@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page errorPage="./error/handle-exception.jsp" %>
+<jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html>
     <head>

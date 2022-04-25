@@ -25,7 +25,6 @@
             } catch (Exception ex) {
                 response.sendRedirect("./login.jsp");
             }
-            
         %>
     </body>
 </html>

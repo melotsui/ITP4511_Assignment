@@ -28,20 +28,21 @@
                     <div class="col-md-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <!--<h4 class="card-title">Default form</h4>-->
+                                <h4 class="card-title"><jsp:getProperty name="userInfo" property="id" /></h4>
                                 <!--<p class="card-description"> A strong password helps to prevent unauthorised access to your account </p>-->
-                                <form class="forms-sample">
+                                <form class="forms-sample" action='HandleChangePassword' method='post'>
+                                        <input type="hidden" class="form-control" name="id" value='<jsp:getProperty name="userInfo" property="id" />'>
                                     <div class="form-group">
                                         <label for="current-password">Current Password</label>
-                                        <input type="password" class="form-control" id="current-password" placeholder="Current Password">
+                                        <input type="password" class="form-control" name="current-password" placeholder="Current Password">
                                     </div>
                                     <div class="form-group">
                                         <label for="new-password">New Password</label>
-                                        <input type="password" class="form-control" id="new-password" placeholder="New Password">
+                                        <input type="password" class="form-control" name="new-password" placeholder="New Password">
                                     </div>
                                     <div class="form-group">
                                         <label for="confirm-new-password">Confirm New Password</label>
-                                        <input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm New Password">
+                                        <input type="password" class="form-control" name="confirm-new-password" placeholder="Confirm New Password">
                                     </div>
                                     <input type='submit' value="Submit" class="btn btn-primary mr-2">
                                     <input type='reset' value="Cancel" class="btn btn-dark">

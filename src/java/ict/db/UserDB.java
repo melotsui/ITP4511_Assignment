@@ -142,6 +142,45 @@ public class UserDB {
         }
         return cb;
     }
+    
+    public boolean changePassword(String id, String oldPw, String newPw) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.user SET password=? WHERE id=? AND password=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, newPw);
+            pStmnt.setString(2, id);
+            pStmnt.setString(3, oldPw);
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
+    
 //    public ArrayList queryUser() {
 //
 //        Connection cnnct = null;

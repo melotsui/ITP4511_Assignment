@@ -72,7 +72,7 @@ public class UserDB {
         try {
             cnnct = getConnection();
 
-            String sql = "SELECT * FROM USERINFO WHERE email=? and password=?";
+            String sql = "SELECT * FROM esd.user WHERE email=? and password=?";
             preQueryStatement = cnnct.prepareStatement(sql);
             preQueryStatement.setString(1, email);
             preQueryStatement.setString(2, pwd);
@@ -95,7 +95,7 @@ public class UserDB {
         return isValid;
     }
 
-    public UserBean getAccountByEmail(String email) {
+    public UserBean getUserInfoByEmail(String email) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
 
@@ -103,12 +103,11 @@ public class UserDB {
         try {
             //1.  get Connection
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM  CUSTOMER WHERE id=? AND password=?";
+            String preQueryStatement = "SELECT * FROM esd.user WHERE email=?";
             //2.  get the prepare Statement
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //3. update the placehoder with id
             pStmnt.setString(1, email);
-            pStmnt.setString(2, password);
             ResultSet rs = null;
             //4. execute the query and assign to the result 
             rs = pStmnt.executeQuery();

@@ -192,7 +192,7 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item" href='${pageContext.request.contextPath}/login.jsp'>
+                                <a class="dropdown-item preview-item" href='${pageContext.request.contextPath}/HandleLogin?action=logout'>
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-logout text-danger"></i>

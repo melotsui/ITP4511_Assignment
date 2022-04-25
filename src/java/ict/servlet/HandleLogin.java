@@ -36,13 +36,13 @@ public class HandleLogin extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new UserDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -70,12 +70,12 @@ public class HandleLogin extends HttpServlet {
         boolean isValid = db.isValidUser(email, password);
         if (isValid) {
             HttpSession session = request.getSession(true);
-            
-            UserBean bean = db.getAccountByEmail(email);
+
+            UserBean bean = db.getUserInfoByEmail(email);
             session.setAttribute("userInfo", bean);
             targetURL = "index.jsp";
         } else {
-//            targetURL = "loginError.jsp";
+            targetURL = "login.jsp";
         }
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
@@ -86,7 +86,7 @@ public class HandleLogin extends HttpServlet {
     private boolean isAuthenticated(HttpServletRequest request) {
         boolean result = false;
         HttpSession session = request.getSession();
-        if(session.getAttribute("userInfo") != null){
+        if (session.getAttribute("userInfo") != null) {
             result = true;
         }
         return result;

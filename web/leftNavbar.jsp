@@ -77,11 +77,11 @@
                                 <a href="#" class="dropdown-item preview-item">
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-calendar-today text-success"></i>
+                                            <i class="mdi mdi-file-image text-success"></i>
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+                                        <p class="preview-subject ellipsis mb-1 text-small">Change Icon</p>
                                     </div>
                                 </a>
                             </div>

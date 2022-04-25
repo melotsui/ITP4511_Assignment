@@ -11,14 +11,14 @@
     <head>
         <title>Edit Personal Trainer</title>
     </head>
-    <jsp:include page="leftNavbar.jsp" />
-    <jsp:include page="topNavbar.jsp" />
+    <jsp:include page="../leftNavbar.jsp" />
+    <jsp:include page="../topNavbar.jsp" />
     <body>
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="page-header">
-                    <h3 class="page-title"> Add Personal Trainer </h3>
+                    <h3 class="page-title"> Edit Personal Trainer </h3>
                     <!--                                  
                       <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -405,8 +405,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type='submit' value="Add" class="btn btn-primary mr-2">
-                                <input type='reset' value="Clear" class="btn btn-dark">
+                                    <input type='submit' value="Edit" class="btn btn-primary mr-2">
+                                    <input type='button' onclick="document.location = '${pageContext.request.contextPath}/index.jsp'" value="Cancal" class="btn btn-dark">
                             </form>
                         </div>
                     </div>
@@ -416,5 +416,5 @@
             <!-- partial:partials/_footer.html -->
             <!-- main-panel ends -->
     </body>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
 </html>

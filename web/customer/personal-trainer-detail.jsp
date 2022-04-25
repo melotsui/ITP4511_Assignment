@@ -10,8 +10,8 @@
     <head>
         <title>Personal Trainer Detail</title>
     </head>
-    <jsp:include page="leftNavbar.jsp" />
-    <jsp:include page="topNavbar.jsp" />
+    <jsp:include page="../leftNavbar.jsp" />
+    <jsp:include page="../topNavbar.jsp" />
     <body>
         <div class="main-panel">
             <div class="content-wrapper">
@@ -162,5 +162,5 @@
                 </div>
             </div>
     </body>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
 </html>

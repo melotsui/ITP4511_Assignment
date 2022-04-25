@@ -11,8 +11,8 @@
     <head>
         <title>Edit Personal Trainer</title>
     </head>
-    <jsp:include page="leftNavbar.jsp" />
-    <jsp:include page="topNavbar.jsp" />
+    <jsp:include page="../leftNavbar.jsp" />
+    <jsp:include page="../topNavbar.jsp" />
     <body>
         <!-- partial -->
         <div class="main-panel">
@@ -132,5 +132,5 @@
             <!-- partial:partials/_footer.html -->
             <!-- main-panel ends -->
     </body>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
 </html>

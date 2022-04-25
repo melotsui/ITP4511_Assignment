@@ -11,8 +11,8 @@
     <head>
         <title>Dashboard</title>
     </head>
-    <jsp:include page="leftNavbar.jsp" />
-    <jsp:include page="topNavbar.jsp" />
+    <jsp:include page="../leftNavbar.jsp" />
+    <jsp:include page="../topNavbar.jsp" />
     <body>
         <!-- partial -->
         <div class="main-panel">
@@ -63,7 +63,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face1.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
                                                     <span class="pl-2">Henry Klein</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -84,7 +84,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face2.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face2.jpg" alt="image" />
                                                     <span class="pl-2">Estella Bryan</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -105,7 +105,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face5.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face5.jpg" alt="image" />
                                                     <span class="pl-2">Lucy Abbott</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -126,7 +126,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face3.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face3.jpg" alt="image" />
                                                     <span class="pl-2">Peter Gill</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -147,7 +147,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face4.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face4.jpg" alt="image" />
                                                     <span class="pl-2">Sallie Reyes</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -201,7 +201,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face1.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
                                                     <span class="pl-2">Henry Klein</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -222,7 +222,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face2.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face2.jpg" alt="image" />
                                                     <span class="pl-2">Estella Bryan</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -243,7 +243,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face5.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face5.jpg" alt="image" />
                                                     <span class="pl-2">Lucy Abbott</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -264,7 +264,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face3.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face3.jpg" alt="image" />
                                                     <span class="pl-2">Peter Gill</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -285,7 +285,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <img src="assets/images/faces/face4.jpg" alt="image" />
+                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face4.jpg" alt="image" />
                                                     <span class="pl-2">Sallie Reyes</span>
                                                 </td>
                                                 <td> 02312 </td>
@@ -309,5 +309,5 @@
             <!-- partial:partials/_footer.html -->
             <!-- main-panel ends -->
     </body>
-    <jsp:include page="footer.jsp" />
+    <jsp:include page="../footer.jsp" />
 </html>

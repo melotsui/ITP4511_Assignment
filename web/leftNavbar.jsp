@@ -99,7 +99,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/edit-gym-center.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/edit-gym-center.jsp">
                             <span class="menu-icon">
                                 <i class="mdi mdi-speedometer"></i>
                             </span>
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/add-gym-center.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/add-gym-center.jsp">
                             <span class="menu-icon">
                                 <i class="mdi mdi-speedometer"></i>
                             </span>
@@ -115,7 +115,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/edit-personal-trainer.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/edit-personal-trainer.jsp">
                             <span class="menu-icon">
                                 <i class="mdi mdi-speedometer"></i>
                             </span>
@@ -123,7 +123,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/add-personal-trainer.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/add-personal-trainer.jsp">
                             <span class="menu-icon">
                                 <i class="mdi mdi-speedometer"></i>
                             </span>
@@ -131,7 +131,7 @@
                         </a>
                     </li>
                     <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/personal-trainer-detail.jsp">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/customer/personal-trainer-detail.jsp">
                             <span class="menu-icon">
                                 <i class="mdi mdi-speedometer"></i>
                             </span>

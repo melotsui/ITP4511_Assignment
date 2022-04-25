@@ -73,6 +73,7 @@ public class HandleLogin extends HttpServlet {
 
             UserBean bean = db.getUserInfoByEmail(email);
             session.setAttribute("userInfo", bean);
+            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS: " + bean.getRole());
             targetURL = "index.jsp";
         } else {
             targetURL = "login.jsp";

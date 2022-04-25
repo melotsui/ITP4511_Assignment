@@ -112,7 +112,6 @@ public class UserDB {
             //4. execute the query and assign to the result 
             rs = pStmnt.executeQuery();
             if (rs.next()) {
-                cb = new UserBean();
                 // set the record detail to the customer bean
                 cb = new UserBean();
                 cb.setId(rs.getString(1));
@@ -122,12 +121,13 @@ public class UserDB {
                 cb.setLastName(rs.getString(5));
                 cb.setGender(rs.getString(6));
                 cb.setAddress(rs.getString(7));
-                cb.setPhone(rs.getInt(8));
-                cb.setRole(rs.getString(9));
-                cb.setBirthday(rs.getString(10));
-                cb.setIsActive(rs.getBoolean(11));
-                cb.setImage(rs.getString(12));
-                cb.setCenterID(rs.getString(13));
+                cb.setCreateDateTime(rs.getString(8));
+                cb.setPhone(rs.getInt(9));
+                cb.setRole(rs.getString(10));
+                cb.setBirthday(rs.getString(11));
+                cb.setIsActive(rs.getBoolean(12));
+                cb.setImage(rs.getString(13));
+                cb.setCenterID(rs.getString(14));
             }
 
             pStmnt.close();

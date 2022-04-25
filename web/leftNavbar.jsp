@@ -31,6 +31,18 @@
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/shortcut-logo.png" />
     </head>
     <body>
+
+        <%
+            String url = request.getContextPath() + "/login.jsp";
+            try {
+                if (userInfo.getRole()==null){
+                    out.println("<script>window.location.href = \"" + url + "\";</script>");
+//                    response.sendRedirect("./login.jsp");
+                }
+            } catch (Exception ex) {
+                    out.println("<script>window.location.href = \"" + url + "\";</script>");
+            }
+        %>
         <div class="container-scroller">
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">

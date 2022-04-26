@@ -94,6 +94,61 @@ public class UserDB {
         }
         return isValid;
     }
+    
+        public ArrayList queryCust() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM esd.user";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+            ArrayList list = new ArrayList();
+
+            while (rs.next()) {
+                UserBean cb = new UserBean();
+                cb.setId(rs.getString(1));
+                cb.setEmail(rs.getString(2));
+                cb.setPassword(rs.getString(3));
+                cb.setFirstName(rs.getString(4));
+                cb.setLastName(rs.getString(5));
+                cb.setGender(rs.getString(6));
+                cb.setAddress(rs.getString(7));
+                cb.setCreateDateTime(rs.getString(8));
+                cb.setPhone(rs.getInt(9));
+                cb.setRole(rs.getString(10));
+                cb.setBirthday(rs.getString(11));
+                cb.setIsActive(rs.getBoolean(12));
+                cb.setImage(rs.getString(13));
+                cb.setCenterID(rs.getString(14));
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
 
     public UserBean getUserInfoByEmail(String email) {
         Connection cnnct = null;

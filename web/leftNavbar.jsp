@@ -160,6 +160,20 @@
                         }
                     %>
                     <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            
+                            String contextPath = request.getContextPath();
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='" + contextPath +  "/handleAccount?action=list'>" );
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>List Account</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <% 
                         if(userInfo.getRole().equalsIgnoreCase("Customer")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' href='personal-trainer-detail.jsp'>");

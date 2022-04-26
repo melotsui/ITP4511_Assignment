@@ -111,61 +111,81 @@
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/edit-gym-center.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>Edit Gym Center</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='add-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>Add Gym Center</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='edit-personal-trainer.jsp'>");
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>Edit Personal Trainer</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='add-personal-trainer.jsp'>");
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>Add Personal Trainer</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Customer")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' href='personal-trainer-detail.jsp'>");
+                            out.println("<span class='menu-icon'>");
+                            out.println("<i class='mdi mdi-speedometer'></i>");
+                            out.println("</span>");
+                            out.println("<span class='menu-title'>Personal Trainer Detail</span>");
+                            out.println("</a>");
+                            out.println("</li>");
+                        }
+                    %>
+                    <li class='nav-item menu-items'>
+                        <a class='nav-link' data-toggle='collapse' href='#auth' aria-expanded='false' aria-controls='auth'>
+                            <span class='menu-icon'>
+                                <i class='mdi mdi-security'></i>
                             </span>
-                            <span class="menu-title">Edit Gym Center</span>
+                            <span class='menu-title'>User Pages</span>
+                            <i class='menu-arrow'></i>
                         </a>
-                    </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/add-gym-center.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
-                            </span>
-                            <span class="menu-title">Add Gym Center</span>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/edit-personal-trainer.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
-                            </span>
-                            <span class="menu-title">Edit Personal Trainer</span>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/staff/add-personal-trainer.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
-                            </span>
-                            <span class="menu-title">Add Personal Trainer</span>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/customer/personal-trainer-detail.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
-                            </span>
-                            <span class="menu-title">Personal Trainer Detail</span>
-                        </a>
-                    </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-security"></i>
-                            </span>
-                            <span class="menu-title">User Pages</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                        <div class='collapse' id='auth'>
+                            <ul class='nav flex-column sub-menu'>
+                                <li class='nav-item'> <a class='nav-link' href='pages/samples/blank-page.html'> Blank Page </a></li>
+                                <li class='nav-item'> <a class='nav-link' href='pages/samples/error-404.html'> 404 </a></li>
+                                <li class='nav-item'> <a class='nav-link' href='pages/samples/error-500.html'> 500 </a></li>
+                                <li class='nav-item'> <a class='nav-link' href='pages/samples/login.html'> Login </a></li>
+                                <li class='nav-item'> <a class='nav-link' href='pages/samples/register.html'> Register </a></li>
                             </ul>
                         </div>
                     </li>

@@ -32,9 +32,6 @@
                                 <h4 class="card-title">Portfolio Slide</h4>
                                 <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel" id="owl-carousel-basic">
                                     <div class="item">
-                                        <img src="https://workoutinfoguru.com/wp-content/uploads/2013/04/kobe-bryant-workout2-1280x720.jpg" alt="">
-                                    </div>
-                                    <div class="item">
                                         <img src="http://2.bp.blogspot.com/-rlbqoNX2aQg/UtvCjo9bVFI/AAAAAAAADO8/9jBlqQt_EcI/s1600/Kobe+Bryant+Workout+routine+and+Diet+plan1.jpg" alt="">
                                     </div>
                                 </div>

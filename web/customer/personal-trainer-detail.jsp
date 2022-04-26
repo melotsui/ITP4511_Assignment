@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="trainer" class="ict.bean.UserBean" scope="request" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,9 +32,6 @@
                                 <h4 class="card-title">Portfolio Slide</h4>
                                 <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel" id="owl-carousel-basic">
                                     <div class="item">
-                                        <img src="https://workoutinfoguru.com/wp-content/uploads/2013/04/kobe-bryant-workout2-1280x720.jpg" alt="">
-                                    </div>
-                                    <div class="item">
                                         <img src="http://2.bp.blogspot.com/-rlbqoNX2aQg/UtvCjo9bVFI/AAAAAAAADO8/9jBlqQt_EcI/s1600/Kobe+Bryant+Workout+routine+and+Diet+plan1.jpg" alt="">
                                     </div>
                                 </div>
@@ -41,12 +39,12 @@
                                     <div class="preview-list w-100">
                                         <div class="preview-item p-0">
                                             <div class="preview-thumbnail">
-                                                <img src="assets/images/faces/face12.jpg" class="rounded-circle" alt="">
+                                                <img src="${pageContext.request.contextPath}/assets/images/faces/face12.jpg" class="rounded-circle" alt="">
                                             </div>
                                             <div class="preview-item-content d-flex flex-grow">
                                                 <div class="flex-grow">
                                                     <div class="d-flex d-md-block d-xl-flex justify-content-between">
-                                                        <h6 class="preview-subject">Kobe Bryant </h6>
+                                                        <h6 class="preview-subject"><jsp:getProperty name="trainer" property="firstName" /> <jsp:getProperty name="trainer" property="lastName" /></h6>
                                                         <!--<p class="text-muted text-small">4 Hours Ago</p>-->
                                                     </div>
                                                     <p class="text-muted">CrossFit Head Coach </p>

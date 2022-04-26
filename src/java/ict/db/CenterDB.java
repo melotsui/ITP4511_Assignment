@@ -7,6 +7,7 @@ package ict.db;
 
 import ict.bean.CenterBean;
 import com.mysql.jdbc.Connection;
+import ict.bean.UserBean;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -35,12 +36,12 @@ public class CenterDB {
         return (Connection) DriverManager.getConnection(url, username, password);
     }
 
-    public ArrayList queryCenter() {
+    public ArrayList queryActiveCenter() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.center";
+            String preQueryStatement = "SELECT * FROM esd.center WHERE isActive=1";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
@@ -81,6 +82,47 @@ public class CenterDB {
             }
         }
         return null;
+    }
+    
+    public CenterBean queryCenterByID(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+
+        CenterBean cb = null;
+        try {
+            //1.  get Connection
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM esd.center WHERE id=?";
+            //2.  get the prepare Statement
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //3. update the placehoder with id
+            pStmnt.setString(1, id);
+            ResultSet rs = null;
+            //4. execute the query and assign to the result 
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                // set the record detail to the customer bean
+                cb = new CenterBean();
+                cb.setId(rs.getString(1));
+                cb.setName(rs.getString(2));
+                cb.setAddress(rs.getString(3));
+                cb.setPhone(rs.getInt(4));
+                cb.setFee(rs.getInt(5));
+                cb.setCreateDateTime(rs.getString(6));
+                cb.setIsActive(rs.getBoolean(7));
+            }
+
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cb;
     }
     
 }

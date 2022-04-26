@@ -74,8 +74,10 @@ public class HandleLogin extends HttpServlet {
         if (isValid) {
             HttpSession session = request.getSession(true);
             UserBean bean = db.getUserInfoByEmail(email);
-            ArrayList<CenterBean> centerBean = centerDb.queryCenter();
+            ArrayList<CenterBean> centerBean = centerDb.queryActiveCenter();
+            ArrayList<UserBean> trainers = db.queryActiveUserByRole("Personal Trainer");
             session.setAttribute("centers", centerBean);
+            session.setAttribute("trainers", trainers);
             session.setAttribute("userInfo", bean);
             targetURL = "index.jsp";
         } else {
@@ -107,6 +109,8 @@ public class HandleLogin extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute("userInfo");
+            session.removeAttribute("centers");
+            session.removeAttribute("trainers");
             session.invalidate();
         }
 

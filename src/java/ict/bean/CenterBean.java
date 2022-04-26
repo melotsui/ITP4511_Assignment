@@ -69,7 +69,7 @@ public class CenterBean {
         this.createDateTime = createDateTime;
     }
 
-    public boolean isIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 

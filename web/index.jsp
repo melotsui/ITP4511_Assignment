@@ -15,11 +15,11 @@
     <body>
         <%
             try {
-                if (userInfo.getRole().equalsIgnoreCase("customer")){
+                if (userInfo.getRole().equalsIgnoreCase("Customer")){
                     response.sendRedirect("./customer/dashboard.jsp");
-                } else if (userInfo.getRole().equalsIgnoreCase("staff")){
+                } else if (userInfo.getRole().equalsIgnoreCase("Staff")){
                     response.sendRedirect("./staff/dashboard.jsp");
-                } else if (userInfo.getRole().equalsIgnoreCase("trainer")){
+                } else if (userInfo.getRole().equalsIgnoreCase("Personal Trainer")){
                     response.sendRedirect("./trainer/dashboard.jsp");
                 }
             } catch (Exception ex) {

@@ -35,12 +35,12 @@ public class CenterDB {
         return (Connection) DriverManager.getConnection(url, username, password);
     }
 
-    public ArrayList queryCenter() {
+    public ArrayList queryActiveCenter() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.center";
+            String preQueryStatement = "SELECT * FROM esd.center WHERE isActive=1";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();

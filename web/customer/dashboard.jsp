@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.CenterBean"%>
+<%@page import="ict.bean.UserBean"%>
 <jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<jsp:useBean id="trainers" scope="session" class="java.util.ArrayList<ict.bean.UserBean>" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,13 +41,14 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>
+<!--                                                <th>
                                                     <div class="form-check form-check-muted m-0">
                                                         <label class="form-check-label">
                                                             <input type="checkbox" class="form-check-input">
                                                         </label>
                                                     </div>
-                                                </th>
+                                                </th>-->
+                                                <th> # </th>
                                                 <th> Personal Trainer Name </th>
                                                 <th> Gender </th>
                                                 <th> Email </th>
@@ -55,26 +58,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
-                                                    <span class="pl-2">Henry Klein</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Dashboard </td>
-                                                <td> Credit card </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Detail</div>
-                                                </td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<trainers.size(); i++){
+//                                                    out.println(centers.get(i).getAddress());
+                                                    out.println("<tr>");
+                                                    out.println("<td> " + (i+1) + " </td>");
+                                                    out.println("<td><span class='pl-2'>" + trainers.get(i).getFirstName() + " " + trainers.get(i).getLastName() + "</span></td>");
+                                                    out.println("<td>" + trainers.get(i).getGender() + "</td>");
+                                                    out.println("<td>" + trainers.get(i).getEmail() + "</td>");
+                                                    out.println("<td>" + trainers.get(i).getPhone() + "</td>");
+                                                    out.println("<td>$" + trainers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td><div class='badge badge-outline-success'>Detail</div></td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

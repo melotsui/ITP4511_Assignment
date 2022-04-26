@@ -26,9 +26,19 @@ public class UserBean {
     private boolean isActive;
     private String image;
     private String centerID;
+    private int fee;
 
     public UserBean() {
     }
+    
+    public int getFee() {
+        return fee;
+    }
+
+    public void setFee(int fee) {
+        this.fee = fee;
+    }
+
 
     public String getId() {
         return id;
@@ -71,7 +81,11 @@ public class UserBean {
     }
 
     public String getGender() {
-        return gender;
+        if(gender.equals("M")){
+            return "Male";
+        } else {
+            return "Female";
+        }
     }
 
     public void setGender(String gender) {

@@ -68,7 +68,7 @@
                                                     out.println("<td>" + trainers.get(i).getEmail() + "</td>");
                                                     out.println("<td>" + trainers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + trainers.get(i).getFee() + "/h</td>");
-                                                    out.println("<td><div class='badge badge-outline-success'>Detail</div></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleUserDetail?action=Inquire&id=" + trainers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
                                                     out.println("</tr>");
                                                 }
                                             %>
@@ -113,7 +113,7 @@
                                                     out.println("<td>" + centers.get(i).getAddress() + "</td>");
                                                     out.println("<td>" + centers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + centers.get(i).getFee() + "/h</td>");
-                                                    out.println("<td><div class='badge badge-outline-success'>Detail</div></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
                                                     out.println("</tr>");
                                                 }
                                             %>

@@ -145,6 +145,55 @@ public class UserDB {
         return cb;
     }
     
+    public UserBean getUserInfoByID(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+
+        UserBean cb = null;
+        try {
+            //1.  get Connection
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM esd.user WHERE id=?";
+            //2.  get the prepare Statement
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //3. update the placehoder with id
+            pStmnt.setString(1, id);
+            ResultSet rs = null;
+            //4. execute the query and assign to the result 
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                // set the record detail to the customer bean
+                cb = new UserBean();
+                cb.setId(rs.getString(1));
+                cb.setEmail(rs.getString(2));
+                cb.setPassword(rs.getString(3));
+                cb.setFirstName(rs.getString(4));
+                cb.setLastName(rs.getString(5));
+                cb.setGender(rs.getString(6));
+                cb.setAddress(rs.getString(7));
+                cb.setCreateDateTime(rs.getString(8));
+                cb.setPhone(rs.getInt(9));
+                cb.setRole(rs.getString(10));
+                cb.setBirthday(rs.getString(11));
+                cb.setIsActive(rs.getBoolean(12));
+                cb.setImage(rs.getString(13));
+                cb.setCenterID(rs.getString(14));
+                cb.setFee(rs.getInt(15));
+            }
+
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cb;
+    }
+    
     public boolean changePassword(String id, String oldPw, String newPw) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;

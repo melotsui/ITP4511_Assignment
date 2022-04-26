@@ -5,7 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="ict.bean.CenterBean"%>
+<jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -100,31 +102,24 @@
                                                 <th> Gym Center Name </th>
                                                 <th> Location </th>
                                                 <th> Phone </th>
-                                                <th> fee </th>
+                                                <th> Fee </th>
                                                 <th>  </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-<!--                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>-->
-                                                <td> 1 </td>
-                                                <td>
-                                                    <!--<img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />-->
-                                                    <span class="pl-2">Henry Klein</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Dashboard </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Detail</div>
-                                                </td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<centers.size(); i++){
+//                                                    out.println(centers.get(i).getAddress());
+                                                    out.println("<tr>");
+                                                    out.println("<td> " + (i+1) + " </td>");
+                                                    out.println("<td><span class='pl-2'>" + centers.get(i).getName() + "</span></td>");
+                                                    out.println("<td>" + centers.get(i).getAddress() + "</td>");
+                                                    out.println("<td>" + centers.get(i).getPhone() + "</td>");
+                                                    out.println("<td>$" + centers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td><div class='badge badge-outline-success'>Detail</div></td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

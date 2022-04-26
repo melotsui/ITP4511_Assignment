@@ -7,9 +7,10 @@
 package ict.servlet;
 
 import ict.bean.UserBean;
-import ict.db.UserDB;
+import ict.bean.CenterBean;
 
 import ict.db.UserDB;
+import ict.db.CenterDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -29,12 +30,14 @@ import javax.servlet.http.HttpSession;
 public class HandleLogin extends HttpServlet {
 
     private UserDB db;
+    private CenterDB centerDb;
 
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new UserDB(dbUrl, dbUser, dbPassword);
+        centerDb = new CenterDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -70,10 +73,10 @@ public class HandleLogin extends HttpServlet {
         boolean isValid = db.isValidUser(email, password);
         if (isValid) {
             HttpSession session = request.getSession(true);
-
             UserBean bean = db.getUserInfoByEmail(email);
+            ArrayList<CenterBean> centerBean = centerDb.queryCenter();
+            session.setAttribute("centers", centerBean);
             session.setAttribute("userInfo", bean);
-            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS: " + bean.getRole());
             targetURL = "index.jsp";
         } else {
             targetURL = "login.jsp";

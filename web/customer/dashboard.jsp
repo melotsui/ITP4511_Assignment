@@ -89,13 +89,14 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>
+<!--                                                <th>
                                                     <div class="form-check form-check-muted m-0">
                                                         <label class="form-check-label">
                                                             <input type="checkbox" class="form-check-input">
                                                         </label>
                                                     </div>
-                                                </th>
+                                                </th>-->
+                                                <th> # </th>
                                                 <th> Gym Center Name </th>
                                                 <th> Location </th>
                                                 <th> Phone </th>
@@ -105,15 +106,16 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
+<!--                                                <td>
                                                     <div class="form-check form-check-muted m-0">
                                                         <label class="form-check-label">
                                                             <input type="checkbox" class="form-check-input">
                                                         </label>
                                                     </div>
-                                                </td>
+                                                </td>-->
+                                                <td> 1 </td>
                                                 <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
+                                                    <!--<img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />-->
                                                     <span class="pl-2">Henry Klein</span>
                                                 </td>
                                                 <td> 02312 </td>

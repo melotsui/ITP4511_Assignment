@@ -71,34 +71,56 @@ public class HandleUserDetail extends HttpServlet {
             bean.setAddress(request.getParameter("address").toString());
             bean.setPhone(Integer.parseInt(request.getParameter("phone")));
             bean.setBirthday(request.getParameter("birthday"));
-            if(db.editProfile(bean)){
-            PrintWriter out = response.getWriter();
-            HttpSession session = request.getSession(true);
-            ArrayList<CenterBean> centerBean = cDB.queryActiveCenter();
-            session.setAttribute("centers", centerBean);
-            ArrayList<UserBean> trainers = db.queryActiveTrainersWithPrice();
-            session.setAttribute("trainers", trainers);
-            bean = db.getUserInfoByID(request.getParameter("id"));
-            session.setAttribute("userInfo", bean);
-            RequestDispatcher rd;
-            if(request.getParameter("role").equalsIgnoreCase("customer")){
-                rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
-            } else if (request.getParameter("role").equalsIgnoreCase("staff")){
-                rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+            if (db.editProfile(bean)) {
+                PrintWriter out = response.getWriter();
+                HttpSession session = request.getSession(true);
+                ArrayList<CenterBean> centerBean = cDB.queryActiveCenter();
+                session.setAttribute("centers", centerBean);
+                ArrayList<UserBean> trainers = db.queryActiveTrainersWithPrice();
+                session.setAttribute("trainers", trainers);
+                bean = db.getUserInfoByID(request.getParameter("id"));
+                session.setAttribute("userInfo", bean);
+                RequestDispatcher rd;
+                if (request.getParameter("role").equalsIgnoreCase("customer")) {
+                    rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
+                } else if (request.getParameter("role").equalsIgnoreCase("staff")) {
+                    rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+                } else {
+                    rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+                }
+                rd.forward(request, response);
             } else {
-                rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+                PrintWriter out = response.getWriter();
+                out.println("fail!!");
+                out.println(request.getParameter("id"));
+                out.println(request.getParameter("firstName"));
+                out.println(request.getParameter("lastName"));
+                out.println(request.getParameter("gender"));
+                out.println(request.getParameter("address"));
+                out.println(request.getParameter("birthday"));
+                out.println(request.getParameter("phone"));
             }
-            rd.forward(request, response);
+        } else if (action.equalsIgnoreCase("Delete")) {
+            String id = request.getParameter("id");
+            if (db.deleteUserByID(id)) {
+                HttpSession session = request.getSession(true);
+                ArrayList<CenterBean> centerBean = cDB.queryActiveCenter();
+                session.setAttribute("centers", centerBean);
+                ArrayList<UserBean> trainers = db.queryActiveTrainersWithPrice();
+                session.setAttribute("trainers", trainers);
+                UserBean bean = db.getUserInfoByID(request.getParameter("id"));
+                session.setAttribute("userInfo", bean);
+                RequestDispatcher rd;
+                if (request.getParameter("role").equalsIgnoreCase("customer")) {
+                    rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
+                } else if (request.getParameter("role").equalsIgnoreCase("staff")) {
+                    rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+                } else {
+                    rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+                }
+                rd.forward(request, response);
             } else {
-            PrintWriter out = response.getWriter();
-            out.println("fail!!");
-            out.println(request.getParameter("id"));
-            out.println(request.getParameter("firstName"));
-            out.println(request.getParameter("lastName"));
-            out.println(request.getParameter("gender"));
-            out.println(request.getParameter("address"));
-            out.println(request.getParameter("birthday"));
-            out.println(request.getParameter("phone"));
+
             }
         } else {
             PrintWriter out = response.getWriter();

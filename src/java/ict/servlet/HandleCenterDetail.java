@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,12 +30,14 @@ import javax.servlet.http.HttpServletResponse;
 public class HandleCenterDetail extends HttpServlet {
 
     private CenterDB db;
+    private UserDB uDB;
 
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new CenterDB(dbUrl, dbUser, dbPassword);
+        uDB = new UserDB(dbUrl, dbUser, dbPassword);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -57,6 +60,29 @@ public class HandleCenterDetail extends HttpServlet {
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/customer/personal-trainer-detail.jsp");
             rd.forward(request, response);
+        } else if(action.equalsIgnoreCase("Delete")) {
+            String id = request.getParameter("id");
+            if(db.deleteCenterByID(id)){
+                
+            HttpSession session = request.getSession(true);
+            ArrayList<CenterBean> centerBean = db.queryActiveCenter();
+            session.setAttribute("centers", centerBean);
+            ArrayList<UserBean> trainers = uDB.queryActiveTrainersWithPrice();
+            session.setAttribute("trainers", trainers);
+            UserBean bean = uDB.getUserInfoByID(request.getParameter("id"));
+            session.setAttribute("userInfo", bean);
+            RequestDispatcher rd;
+            if(request.getParameter("role").equalsIgnoreCase("customer")){
+                rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
+            } else if (request.getParameter("role").equalsIgnoreCase("staff")){
+                rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+            } else {
+                rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+            }
+            rd.forward(request, response);
+            } else {
+                
+            }
         } else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!");

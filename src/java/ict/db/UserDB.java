@@ -292,7 +292,7 @@ public class UserDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=?";
+            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=? and esd.user.deleted = 0";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, "Personal Trainer");
             //Statement s = cnnct.createStatement();
@@ -316,7 +316,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setPrice(rs.getInt(15));
+                cb.setPrice(rs.getInt(16));
                 list.add(cb);
             }
             return list;
@@ -359,6 +359,42 @@ public class UserDB {
             pStmnt.setInt(5, cb.getPhone());
             pStmnt.setString(6, cb.getBirthday());
             pStmnt.setString(7, cb.getId());
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
+        
+    public boolean deleteUserByID(String id) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.user SET deleted=1 WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
             //Statement s = cnnct.createStatement();
             num= pStmnt.executeUpdate();
           

@@ -41,7 +41,7 @@ public class CenterDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.center WHERE isActive=1";
+            String preQueryStatement = "SELECT * FROM esd.center WHERE isActive=1 and deleted = 0";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
@@ -123,6 +123,42 @@ public class CenterDB {
             ex.printStackTrace();
         }
         return cb;
+    }
+    
+    public boolean deleteCenterByID(String id) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.center SET deleted=1 WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
     }
     
 }

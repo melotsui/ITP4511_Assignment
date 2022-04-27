@@ -102,6 +102,7 @@
                                                 <th> Phone </th>
                                                 <th> Price </th>
                                                 <th>  </th>
+                                                <th>  </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -115,6 +116,7 @@
                                                     out.println("<td>" + centers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + centers.get(i).getFee() + "/h</td>");
                                                     out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Delete&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Delete</div></a></td>");
                                                     out.println("</tr>");
                                                 }
                                             %>

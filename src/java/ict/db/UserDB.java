@@ -288,4 +288,47 @@ public class UserDB {
         }
         return null;
     }
+    
+    public boolean editProfile(UserBean cb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.user SET firstName=? ,lastName=? ,gender=?, address=?, phone=?, birthday=? WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cb.getFirstName());
+            pStmnt.setString(2, cb.getLastName());
+            pStmnt.setString(3, cb.getGender());
+            pStmnt.setString(4, cb.getAddress());
+            pStmnt.setInt(5, cb.getPhone());
+            pStmnt.setString(6, cb.getBirthday());
+            pStmnt.setString(7, cb.getId());
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
+    
 }

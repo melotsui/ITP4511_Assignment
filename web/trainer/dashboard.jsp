@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="ict.bean.CenterBean"%>
+<%@page import="ict.bean.UserBean"%>
+<jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<jsp:useBean id="trainers" scope="session" class="java.util.ArrayList<ict.bean.UserBean>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,128 +42,37 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>
+<!--                                                <th>
                                                     <div class="form-check form-check-muted m-0">
                                                         <label class="form-check-label">
                                                             <input type="checkbox" class="form-check-input">
                                                         </label>
                                                     </div>
-                                                </th>
+                                                </th>-->
+                                                <th> # </th>
                                                 <th> Personal Trainer Name </th>
-                                                <th> Trainer ID </th>
-                                                <th> Product Cost </th>
-                                                <th> Project </th>
-                                                <th> Payment Mode </th>
-                                                <th> Start Date </th>
-                                                <th> Payment Status </th>
+                                                <th> Gender </th>
+                                                <th> Email </th>
+                                                <th> Phone </th>
+                                                <th> Fee </th>
+                                                <th>  </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
-                                                    <span class="pl-2">Henry Klein</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Dashboard </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face2.jpg" alt="image" />
-                                                    <span class="pl-2">Estella Bryan</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Website </td>
-                                                <td> Cash on delivered </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face5.jpg" alt="image" />
-                                                    <span class="pl-2">Lucy Abbott</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> App design </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-danger">Rejected</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face3.jpg" alt="image" />
-                                                    <span class="pl-2">Peter Gill</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Development </td>
-                                                <td> Online Payment </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face4.jpg" alt="image" />
-                                                    <span class="pl-2">Sallie Reyes</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Website </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<trainers.size(); i++){
+//                                                    out.println(centers.get(i).getAddress());
+                                                    out.println("<tr>");
+                                                    out.println("<td> " + (i+1) + " </td>");
+                                                    out.println("<td><span class='pl-2'>" + trainers.get(i).getFirstName() + " " + trainers.get(i).getLastName() + "</span></td>");
+                                                    out.println("<td>" + trainers.get(i).getGender() + "</td>");
+                                                    out.println("<td>" + trainers.get(i).getEmail() + "</td>");
+                                                    out.println("<td>" + trainers.get(i).getPhone() + "</td>");
+                                                    out.println("<td>$" + trainers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleUserDetail?action=Inquire&id=" + trainers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -175,128 +89,35 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>
+<!--                                                <th>
                                                     <div class="form-check form-check-muted m-0">
                                                         <label class="form-check-label">
                                                             <input type="checkbox" class="form-check-input">
                                                         </label>
                                                     </div>
-                                                </th>
+                                                </th>-->
+                                                <th> # </th>
                                                 <th> Gym Center Name </th>
-                                                <th> Center ID </th>
-                                                <th> Product Cost </th>
-                                                <th> Project </th>
-                                                <th> Payment Mode </th>
-                                                <th> Start Date </th>
-                                                <th> Payment Status </th>
+                                                <th> Location </th>
+                                                <th> Phone </th>
+                                                <th> Fee </th>
+                                                <th>  </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face1.jpg" alt="image" />
-                                                    <span class="pl-2">Henry Klein</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Dashboard </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face2.jpg" alt="image" />
-                                                    <span class="pl-2">Estella Bryan</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Website </td>
-                                                <td> Cash on delivered </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-warning">Pending</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face5.jpg" alt="image" />
-                                                    <span class="pl-2">Lucy Abbott</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> App design </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-danger">Rejected</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face3.jpg" alt="image" />
-                                                    <span class="pl-2">Peter Gill</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Development </td>
-                                                <td> Online Payment </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check form-check-muted m-0">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/assets/images/faces/face4.jpg" alt="image" />
-                                                    <span class="pl-2">Sallie Reyes</span>
-                                                </td>
-                                                <td> 02312 </td>
-                                                <td> $14,500 </td>
-                                                <td> Website </td>
-                                                <td> Credit card </td>
-                                                <td> 04 Dec 2019 </td>
-                                                <td>
-                                                    <div class="badge badge-outline-success">Approved</div>
-                                                </td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<centers.size(); i++){
+//                                                    out.println(centers.get(i).getAddress());
+                                                    out.println("<tr>");
+                                                    out.println("<td> " + (i+1) + " </td>");
+                                                    out.println("<td><span class='pl-2'>" + centers.get(i).getName() + "</span></td>");
+                                                    out.println("<td>" + centers.get(i).getAddress() + "</td>");
+                                                    out.println("<td>" + centers.get(i).getPhone() + "</td>");
+                                                    out.println("<td>$" + centers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

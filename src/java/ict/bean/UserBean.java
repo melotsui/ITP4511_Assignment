@@ -12,6 +12,7 @@ import java.io.InputStream;
  * @author Melo
  */
 public class UserBean {
+
     private String id;
     private String email;
     private String password;
@@ -30,7 +31,7 @@ public class UserBean {
 
     public UserBean() {
     }
-    
+
     public int getFee() {
         return fee;
     }
@@ -38,7 +39,6 @@ public class UserBean {
     public void setFee(int fee) {
         this.fee = fee;
     }
-
 
     public String getId() {
         return id;
@@ -81,11 +81,7 @@ public class UserBean {
     }
 
     public String getGender() {
-        if(gender.equals("M")){
-            return "Male";
-        } else {
-            return "Female";
-        }
+        return gender;
     }
 
     public void setGender(String gender) {
@@ -93,7 +89,12 @@ public class UserBean {
     }
 
     public String getAddress() {
-        return address;
+        if (address == null) {
+            return "";
+        } else {
+            return address;
+        }
+
     }
 
     public void setAddress(String address) {
@@ -109,7 +110,11 @@ public class UserBean {
     }
 
     public int getPhone() {
-        return phone;
+        if (phone == 0) {
+            return 0;
+        } else {
+            return phone;
+        }
     }
 
     public void setPhone(int phone) {
@@ -125,7 +130,11 @@ public class UserBean {
     }
 
     public String getBirthday() {
-        return birthday;
+        if (birthday == null) {
+            return "";
+        } else {
+            return birthday;
+        }
     }
 
     public void setBirthday(String birthday) {
@@ -155,6 +164,5 @@ public class UserBean {
     public void setCenterID(String centerID) {
         this.centerID = centerID;
     }
-    
-    
+
 }

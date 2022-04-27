@@ -76,7 +76,7 @@ public class HandleUserDetail extends HttpServlet {
             HttpSession session = request.getSession(true);
             ArrayList<CenterBean> centerBean = cDB.queryActiveCenter();
             session.setAttribute("centers", centerBean);
-            ArrayList<UserBean> trainers = db.queryActiveUserByRole("Personal Trainer");
+            ArrayList<UserBean> trainers = db.queryActiveTrainersWithPrice();
             session.setAttribute("trainers", trainers);
             bean = db.getUserInfoByID(request.getParameter("id"));
             session.setAttribute("userInfo", bean);

@@ -129,7 +129,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+//                cb.setFee(rs.getInt(15));
             }
 
             pStmnt.close();
@@ -178,7 +178,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+//                cb.setPrice(rs.getInt(15));
             }
 
             pStmnt.close();
@@ -232,14 +232,14 @@ public class UserDB {
          return (num == 1) ? true : false;   
     }
     
-    public ArrayList queryActiveUserByRole(String role) {
+    public ArrayList queryActiveTrainersWithPrice() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.user WHERE isActive=1 AND role=?";
+            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, role);
+            pStmnt.setString(1, "Personal Trainer");
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -261,7 +261,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+                cb.setPrice(rs.getInt(15));
                 list.add(cb);
             }
             return list;

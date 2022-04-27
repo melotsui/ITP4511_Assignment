@@ -54,7 +54,7 @@
                                                 <th> Gender </th>
                                                 <th> Email </th>
                                                 <th> Phone </th>
-                                                <th> Fee </th>
+                                                <th> Price </th>
                                                 <th>  </th>
                                             </tr>
                                         </thead>
@@ -68,7 +68,7 @@
                                                     out.println("<td>" + trainers.get(i).getGender() + "</td>");
                                                     out.println("<td>" + trainers.get(i).getEmail() + "</td>");
                                                     out.println("<td>" + trainers.get(i).getPhone() + "</td>");
-                                                    out.println("<td>$" + trainers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td>$" + trainers.get(i).getPrice() + "/h</td>");
                                                     out.println("<td><a href='" + request.getContextPath() + "/HandleUserDetail?action=Inquire&id=" + trainers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
                                                     out.println("</tr>");
                                                 }
@@ -100,7 +100,7 @@
                                                 <th> Gym Center Name </th>
                                                 <th> Location </th>
                                                 <th> Phone </th>
-                                                <th> Fee </th>
+                                                <th> Price </th>
                                                 <th>  </th>
                                             </tr>
                                         </thead>

@@ -27,17 +27,17 @@ public class UserBean {
     private boolean isActive;
     private String image;
     private String centerID;
-    private int fee;
+    private int price;
 
     public UserBean() {
     }
 
-    public int getFee() {
-        return fee;
+    public int getPrice() {
+        return price;
     }
 
-    public void setFee(int fee) {
-        this.fee = fee;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getId() {

@@ -75,7 +75,7 @@ public class HandleLogin extends HttpServlet {
             HttpSession session = request.getSession(true);
             UserBean bean = db.getUserInfoByEmail(email);
             ArrayList<CenterBean> centerBean = centerDb.queryActiveCenter();
-            ArrayList<UserBean> trainers = db.queryActiveUserByRole("Personal Trainer");
+            ArrayList<UserBean> trainers = db.queryActiveTrainersWithPrice();
             session.setAttribute("centers", centerBean);
             session.setAttribute("trainers", trainers);
             session.setAttribute("userInfo", bean);

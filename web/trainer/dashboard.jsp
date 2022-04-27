@@ -10,6 +10,7 @@
 <%@page import="ict.bean.UserBean"%>
 <jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
 <jsp:useBean id="trainers" scope="session" class="java.util.ArrayList<ict.bean.UserBean>" />
+<jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,7 @@
                                                     out.println("<td>" + trainers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + trainers.get(i).getPrice() + "/h</td>");
                                                     out.println("<td><a href='" + request.getContextPath() + "/HandleUserDetail?action=Inquire&id=" + trainers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleUserDetail?action=Delete&id=" + trainers.get(i).getId() + "&role="+ userInfo.getRole() +"'><div class='badge badge-outline-success'>Delete</div></a></td>");
                                                     out.println("</tr>");
                                                 }
                                             %>
@@ -114,9 +116,9 @@
                                                     out.println("<td><span class='pl-2'>" + centers.get(i).getName() + "</span></td>");
                                                     out.println("<td>" + centers.get(i).getAddress() + "</td>");
                                                     out.println("<td>" + centers.get(i).getPhone() + "</td>");
-                                                    out.println("<td>$" + centers.get(i).getFee() + "/h</td>");
+                                                    out.println("<td>$" + centers.get(i).getPrice() + "/h</td>");
                                                     out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
-                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Delete&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Delete</div></a></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Delete&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><div class='badge badge-outline-success'>Delete</div></a></td>");                                                    
                                                     out.println("</tr>");
                                                 }
                                             %>

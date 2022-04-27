@@ -14,7 +14,7 @@ public class CenterBean {
     private String name;
     private String address;
     private int phone;
-    private int fee;
+    private int price;
     private String createDateTime;
     private boolean isActive;
 
@@ -53,12 +53,12 @@ public class CenterBean {
         this.phone = phone;
     }
 
-    public int getFee() {
-        return fee;
+    public int getPrice() {
+        return price;
     }
 
-    public void setFee(int fee) {
-        this.fee = fee;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getCreateDateTime() {

@@ -41,7 +41,7 @@ public class CenterDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.center WHERE isActive=1 and deleted = 0";
+            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID group by esd.center.id having esd.center.isActive = 1 and esd.center.deleted = 0;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
@@ -54,9 +54,9 @@ public class CenterDB {
                 cb.setName(rs.getString(2));
                 cb.setAddress(rs.getString(3));
                 cb.setPhone(rs.getInt(4));
-                cb.setFee(rs.getInt(5));
-                cb.setCreateDateTime(rs.getString(6));
-                cb.setIsActive(rs.getBoolean(7));
+                cb.setPrice(rs.getInt(8));
+                cb.setCreateDateTime(rs.getString(5));
+                cb.setIsActive(rs.getBoolean(6));
                 list.add(cb);
             }
             return list;
@@ -107,9 +107,9 @@ public class CenterDB {
                 cb.setName(rs.getString(2));
                 cb.setAddress(rs.getString(3));
                 cb.setPhone(rs.getInt(4));
-                cb.setFee(rs.getInt(5));
-                cb.setCreateDateTime(rs.getString(6));
-                cb.setIsActive(rs.getBoolean(7));
+//                cb.setPrice(rs.getInt(5));
+                cb.setCreateDateTime(rs.getString(5));
+                cb.setIsActive(rs.getBoolean(6));
             }
 
             pStmnt.close();

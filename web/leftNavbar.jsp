@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page errorPage="./error/handle-exception.jsp" %>
+<%--<%@ page errorPage="./error/handle-exception.jsp" %>--%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html>
@@ -114,76 +114,46 @@
                     <% 
                         if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>Edit Gym Center</span>");
+                            out.println("<a class='nav-link' data-toggle='collapse' href='#center' aria-expanded='false' aria-controls='center'>");
+//                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'><i class='mdi mdi-speedometer'></i></span>");
+                            out.println("<span class='menu-title'>Gym Center</span>");
+                            out.println("<i class='menu-arrow'></i>");
                             out.println("</a>");
-                            out.println("</li>");
+                            out.println("<div class='collapse' id='center'>");
+                            out.println("<ul class='nav flex-column sub-menu'>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-gym-center.jsp'> List Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='add-gym-center.jsp'> Add Gym Center </a></li>");
+                            out.println("</ul></div></li>");
                         }
                     %>
                     <% 
                         if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='add-gym-center.jsp'>");
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>Add Gym Center</span>");
+                            out.println("<a class='nav-link' data-toggle='collapse' href='#user' aria-expanded='false' aria-controls='user'>");
+//                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'><i class='mdi mdi-speedometer'></i></span>");
+                            out.println("<span class='menu-title'>User</span>");
+                            out.println("<i class='menu-arrow'></i>");
                             out.println("</a>");
-                            out.println("</li>");
+                            out.println("<div class='collapse' id='user'>");
+                            out.println("<ul class='nav flex-column sub-menu'>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-personal-trainer.jsp'> List User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='add-personal-trainer.jsp'> Add User </a></li>");
+                            out.println("</ul></div></li>");
                         }
                     %>
                     <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
-                            out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='edit-personal-trainer.jsp'>");
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>Edit Personal Trainer</span>");
-                            out.println("</a>");
-                            out.println("</li>");
-                        }
-                    %>
-                    <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
-                            out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='add-personal-trainer.jsp'>");
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>Add Personal Trainer</span>");
-                            out.println("</a>");
-                            out.println("</li>");
-                        }
-                    %>
-                    <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
-                            
-                            String contextPath = request.getContextPath();
-                            out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='" + contextPath +  "/handleAccount?action=list'>" );
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>List Account</span>");
-                            out.println("</a>");
-                            out.println("</li>");
-                        }
-                    %>
-                    <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Customer")){
-                            out.println("<li class='nav-item menu-items'>");
-                            out.println("<a class='nav-link' href='personal-trainer-detail.jsp'>");
-                            out.println("<span class='menu-icon'>");
-                            out.println("<i class='mdi mdi-speedometer'></i>");
-                            out.println("</span>");
-                            out.println("<span class='menu-title'>Personal Trainer Detail</span>");
-                            out.println("</a>");
-                            out.println("</li>");
-                        }
+//                        if(userInfo.getRole().equalsIgnoreCase("Customer")){
+//                            out.println("<li class='nav-item menu-items'>");
+//                            out.println("<a class='nav-link' href='personal-trainer-detail.jsp'>");
+//                            out.println("<span class='menu-icon'>");
+//                            out.println("<i class='mdi mdi-speedometer'></i>");
+//                            out.println("</span>");
+//                            out.println("<span class='menu-title'>Personal Trainer Detail</span>");
+//                            out.println("</a>");
+//                            out.println("</li>");
+//                        }
                     %>
                     <li class="nav-item menu-items">
                         <a class="nav-link" href="${pageContext.request.contextPath}/profile.jsp">

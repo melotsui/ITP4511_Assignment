@@ -184,7 +184,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+//                cb.setFee(rs.getInt(15));
             }
 
             pStmnt.close();
@@ -233,7 +233,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+//                cb.setPrice(rs.getInt(15));
             }
 
             pStmnt.close();
@@ -287,14 +287,14 @@ public class UserDB {
          return (num == 1) ? true : false;   
     }
     
-    public ArrayList queryActiveUserByRole(String role) {
+    public ArrayList queryActiveTrainersWithPrice() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.user WHERE isActive=1 AND role=?";
+            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, role);
+            pStmnt.setString(1, "Personal Trainer");
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -316,7 +316,7 @@ public class UserDB {
                 cb.setIsActive(rs.getBoolean(12));
                 cb.setImage(rs.getString(13));
                 cb.setCenterID(rs.getString(14));
-                cb.setFee(rs.getInt(15));
+                cb.setPrice(rs.getInt(15));
                 list.add(cb);
             }
             return list;
@@ -343,4 +343,47 @@ public class UserDB {
         }
         return null;
     }
+    
+    public boolean editProfile(UserBean cb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.user SET firstName=? ,lastName=? ,gender=?, address=?, phone=?, birthday=? WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cb.getFirstName());
+            pStmnt.setString(2, cb.getLastName());
+            pStmnt.setString(3, cb.getGender());
+            pStmnt.setString(4, cb.getAddress());
+            pStmnt.setInt(5, cb.getPhone());
+            pStmnt.setString(6, cb.getBirthday());
+            pStmnt.setString(7, cb.getId());
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
+    
 }

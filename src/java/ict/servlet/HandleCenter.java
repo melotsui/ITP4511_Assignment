@@ -5,8 +5,8 @@
  */
 package ict.servlet;
 
-import ict.bean.UserBean;
-import ict.db.UserDB;
+import ict.bean.CenterBean;
+import ict.db.CenterDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,25 +21,32 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hhch0
  */
-@WebServlet(name = "HandleAccount", urlPatterns = {"/staff/handleAccount"})
-public class HandleAccount extends HttpServlet {
-    
-    private UserDB db;
+@WebServlet(name = "HandleCenter", urlPatterns = {"/staff/handleCenter/getAll"})
+public class HandleCenter extends HttpServlet {
 
+    private CenterDB centerDB;
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         init();
         response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("action");
 
         PrintWriter out = response.getWriter();
-        if ("list".equalsIgnoreCase(action)) {
-            ArrayList<UserBean> accounts = db.queryCust();
-            request.setAttribute("accounts", accounts);
-            RequestDispatcher rd;
-            rd = getServletContext().getRequestDispatcher("/staff/list-account.jsp");
-            rd.forward(request, response);
-        }
+        ArrayList<CenterBean> centers = centerDB.queryActiveCenter();
+        request.setAttribute("centers", centers);
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/staff/list-gym-center.jsp");
+        rd.forward(request, response);
+
     }
 
     public void init() {
@@ -47,8 +54,9 @@ public class HandleAccount extends HttpServlet {
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
 
-        db = new UserDB(dbUrl, dbUser, dbPassword);
+        centerDB = new CenterDB(dbUrl, dbUser, dbPassword);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -77,5 +85,15 @@ public class HandleAccount extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

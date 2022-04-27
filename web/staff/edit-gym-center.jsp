@@ -19,14 +19,12 @@
             <div class="content-wrapper">
                 <div class="page-header">
                     <h3 class="page-title"> Edit Gym Center </h3>
-                    <!--                                  
-                      <nav aria-label="breadcrumb">
+                    <!--<nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                           <li class="breadcrumb-item"><a href="#">Forms</a></li>
                           <li class="breadcrumb-item active" aria-current="page">Form elements</li>
                         </ol>
-                      </nav>
-                    -->
+                      </nav>-->
                 </div><div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
@@ -42,87 +40,39 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Location</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control">
-                                                    <option value="Tuen Mun">Tuen Mun</option>
-                                                    <option value="Sha Tin">Sha Tin</option>
-                                                    <option value="Tsing Yi">Tsing Yi</option>
-                                                    <option value="Lee Wai Lee">Lee Wai Lee</option>
-                                                    <option value="Chai Wan">Chai Wan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" placeholder="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Opening Date</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" placeholder="dd/mm/yyyy" />
+                                                <input type="tel" maxlength="8" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Address</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control" id="address" rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Membership</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked> Free </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2"> Professional </label>
-                                                </div>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group ">
+                                            <label for="address">Address</label>
+                                            <textarea class="form-control" id="address" rows="4"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="card-description">Opening Hour</p>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">From</label>
-                                            <div class="col-sm-9">
-                                                <input type="time" class="form-control" />
+                                        <div class="form-group">
+                                            <div class="form-check form-check-success">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" checked=""> Active <i class="input-helper"></i></label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">To</label>
-                                            <div class="col-sm-9">
-                                                <input type="time" class="form-control" />
-                                            </div>
-                                        </div>
+                                    <div class="col-md-6 text-right mt-3">
+                                        <input type='submit' value="Save" class="btn btn-primary mr-2">
+                                        <input type='button' onclick="document.location = '${pageContext.request.contextPath}/index.jsp'" value="Cancal" class="btn btn-dark">
                                     </div>
                                 </div>
-                                <input type='submit' value="Edit" class="btn btn-primary mr-2">
-                                <input type='button' onclick="document.location = '${pageContext.request.contextPath}/index.jsp'" value="Cancal" class="btn btn-dark">
+
                             </form>
                         </div>
                     </div>

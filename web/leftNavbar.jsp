@@ -35,7 +35,7 @@
         <%
             String url = request.getContextPath() + "/login.jsp";
             try {
-                if (userInfo.getRole()==null){
+                if (userInfo == null || userInfo.getRole()==null){
                     out.println("<script>window.location.href = \"" + url + "\";</script>");
 //                    response.sendRedirect("./login.jsp");
                 }
@@ -122,8 +122,9 @@
                             out.println("</a>");
                             out.println("<div class='collapse' id='center'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-gym-center.jsp'> List Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='handleCenter/getAll'> List Gym Center </a></li>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='add-gym-center.jsp'> Add Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-gym-center.jsp'> Edit Gym Center </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>
@@ -138,8 +139,9 @@
                             out.println("</a>");
                             out.println("<div class='collapse' id='user'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-personal-trainer.jsp'> List User </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='add-personal-trainer.jsp'> Add User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='handleAccount?action=list'> List User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>

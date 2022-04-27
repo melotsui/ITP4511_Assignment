@@ -6,12 +6,13 @@
 package ict.bean;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  *
  * @author Melo
  */
-public class UserBean {
+public class UserBean implements Serializable {
 
     private String id;
     private String email;

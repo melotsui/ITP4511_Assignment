@@ -6,10 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="ict.bean.CenterBean"%>
 <%@page import="ict.bean.UserBean"%>
-
-<jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
 <!DOCTYPE html>
 <html lang="en">
     <head>

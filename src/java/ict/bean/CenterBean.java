@@ -5,11 +5,13 @@
  */
 package ict.bean;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Melo
  */
-public class CenterBean {
+public class CenterBean implements Serializable {
     private String id;
     private String name;
     private String address;

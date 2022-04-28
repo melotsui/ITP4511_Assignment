@@ -5,11 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="trainer" class="ict.bean.UserBean" scope="request" />
+<jsp:useBean id="user" class="ict.bean.UserBean" scope="request" />
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Personal Trainer Detail</title>
+        <title>User Detail</title>
     </head>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
@@ -17,7 +17,7 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="page-header">
-                    <h3 class="page-title"> Personal Trainer Detail</h3>
+                    <h3 class="page-title"> User Detail</h3>
                     <!--              <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                       <li class="breadcrumb-item"><a href="#">Forms</a></li>
@@ -29,25 +29,25 @@
                     <div class="col-md-6 col-xl-4 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Portfolio Slide</h4>
+                                <h4 class="card-title">Portfolio </h4>
                                 <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel" id="owl-carousel-basic">
                                     <div class="item">
-                                        <img src="http://2.bp.blogspot.com/-rlbqoNX2aQg/UtvCjo9bVFI/AAAAAAAADO8/9jBlqQt_EcI/s1600/Kobe+Bryant+Workout+routine+and+Diet+plan1.jpg" alt="">
+                                        <img src="data:image/jpg;base64,<jsp:getProperty name="user" property="image" />" alt="">
                                     </div>
                                 </div>
                                 <div class="d-flex py-4">
                                     <div class="preview-list w-100">
                                         <div class="preview-item p-0">
                                             <div class="preview-thumbnail">
-                                                <img src="${pageContext.request.contextPath}/assets/images/faces/face12.jpg" class="rounded-circle" alt="">
+                                                <img src="data:image/jpg;base64,<jsp:getProperty name="user" property="image" />" class="rounded-circle" alt="">
                                             </div>
                                             <div class="preview-item-content d-flex flex-grow">
                                                 <div class="flex-grow">
                                                     <div class="d-flex d-md-block d-xl-flex justify-content-between">
-                                                        <h6 class="preview-subject"><jsp:getProperty name="trainer" property="firstName" /> <jsp:getProperty name="trainer" property="lastName" /></h6>
+                                                        <h6 class="preview-subject"><jsp:getProperty name="user" property="firstName" /> <jsp:getProperty name="user" property="lastName" /></h6>
                                                         <!--<p class="text-muted text-small">4 Hours Ago</p>-->
                                                     </div>
-                                                    <p class="text-muted">CrossFit Head Coach </p>
+                                                    <p class="text-muted"><jsp:getProperty name="user" property="role" /> </p>
                                                 </div>
                                             </div>
                                         </div>

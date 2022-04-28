@@ -45,7 +45,7 @@ public class UserDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role) VALUES ((SELECT max(id)+1 FROM esd.user subquery), ?, ?, ?, ?, \"customer\")";
+            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role) VALUES ((SELECT count(id)+1 FROM esd.user subquery), ?, ?, ?, ?, \"customer\")";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, firstName);
             pStmnt.setString(2, lastName);
@@ -141,7 +141,7 @@ public class UserDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.user";
+            String preQueryStatement = "SELECT * FROM esd.user where deleted = 0 order by firstName asc";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
@@ -380,7 +380,7 @@ public class UserDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=? and esd.user.deleted = 0";
+            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=? and esd.user.deleted = 0 order by firstName asc";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, "Personal Trainer");
             //Statement s = cnnct.createStatement();

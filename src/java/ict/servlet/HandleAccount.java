@@ -89,6 +89,7 @@ public class HandleAccount extends HttpServlet {
                     }
                     out.print("add center price[0] fail");
                 } else {
+                            response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
 
                 }
             } else {
@@ -131,7 +132,7 @@ public class HandleAccount extends HttpServlet {
                 out.println("edit user failed");
             }
 
-        }  else if (action.equalsIgnoreCase("getEditCustomer")) {
+        } else if (action.equalsIgnoreCase("getEditCustomer")) {
             String id = request.getParameter("id");
             String role = request.getParameter("role");
             if(role.equalsIgnoreCase("Personal Trainer")){
@@ -143,7 +144,37 @@ public class HandleAccount extends HttpServlet {
                 rd = this.getServletContext().getRequestDispatcher("/staff/edit-user.jsp");
                 rd.forward(request, response);
             } else {
-                
+                UserBean ub = db.getUserInfoByID(id);
+                request.setAttribute("user", ub);
+                ArrayList<UserPriceBean> upList = upDB.queryUserPriceByID(request.getParameter("id"));
+                request.setAttribute("userPrice", upList);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/staff/edit-user.jsp");
+                rd.forward(request, response);
+            }
+        } else if (action.equalsIgnoreCase("delete")) {
+            String id = request.getParameter("id");
+            if (db.deleteUserByID(id)) {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA " + id);
+                response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
+            } else {
+                out.print("delete fail");
+            }
+        } else if (action.equalsIgnoreCase("Inquire")) {
+            String id = request.getParameter("id");
+            String role = request.getParameter("role");
+            if(role.equalsIgnoreCase("Personal Trainer")){
+                UserBean ub = db.getUserInfoByID(id);
+                request.setAttribute("user", ub);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/customer/personal-trainer-detail.jsp");
+                rd.forward(request, response);
+            } else {
+                UserBean ub = db.getUserInfoByID(id);
+                request.setAttribute("user", ub);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/customer/personal-trainer-detail.jsp");
+                rd.forward(request, response);
             }
         } else {
             out.print("No such action");

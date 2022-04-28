@@ -6,11 +6,57 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="ict.bean.CenterBean"%>
 <%@page import="ict.bean.UserBean"%>
-<jsp:useBean id="centers" scope="session" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<%@page import="com.mysql.jdbc.Connection"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.util.*"%>
 <jsp:useBean id="trainers" scope="session" class="java.util.ArrayList<ict.bean.UserBean>" />
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<%!
+
+    public Connection getConnection() throws SQLException, IOException {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return (Connection) DriverManager.getConnection("jdbc:mysql://chunon.me:3306/esd", "esd", "qY6-@f67rp");
+    }
+
+    public String getResult(String mySQL) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement preQueryStatement = null;
+        ResultSet rs = null;
+        boolean isValid = false;
+        try {
+            cnnct = getConnection();
+
+            String sql = mySQL;
+            preQueryStatement = cnnct.prepareStatement(sql);
+
+            preQueryStatement.execute();
+            rs = preQueryStatement.getResultSet();
+
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Unable to get records";
+    }
+%>
+<% 
+
+    out.print(getResult("SELECT COUNT(*) FROM esd.user WHERE DATE(createDateTime) = CURDATE()"));
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +87,7 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="d-flex align-items-center align-self-start">
-                                            <h3 class="mb-0">12</h3>
+                                            <h3 class="mb-0"><% out.print(getResult("SELECT COUNT(*) FROM esd.centerBooking WHERE DATE(createDateTime) = CURDATE()"));%></h3>
 
                                         </div>
                                     </div>
@@ -56,7 +102,7 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="d-flex align-items-center align-self-start">
-                                            <h3 class="mb-0">5</h3>
+                                            <h3 class="mb-0"><% out.print(getResult("SELECT COUNT(*) FROM esd.user WHERE DATE(createDateTime) = CURDATE()"));%></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +116,7 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="d-flex align-items-center align-self-start">
-                                            <h3 class="mb-0">$12.34</h3>
+                                            <h3 class="mb-0">$<% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)), 0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = CURDATE();"));%></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="d-flex align-items-center align-self-start">
-                                            <h3 class="mb-0">1</h3>
+                                            <h3 class="mb-0"><% out.print(getResult("SELECT COUNT(*) FROM `centerBooking` WHERE isHandled = 0"));%></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +168,7 @@
                     <div class="col-lg-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Position Distribution Chart</h4>
+                                <h4 class="card-title">User Distribution Chart</h4>
                                 <canvas id="PositionChart" style="height:250px"></canvas>
                             </div>
                         </div>
@@ -139,10 +185,15 @@
 
     <script>
         var areaSaleData = {
-            labels: ["24/4/2022", "25/4/2022", "26/4/2022", "27/4/2022", "28/4/2022"],
+            labels: ["<% out.print(getResult("SELECT (CURDATE() + INTERVAL -4 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -3 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -2 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -1 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL +0 DAY)"));%>"],
             datasets: [{
                     label: 'Income',
-                    data: [1200, 3800, 310, 550, 270, 350],
+                    data: [<% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)),0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = (CURDATE() + INTERVAL -4 DAY)"));%>,
+                        <% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)),0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = (CURDATE() + INTERVAL -3 DAY)"));%>,
+                        <% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)),0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = (CURDATE() + INTERVAL -2 DAY)"));%>,
+                        <% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)),0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = (CURDATE() + INTERVAL -1 DAY)"));%>,
+                        <% out.print(getResult("SELECT coalesce(SUM(coalesce(centerBooking.price, 0)) + SUM(coalesce(trainerBooking.price, 0)),0) FROM centerBooking LEFT JOIN trainerBooking ON centerBooking.trainerBookingID = trainerBooking.id WHERE DATE(centerBooking.createDateTime) = (CURDATE() + INTERVAL +0 DAY)"));%>
+                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -166,10 +217,15 @@
         
         
         var areaBookingData = {
-            labels: ["24/4/2022", "25/4/2022", "26/4/2022", "27/4/2022", "28/4/2022"],
+            labels: ["<% out.print(getResult("SELECT (CURDATE() + INTERVAL -4 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -3 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -2 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -1 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL +0 DAY)"));%>"],
             datasets: [{
                     label: 'Booking',
-                    data: [120, 191, 34, 58, 25, 37],
+                    data: [<% out.print(getResult("SELECT COUNT(*) FROM centerBooking WHERE DATE(createDateTime) = CURDATE() + INTERVAL -4 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM centerBooking WHERE DATE(createDateTime) = CURDATE() + INTERVAL -3 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM centerBooking WHERE DATE(createDateTime) = CURDATE() + INTERVAL -2 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM centerBooking WHERE DATE(createDateTime) = CURDATE() + INTERVAL -1 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM centerBooking WHERE DATE(createDateTime) = CURDATE()"));%>
+                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -191,10 +247,15 @@
                 }]
         };        
         var areaCustomerData = {
-            labels: ["24/4/2022", "25/4/2022", "26/4/2022", "27/4/2022", "28/4/2022"],
+            labels: ["<% out.print(getResult("SELECT (CURDATE() + INTERVAL -4 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -3 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -2 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL -1 DAY)"));%>", "<% out.print(getResult("SELECT (CURDATE() + INTERVAL +0 DAY)"));%>"],
             datasets: [{
                     label: 'Customer',
-                    data: [1, 9, 0, 5, 0, 3],
+                    data: [<% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer' AND DATE(createDateTime) = CURDATE() + INTERVAL -4 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer' AND DATE(createDateTime) = CURDATE() + INTERVAL -3 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer' AND DATE(createDateTime) = CURDATE() + INTERVAL -2 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer' AND DATE(createDateTime) = CURDATE() + INTERVAL -1 DAY"));%>,
+                        <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer' AND DATE(createDateTime) = CURDATE()"));%>
+                                ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -219,7 +280,7 @@
 
         var doughnutPieData = {
             datasets: [{
-                    data: [30, 40, 30],
+                    data: [<% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Customer'"));%>, <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Staff'"));%>, <% out.print(getResult("SELECT COUNT(*) FROM user WHERE role = 'Personal Trainer'"));%>],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.5)',
                         'rgba(54, 162, 235, 0.5)',

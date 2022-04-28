@@ -215,7 +215,7 @@ public class CenterDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "insert into esd.center (id, name, address, phone, isActive) values ((select max(id)+1 from esd.center subquery), ?, ?, ?, ?)";
+            String preQueryStatement = "insert into esd.center (id, name, address, phone, isActive) values ((select count(id)+1 from esd.center subquery), ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, cb.getName());
             pStmnt.setString(2, cb.getAddress());

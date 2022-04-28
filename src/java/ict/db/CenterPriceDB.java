@@ -44,7 +44,7 @@ public class CenterPriceDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "insert into esd.centerHourlyRate (id, centerID, year, price) values ((select max(id)+1 from esd.centerHourlyRate subquery), (select max(id) from esd.center), ?, ?);";
+            String preQueryStatement = "insert into esd.centerHourlyRate (id, centerID, year, price) values ((select count(id)+1 from esd.centerHourlyRate subquery), (select count(id) from esd.center), ?, ?);";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, year + "");
             pStmnt.setString(2, price);

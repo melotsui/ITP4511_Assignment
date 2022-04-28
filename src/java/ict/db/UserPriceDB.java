@@ -45,7 +45,7 @@ public class UserPriceDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "insert into esd.trainerHourlyRate (id, trainerID, year, price) values ((select max(id)+1 from esd.trainerHourlyRate subquery), (select max(id) from esd.user), ?, ?);";
+            String preQueryStatement = "insert into esd.trainerHourlyRate (id, trainerID, year, price) values ((select count(id)+1 from esd.trainerHourlyRate subquery), (select count(id) from esd.user), ?, ?);";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, year + "");
             pStmnt.setString(2, price);

@@ -71,11 +71,10 @@ public class UserDB {
     public boolean addUser(UserBean bean, InputStream image) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        System.out.println("AAAAAAAAAAA" + bean.toString());
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role, image, phone, address, gender) VALUES ((SELECT max(id)+1 FROM esd.user subquery), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role, image, phone, address, gender) VALUES ((SELECT count(id)+1 FROM esd.user subquery), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, bean.getFirstName());
             pStmnt.setString(2, bean.getLastName());

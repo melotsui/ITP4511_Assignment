@@ -15,6 +15,9 @@
             .form-control[readonly] {
                 background-color: #2A3038 !important;
             }
+            select.form-control{
+                color: #ffffff !important;
+            }
         </style>
     </head>
     <jsp:include page="../leftNavbar.jsp" />

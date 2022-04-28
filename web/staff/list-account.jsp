@@ -67,8 +67,8 @@
                                                     out.println("<td>" + c.getEmail() + "</td>");
                                                     out.println("<td>" + c.getRole() + "</td>");
                                                     out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + c.getId() + "'><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=edit&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=Delete&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                     out.println("</tr>");
 
                                                 }

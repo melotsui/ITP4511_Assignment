@@ -97,6 +97,7 @@ public class HandleAccount extends HttpServlet {
 //            out.print(account.toString());
         } else if (action.equalsIgnoreCase("edit")) {
             UserBean account = new UserBean();
+            account.setId(request.getParameter("id"));
             account.setFirstName(request.getParameter("firstName"));
             account.setLastName(request.getParameter("lastName"));
             account.setPhone(Integer.parseInt(request.getParameter("phone")));
@@ -110,37 +111,21 @@ public class HandleAccount extends HttpServlet {
             } else {
                 account.setIsActive(false);
             }
-            InputStream inputStream = null; // input stream of the upload file
-            // obtains the upload file part in this multipart request
-            Part filePart = request.getPart("imgInputUser");
-            if (filePart != null) {
-                // prints out some information for debugging
-                System.out.println(filePart.getName());
-                System.out.println(filePart.getSize());
-                System.out.println(filePart.getContentType());
-
-                if (filePart.getSize() > 0) {
-                    // obtains input stream of the upload file
-                    inputStream = filePart.getInputStream();
-                }
-            }
-            if (db.addUser(account, inputStream)) {
-                if (request.getParameter("role").equalsIgnoreCase("Personal Trainer")) {
-                    String[] price = request.getParameterValues("price");
-                    if (upDB.addUserPrice(2023, price[0])) {
-                        if (upDB.addUserPrice(2022, price[1])) {
-                            response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
-                        }
-                        out.print("add center price[1] fail");
-                    }
-                    out.print("add center price[0] fail");
-                } else {
-                    
-                }
-            } else {
-                out.print("add user fail");
-            }
-//            out.print(account.toString());
+//            InputStream inputStream = null; // input stream of the upload file
+//            // obtains the upload file part in this multipart request
+//            Part filePart = request.getPart("imgInputUser");
+//            if (filePart != null) {
+//                // prints out some information for debugging
+//                System.out.println(filePart.getName());
+//                System.out.println(filePart.getSize());
+//                System.out.println(filePart.getContentType());
+//
+//                if (filePart.getSize() > 0) {
+//                    // obtains input stream of the upload file
+//                    inputStream = filePart.getInputStream();
+//                }
+//            }
+            
         }  else if (action.equalsIgnoreCase("getEditCustomer")) {
             String id = request.getParameter("id");
             String role = request.getParameter("role");

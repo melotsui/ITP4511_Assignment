@@ -118,6 +118,13 @@ public class HandleCenter extends HttpServlet {
                 }
             }
         } else if (action.equalsIgnoreCase("delete")) {
+            String id = request.getParameter("id");
+            if (centerDB.deleteCenterByID(id)) {
+                response.sendRedirect(request.getContextPath() + "/staff/handleCenter?action=getAll");
+            } else {
+                PrintWriter out = response.getWriter();
+                out.print("delete fail");
+            }
         } else {
             PrintWriter out = response.getWriter();
             out.print("No such action");

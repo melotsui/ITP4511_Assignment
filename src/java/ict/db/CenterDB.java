@@ -89,7 +89,7 @@ public class CenterDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price, esd.centerHourlyRate.year FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID group by esd.center.id having esd.center.deleted = 0;";
+            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price, esd.centerHourlyRate.year FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID where esd.center.deleted = 0 and esd.centerHourlyRate.year = YEAR(sysdate());";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();

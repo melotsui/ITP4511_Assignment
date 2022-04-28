@@ -17,6 +17,12 @@ public class UserBean implements Serializable {
     private String id;
     private String email;
     private String password;
+
+    @Override
+    public String toString() {
+        return "UserBean{" + "id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender + ", address=" + address + ", createDateTime=" + createDateTime + ", phone=" + phone + ", role=" + role + ", birthday=" + birthday + ", isActive=" + isActive + ", image=" + image + ", centerID=" + centerID + ", price=" + price + '}';
+    }
+    
     private String firstName;
     private String lastName;
     private String gender;
@@ -151,7 +157,11 @@ public class UserBean implements Serializable {
     }
 
     public String getImage() {
-        return image;
+        if (image == null) {
+            return "";
+        } else {
+            return image;
+        }
     }
 
     public void setImage(String image) {

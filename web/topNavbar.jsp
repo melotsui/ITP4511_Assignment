@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -173,7 +174,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                                 <div class="navbar-profile">
-                                    <img class="img-xs rounded-circle" src="${pageContext.request.contextPath}/assets/images/faces/face15.jpg" alt="">
+                                    <img class="img-xs rounded-circle" src="data:image/jpg;base64,<jsp:getProperty name="userInfo" property="image" />" alt="">
                                     <p class="mb-0 d-none d-sm-block navbar-profile-name"><jsp:getProperty name="userInfo" property="firstName" /> <jsp:getProperty name="userInfo" property="lastName" /></p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>

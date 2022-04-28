@@ -121,14 +121,6 @@
                                                             <input type="number" step="0.01" name="price" class="form-control ml-3" />
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" readonly />
-                                                        </td>
-                                                        <td class="ml-3">
-                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
-                                                        </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

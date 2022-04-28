@@ -59,7 +59,7 @@
                         <div class="profile-desc">
                             <div class="profile-pic">
                                 <div class="count-indicator">
-                                    <img class="img-xs rounded-circle " src="${pageContext.request.contextPath}/assets/images/faces/face15.jpg" alt="">
+                                    <img class="img-xs rounded-circle " src="data:image/jpg;base64,<jsp:getProperty name="userInfo" property="image" />" alt="">
                                     <span class="count bg-success"></span>
                                 </div>
                                 <div class="profile-name">

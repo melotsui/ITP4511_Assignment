@@ -5,7 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="ict.bean.CenterPriceBean"%>
 <jsp:useBean id="center" class="ict.bean.CenterBean" scope="request" />
+<jsp:useBean id="centerPrice" class="java.util.ArrayList<ict.bean.CenterPriceBean>" scope="request" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,6 +16,11 @@
     </head>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
+    <style>
+        .form-control[readonly] {
+            background-color: #2A3038 !important;
+        }
+    </style>
     <body>
         <!-- partial -->
         <div class="main-panel">
@@ -81,6 +89,62 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="card-title">Price per Years</h4>
+                                        <div class="table-responsive">
+                                            <table class="w-50" id="tableGym">
+                                                <thead>
+                                                    <tr>
+                                                        <th> 
+                                                            <h4 class="card-title">Year</h4>
+                                                        </th>
+                                                        <th> 
+                                                            <h4 class="card-title ml-3">Price</h4>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                        ArrayList<CenterPriceBean> centerPrices = (ArrayList<CenterPriceBean>) request.getAttribute("centerPrice");
+                                        if (centerPrices != null) {
+                                            for (int i = 0; i < centerPrices.size(); i++) {
+                                                CenterPriceBean c = centerPrices.get(i);
+                                                out.println("<tr>");
+                                                out.println("<td>");
+                                                out.println("<input class=\"form-control\" type=\"number\" min=\"1900\" max=\"2099\" step=\"1\" value=\""+ c.getYear() +"\" name='year' readonly />");
+                                                out.println("</td>");
+                                                out.println("<td class=\"ml-3\">");
+                                                out.println("<input type='number' step='0.01' name='price' class='form-control ml-3' value='"+ c.getPrice() +"'/>");
+                                                out.println(" </td>");
+                                                out.println("</tr>");
+
+                                            }
+                                        } else {
+                                            out.println("No Price");
+                                        }
+                                                    %>
+                                                    <!--<tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" readonly />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type='number' step='0.01' name='price' class='form-control ml-3' />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" readonly />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

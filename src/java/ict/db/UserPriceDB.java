@@ -72,7 +72,7 @@ public class UserPriceDB {
         try {
             //1.  get Connection
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.trainerHourlyRate where trainerID = ?";
+            String preQueryStatement = "SELECT *, YEAR(esd.trainerHourlyRate.year) FROM esd.trainerHourlyRate where trainerID = ?";
             //2.  get the prepare Statement
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //3. update the placehoder with id
@@ -87,11 +87,11 @@ public class UserPriceDB {
                 UserPriceBean cb = new UserPriceBean();
                 cb.setId(rs.getString(1));
                 cb.setTrainerID(rs.getString(2));
-                cb.setYear(rs.getString(3));
+                cb.setYear(rs.getString(6));
                 cb.setPrice(rs.getInt(4));
+            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSS " + cb.getYear());
                 list.add(cb);
             }
-            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSS " + list.size());
 
             pStmnt.close();
             cnnct.close();

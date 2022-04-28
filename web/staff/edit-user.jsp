@@ -71,18 +71,18 @@
                                                 <input type="text" class="form-control"  name="email" value="<jsp:getProperty name="user" property="email" />"/>
                                             </div>
                                         </div>
-<!--                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Center</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="centerID">
-                                                    <option value="">Tuen Mun Center</option>
-                                                    <option>Sha Tin Center</option>
-                                                    <option>Tsing Yi Center</option>
-                                                    <option>Lee Wai Lee Center</option>
-                                                    <option>Chai Wan Center</option>
-                                                </select>
-                                            </div>
-                                        </div>-->
+                                        <!--                                        <div class="form-group row">
+                                                                                    <label class="col-sm-3 col-form-label">Center</label>
+                                                                                    <div class="col-sm-9">
+                                                                                        <select class="form-control" name="centerID">
+                                                                                            <option value="">Tuen Mun Center</option>
+                                                                                            <option>Sha Tin Center</option>
+                                                                                            <option>Tsing Yi Center</option>
+                                                                                            <option>Lee Wai Lee Center</option>
+                                                                                            <option>Chai Wan Center</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>-->
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Role</label>
                                             <div class="col-sm-9">
@@ -102,8 +102,8 @@
                                                             out.println("<option value='Personal Trainer' selected>Personal Trainer</option>");
                                                         }
                                                     %>
-                                                    
-                                                    
+
+
                                                 </select>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@
                                                                 out.println("<input type='radio' class='form-check-input' name='gender' id='membershipRadios1' value='Male' > Male </label>");
                                                             }
                                                         %>
-                                                        
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
@@ -145,6 +145,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <%
+                                    if(userPrice.size()>0){
+                                    out.println("<div class='row'><div class='col-12'><h4 class='card-title'>Price per Years</h4><div class='table-responsive'>");
+                                    out.println("<table class='w-50' id='tableGym'><thead><tr><th><h4 class='card-title'>Year</h4>");
+                                    out.println("</th><th><h4 class='card-title ml-3'>Price</h4></th></tr></thead><tbody>");
+                                    for(int i=0; i<userPrice.size(); i++){
+                                        out.println("<tr><td><input class='form-control' type='number' min='1900' max='2099' step='1' value='" + userPrice.get(i).getYear() + "' readonly /></td>");
+                                        out.println("<td class='ml-3'><input type='number' step='0.01' name='price' class='form-control ml-3' value='" + userPrice.get(i).getPrice() + "' /></td></tr>");
+                                    }
+                                    out.println("</tbody></table></div></div></div>");
+                                    }
+                                %>    
+
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -161,46 +175,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <hr/>
-                                <div class="row" id="areaPrice" style="display: none">
-                                    <div class="col-12">
-                                        <h4 class="card-title">Price per Years</h4>
-                                        <div class="table-responsive">
-                                            <table class="w-50" id="tableGym">
-                                                <thead>
-                                                    <tr>
-                                                        <th> 
-                                                            <h4 class="card-title">Year</h4>
-                                                        </th>
-                                                        <th> 
-                                                            <h4 class="card-title ml-3">Price</h4>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" readonly />
-                                                        </td>
-                                                        <td class="ml-3">
-                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" readonly />
-                                                        </td>
-                                                        <td class="ml-3">
-                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                
                                 <div class="row">
                                     <div class="col-md-12 text-right mt-3">
                                         <input type='submit' value="Save" class="btn btn-primary mr-2">
@@ -217,5 +191,13 @@
             <!-- partial:partials/_footer.html -->
             <!-- main-panel ends -->
     </body>
+    <style>
+        .form-control[readonly] {
+            background-color: #2A3038 !important;
+        }
+        select.form-control{
+            color: #ffffff !important;
+        }
+    </style>
     <jsp:include page="../footer.jsp" />
 </html>

@@ -7,12 +7,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.UserBean"%>
+<jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Account</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
+        <style>
+            .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter,
+            .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing,
+            .dataTables_wrapper .dataTables_paginate {
+                color: #ffffff;
+            }
+        </style>
     </head>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
@@ -44,31 +51,31 @@
                                                 <th> Name </th>
                                                 <th> Email </th>
                                                 <th> Role </th>
-                                                <th> Fee </th>
-                                                <th></th>
+                                                <th> Action </th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                        <%
-                                        ArrayList<UserBean> accounts = (ArrayList<UserBean>) request.getAttribute("accounts");
-                                        if (accounts != null) {
-                                            for (int i = 0; i < accounts.size(); i++) {
-                                                UserBean c = accounts.get(i);
-                                                out.println("<tr style='background-color: #191c24;'>");
-                                                out.println("<td class='id'>" + c.getId() + "</td>");
-                                                out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
-                                                out.println("<td>" + c.getEmail() + "</td>");
-                                                out.println("<td>" + c.getRole() + "</td>");
-                                                out.println("<td><a class=\"linkDelete\" href=\"handleCustomer?action=delete&id=" + c.getId() + "\">delete</a></td>");
-                                                out.println("<td><a href=\"handleCustomer?action=getEditCustomer&id=" + c.getId() + "\">edit</a></td>");
-                                                out.println("</tr>");
+                                            <%
+                                            ArrayList<UserBean> accounts = (ArrayList<UserBean>) request.getAttribute("accounts");
+                                            if (accounts != null) {
+                                                for (int i = 0; i < accounts.size(); i++) {
+                                                    UserBean c = accounts.get(i);
+                                                    out.println("<tr style='background-color: #191c24;'>");
+                                                    out.println("<td class='id'>" + c.getId() + "</td>");
+                                                    out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
+                                                    out.println("<td>" + c.getEmail() + "</td>");
+                                                    out.println("<td>" + c.getRole() + "</td>");
+                                                    out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + c.getId() + "'><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=edit&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=Delete&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                    out.println("</tr>");
 
+                                                }
+                                            } else {
+                                                out.println("No Customer");
                                             }
-                                        } else {
-                                            out.println("No Customer");
-                                        }
-                                        %>
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

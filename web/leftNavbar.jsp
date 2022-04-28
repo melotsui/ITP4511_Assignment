@@ -7,6 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%--<%@ page errorPage="./error/handle-exception.jsp" %>--%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<%
+    //String urlBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,6 +32,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
         <!-- End layout styles -->
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/shortcut-logo.png" />
+<!--        <base href="">-->
     </head>
     <body>
 
@@ -111,6 +115,26 @@
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
+                    
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' data-toggle='collapse' href='#booking' aria-expanded='false' aria-controls='booking'>");
+//                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'><i class='mdi mdi-speedometer'></i></span>");
+                            out.println("<span class='menu-title'>Booking</span>");
+                            out.println("<i class='menu-arrow'></i>");
+                            out.println("</a>");
+                            out.println("<div class='collapse' id='booking'>");
+                            out.println("<ul class='nav flex-column sub-menu'>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/add-booking.jsp'> New Booking </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/view-booking.jsp'> View Booking </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/update-booking.jsp'> Update Booking </a></li>");
+//                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
+//                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
+                            out.println("</ul></div></li>");
+                        }
+                    %>
                     <% 
                         if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
@@ -123,8 +147,8 @@
                             out.println("<div class='collapse' id='center'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/handleCenter/getAll'> List Gym Center </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/handleCenter?action=getAll'> List Gym Center </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/add-gym-center.jsp'> Add Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/staff/handleCenter?action=getAll'> List Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/staff/add-gym-center.jsp'> Add Gym Center </a></li>");
                             //out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath() + "/staff/edit-gym-center.jsp'> Edit Gym Center </a></li>");
                             out.println("</ul></div></li>");
                         }
@@ -140,9 +164,25 @@
                             out.println("</a>");
                             out.println("<div class='collapse' id='user'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='handleAccount?action=list'> List User </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/handleAccount?action=list'> List User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/add-user.jsp'> Add User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/edit-user.jsp'> Edit User </a></li>");
+                            out.println("</ul></div></li>");
+                        }
+                    %>
+                    <% 
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                            out.println("<li class='nav-item menu-items'>");
+                            out.println("<a class='nav-link' data-toggle='collapse' href='#report' aria-expanded='false' aria-controls='report'>");
+//                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
+                            out.println("<span class='menu-icon'><i class='mdi mdi-speedometer'></i></span>");
+                            out.println("<span class='menu-title'>Report</span>");
+                            out.println("<i class='menu-arrow'></i>");
+                            out.println("</a>");
+                            out.println("<div class='collapse' id='report'>");
+                            out.println("<ul class='nav flex-column sub-menu'>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/report-booking-overview.jsp'> Booking Report </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/report-income.jsp'> Income Report </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>

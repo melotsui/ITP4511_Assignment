@@ -112,13 +112,14 @@ public class HandleUserDetail extends HttpServlet {
                 session.setAttribute("userInfo", bean);
                 RequestDispatcher rd;
                 if (request.getParameter("role").equalsIgnoreCase("customer")) {
-                    rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
+                    response.sendRedirect(request.getContextPath() + "/customer/dashboard.jsp");
                 } else if (request.getParameter("role").equalsIgnoreCase("staff")) {
-                    rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+                    response.sendRedirect(request.getContextPath() + "/staff/dashboard.jsp");
+//                    rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
                 } else {
-                    rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+                    response.sendRedirect(request.getContextPath() + "/trainer/dashboard.jsp");
                 }
-                rd.forward(request, response);
+                //rd.forward(request, response);
             } else {
 
             }

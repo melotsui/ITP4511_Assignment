@@ -60,28 +60,32 @@ public class HandleCenterDetail extends HttpServlet {
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/customer/personal-trainer-detail.jsp");
             rd.forward(request, response);
-        } else if(action.equalsIgnoreCase("Delete")) {
+        } else if (action.equalsIgnoreCase("Delete")) {
             String id = request.getParameter("id");
-            if(db.deleteCenterByID(id)){
-                
-            HttpSession session = request.getSession(true);
-            ArrayList<CenterBean> centerBean = db.queryActiveCenter();
-            session.setAttribute("centers", centerBean);
-            ArrayList<UserBean> trainers = uDB.queryActiveTrainersWithPrice();
-            session.setAttribute("trainers", trainers);
-            UserBean bean = uDB.getUserInfoByID(request.getParameter("id"));
-            session.setAttribute("userInfo", bean);
-            RequestDispatcher rd;
-            if(request.getParameter("role").equalsIgnoreCase("customer")){
-                rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
-            } else if (request.getParameter("role").equalsIgnoreCase("staff")){
-                rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+            if (db.deleteCenterByID(id)) {
+
+                HttpSession session = request.getSession(true);
+                ArrayList<CenterBean> centerBean = db.queryActiveCenter();
+                session.setAttribute("centers", centerBean);
+                ArrayList<UserBean> trainers = uDB.queryActiveTrainersWithPrice();
+                session.setAttribute("trainers", trainers);
+                UserBean bean = (UserBean) session.getAttribute("userInfo");
+                bean = uDB.getUserInfoByID(bean.getId());
+                session.setAttribute("userInfo", bean);
+                RequestDispatcher rd;
+                if (request.getParameter("role").equalsIgnoreCase("customer")) {
+                    response.sendRedirect(request.getContextPath() + "/customer/dashboard.jsp");
+//                rd = this.getServletContext().getRequestDispatcher("/customer/dashboard.jsp");
+                } else if (request.getParameter("role").equalsIgnoreCase("staff")) {
+                    response.sendRedirect(request.getContextPath() + "/staff/dashboard.jsp");
+//                rd = this.getServletContext().getRequestDispatcher("/staff/dashboard.jsp");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/trainer/dashboard.jsp");
+//                rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
+                }
+//            rd.forward(request, response);
             } else {
-                rd = this.getServletContext().getRequestDispatcher("/trainer/dashboard.jsp");
-            }
-            rd.forward(request, response);
-            } else {
-                
+
             }
         } else {
             PrintWriter out = response.getWriter();

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hhch0
  */
-@WebServlet(name = "HandleCenter", urlPatterns = {"/staff/handleCenter/getAll"})
+@WebServlet(name = "HandleCenter", urlPatterns = {"/staff/handleCenter"})
 public class HandleCenter extends HttpServlet {
 
     private CenterDB centerDB;
@@ -38,15 +38,60 @@ public class HandleCenter extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         init();
-        response.setContentType("text/html;charset=UTF-8");
-
-        PrintWriter out = response.getWriter();
-        ArrayList<CenterBean> centers = centerDB.queryActiveCenter();
-        request.setAttribute("centers", centers);
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/staff/list-gym-center.jsp");
-        rd.forward(request, response);
-
+        String action = request.getParameter("action");
+        if (action.equalsIgnoreCase("getAll")) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            ArrayList<CenterBean> centers = centerDB.queryAllCenters();
+            request.setAttribute("centers", centers);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/staff/list-gym-center.jsp");
+            rd.forward(request, response);
+        } else if (action.equalsIgnoreCase("add")) {
+            CenterBean cb = new CenterBean();
+            cb.setName(request.getParameter("name"));
+            cb.setAddress(request.getParameter("address"));
+            cb.setPhone(Integer.parseInt(request.getParameter("phone")));
+            if (request.getParameter("active") != null) {
+                cb.setIsActive(true);
+            } else {
+                cb.setIsActive(false);
+            }
+            if (centerDB.addCenter(cb)) {
+                response.sendRedirect(request.getContextPath() + "/staff/handleCenter?action=getAll");
+            } else {
+                PrintWriter out = response.getWriter();
+                out.print("fail");
+            }
+        } else if (action.equalsIgnoreCase("edit")) {
+            if (request.getParameter("name") == null) {
+                CenterBean cb = centerDB.queryCenterByID(request.getParameter("id"));
+                request.setAttribute("center", cb);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/staff/edit-gym-center.jsp");
+                rd.forward(request, response);
+            } else {
+                CenterBean cb = new CenterBean();
+                cb.setId(request.getParameter("id"));
+                cb.setName(request.getParameter("name"));
+                cb.setAddress(request.getParameter("address"));
+                cb.setPhone(Integer.parseInt(request.getParameter("phone")));
+                if (request.getParameter("active") != null) {
+                    cb.setIsActive(true);
+                } else {
+                    cb.setIsActive(false);
+                }
+                if (centerDB.editCenter(cb)) {
+                    response.sendRedirect(request.getContextPath() + "/staff/handleCenter?action=getAll");
+                } else {
+                    PrintWriter out = response.getWriter();
+                    out.print("fail");
+                }
+            }
+        } else {
+            PrintWriter out = response.getWriter();
+            out.print("No such action");
+        }
     }
 
     public void init() {

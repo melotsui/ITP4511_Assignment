@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author Melo
  */
 public class CenterBean implements Serializable {
+
     private String id;
     private String name;
     private String address;
@@ -22,7 +23,7 @@ public class CenterBean implements Serializable {
 
     public CenterBean() {
     }
-    
+
     public String getId() {
         return id;
     }
@@ -32,7 +33,11 @@ public class CenterBean implements Serializable {
     }
 
     public String getName() {
-        return name;
+        if (name == null) {
+            return "";
+        } else {
+            return name;
+        }
     }
 
     public void setName(String name) {
@@ -40,7 +45,11 @@ public class CenterBean implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+        if (name == null) {
+            return "";
+        } else {
+            return address;
+        }
     }
 
     public void setAddress(String address) {

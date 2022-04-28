@@ -41,7 +41,55 @@ public class CenterDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID group by esd.center.id having esd.center.isActive = 1 and esd.center.deleted = 0;";
+            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price, esd.centerHourlyRate.year FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID group by esd.center.id having esd.center.isActive = 1 and esd.center.deleted = 0 and esd.centerHourlyRate.year = YEAR(sysdate());";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+            ArrayList list = new ArrayList();
+
+            while (rs.next()) {
+                CenterBean cb = new CenterBean();
+                cb.setId(rs.getString(1));
+                cb.setName(rs.getString(2));
+                cb.setAddress(rs.getString(3));
+                cb.setPhone(rs.getInt(4));
+                cb.setPrice(rs.getInt(8));
+                cb.setCreateDateTime(rs.getString(5));
+                cb.setIsActive(rs.getBoolean(6));
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList queryAllCenters() {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT esd.center.*, esd.centerHourlyRate.price, esd.centerHourlyRate.year FROM esd.center join esd.centerHourlyRate on esd.center.id = esd.centerHourlyRate.centerID group by esd.center.id having esd.center.deleted = 0 and esd.centerHourlyRate.year = YEAR(sysdate());";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
@@ -134,6 +182,75 @@ public class CenterDB {
             String preQueryStatement = "UPDATE esd.center SET deleted=1 WHERE id=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
+    
+    public boolean addCenter(CenterBean cb) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "insert into esd.center (id, name, address, phone, isActive) values ((select max(id)+1 from esd.center subquery), ?, ?, ?, ?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cb.getName());
+            pStmnt.setString(2, cb.getAddress());
+            pStmnt.setInt(3, cb.getPhone());
+            pStmnt.setBoolean(4, cb.getIsActive());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean editCenter(CenterBean cb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.center SET name=?, address=?, phone=?, isActive=? WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cb.getName());
+            pStmnt.setString(2, cb.getAddress());
+            pStmnt.setInt(3, cb.getPhone());
+            pStmnt.setBoolean(4, cb.getIsActive());
+            pStmnt.setString(5, cb.getId());
             //Statement s = cnnct.createStatement();
             num= pStmnt.executeUpdate();
           

@@ -122,9 +122,10 @@
                             out.println("</a>");
                             out.println("<div class='collapse' id='center'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='handleCenter/getAll'> List Gym Center </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='add-gym-center.jsp'> Add Gym Center </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-gym-center.jsp'> Edit Gym Center </a></li>");
+//                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/handleCenter/getAll'> List Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/handleCenter?action=getAll'> List Gym Center </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/add-gym-center.jsp'> Add Gym Center </a></li>");
+                            //out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath() + "/staff/edit-gym-center.jsp'> Edit Gym Center </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>

@@ -34,13 +34,14 @@
                                                 <th> Location </th>
                                                 <th> Phone </th>
                                                 <th> Price </th>
+                                                <th> Active </th>
                                                 <th>  </th>
                                                 <th>  </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <%
-                                        ArrayList<CenterBean> centers = (ArrayList<CenterBean>) request.getAttribute("centers");
+                                                ArrayList<CenterBean> centers = (ArrayList<CenterBean>) request.getAttribute("centers");
                                                 for(int i=0; i< centers.size(); i++){
             //                                                    out.println(centers.get(i).getAddress());
                                                     out.println("<tr>");
@@ -49,8 +50,10 @@
                                                     out.println("<td>" + centers.get(i).getAddress() + "</td>");
                                                     out.println("<td>" + centers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + centers.get(i).getPrice() + "/h</td>");
+                                                    out.println("<td>" + centers.get(i).getIsActive() + "</td>");
                                                     out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><div class='badge badge-outline-success'>Detail</div></a></td>");
-                                                    out.println("<td><a href='" + request.getContextPath() + "/HandleCenterDetail?action=Delete&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><div class='badge badge-outline-success'>Delete</div></a></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/staff/handleCenter?action=edit&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><div class='badge badge-outline-success'>Edit</div></a></td>");
+                                                    out.println("<td><a href='" + request.getContextPath() + "/staff/handleCenter?action=Delete&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><div class='badge badge-outline-success'>Delete</div></a></td>");
                                                     out.println("</tr>");
                                                 }
                                             %>

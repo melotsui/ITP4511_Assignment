@@ -13,7 +13,7 @@ public class UserPriceBean {
     private String id;
     private String trainerID;
     private String year;
-    private String price;
+    private int price;
 
     public UserPriceBean() {
     }
@@ -42,11 +42,13 @@ public class UserPriceBean {
         this.year = year;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
+
+    
 }

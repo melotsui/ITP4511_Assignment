@@ -80,14 +80,14 @@ public class HandleAccount extends HttpServlet {
             }
             if (db.addUser(account, inputStream)) {
                 if (request.getParameter("role").equalsIgnoreCase("Personal Trainer")) {
-            String[] price = request.getParameterValues("price");
-                if (upDB.addUserPrice(2023, price[0])) {
-                    if (upDB.addUserPrice(2022, price[1])) {
-                        response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
+                    String[] price = request.getParameterValues("price");
+                    if (upDB.addUserPrice(2023, price[0])) {
+                        if (upDB.addUserPrice(2022, price[1])) {
+                            response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
+                        }
+                        out.print("add center price[1] fail");
                     }
-                    out.print("add center price[1] fail");
-                }
-                out.print("add center price[0] fail");
+                    out.print("add center price[0] fail");
                 } else {
 
                 }
@@ -95,6 +95,66 @@ public class HandleAccount extends HttpServlet {
                 out.print("add user fail");
             }
 //            out.print(account.toString());
+        } else if (action.equalsIgnoreCase("edit")) {
+            UserBean account = new UserBean();
+            account.setFirstName(request.getParameter("firstName"));
+            account.setLastName(request.getParameter("lastName"));
+            account.setPhone(Integer.parseInt(request.getParameter("phone")));
+            account.setBirthday(request.getParameter("birthday"));
+            account.setEmail(request.getParameter("email"));
+            account.setGender(request.getParameter("gender"));
+            account.setRole(request.getParameter("role"));
+            account.setAddress(request.getParameter("address"));
+            if (request.getParameter("active") != null) {
+                account.setIsActive(true);
+            } else {
+                account.setIsActive(false);
+            }
+            InputStream inputStream = null; // input stream of the upload file
+            // obtains the upload file part in this multipart request
+            Part filePart = request.getPart("imgInputUser");
+            if (filePart != null) {
+                // prints out some information for debugging
+                System.out.println(filePart.getName());
+                System.out.println(filePart.getSize());
+                System.out.println(filePart.getContentType());
+
+                if (filePart.getSize() > 0) {
+                    // obtains input stream of the upload file
+                    inputStream = filePart.getInputStream();
+                }
+            }
+            if (db.addUser(account, inputStream)) {
+                if (request.getParameter("role").equalsIgnoreCase("Personal Trainer")) {
+                    String[] price = request.getParameterValues("price");
+                    if (upDB.addUserPrice(2023, price[0])) {
+                        if (upDB.addUserPrice(2022, price[1])) {
+                            response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
+                        }
+                        out.print("add center price[1] fail");
+                    }
+                    out.print("add center price[0] fail");
+                } else {
+                    
+                }
+            } else {
+                out.print("add user fail");
+            }
+//            out.print(account.toString());
+        }  else if (action.equalsIgnoreCase("getEditCustomer")) {
+            String id = request.getParameter("id");
+            String role = request.getParameter("role");
+            if(role.equalsIgnoreCase("Personal Trainer")){
+                UserBean ub = db.getUserInfoByID(id);
+                request.setAttribute("user", ub);
+                ArrayList<UserPriceBean> upList = upDB.queryUserPriceByID(request.getParameter("id"));
+                request.setAttribute("userPrice", upList);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/staff/edit-user.jsp");
+                rd.forward(request, response);
+            } else {
+                
+            }
         } else {
             out.print("No such action");
         }

@@ -61,7 +61,7 @@
                                                 out.println("<td>" + c.getEmail() + "</td>");
                                                 out.println("<td>" + c.getRole() + "</td>");
                                                 out.println("<td><a class=\"linkDelete\" href=\"handleCustomer?action=delete&id=" + c.getId() + "\">delete</a></td>");
-                                                out.println("<td><a href=\"handleCustomer?action=getEditCustomer&id=" + c.getId() + "\">edit</a></td>");
+                                                out.println("<td><a href=\"handleCustomer?action=getEditCustomer&role="+c.getRole()+"&id=" + c.getId() + "\">edit</a></td>");
                                                 out.println("</tr>");
 
                                             }

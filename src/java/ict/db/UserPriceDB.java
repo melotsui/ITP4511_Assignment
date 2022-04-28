@@ -9,6 +9,7 @@ import ict.bean.CenterPriceBean;
 import com.mysql.jdbc.Connection;
 import ict.bean.CenterBean;
 import ict.bean.UserBean;
+import ict.bean.UserPriceBean;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -65,14 +66,13 @@ public class UserPriceDB {
         return isSuccess;
     }
 
-    public ArrayList<CenterPriceBean> queryCenterPriceByID(String id) {
+    public ArrayList<UserPriceBean> queryUserPriceByID(String id) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        System.out.println("IIIIIIDDDDDDDDDDDDDDDDDDDDDDDDDDDd ");
         try {
             //1.  get Connection
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.centerHourlyRate JOIN esd.center ON esd.center.id = esd.centerHourlyRate.centerID WHERE esd.center.id=?";
+            String preQueryStatement = "SELECT * FROM esd.trainerHourlyRate where trainerID = ?";
             //2.  get the prepare Statement
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //3. update the placehoder with id
@@ -81,13 +81,13 @@ public class UserPriceDB {
             //4. execute the query and assign to the result 
             rs = pStmnt.executeQuery();
 
-            ArrayList<CenterPriceBean> list = new ArrayList<CenterPriceBean>();
+            ArrayList<UserPriceBean> list = new ArrayList<UserPriceBean>();
             while (rs.next()) {
                 // set the record detail to the customer bean
-                CenterPriceBean cb = new CenterPriceBean();
+                UserPriceBean cb = new UserPriceBean();
                 cb.setId(rs.getString(1));
-                cb.setCenterID(rs.getString(2));
-                cb.setYear(rs.getInt(3));
+                cb.setTrainerID(rs.getString(2));
+                cb.setYear(rs.getString(3));
                 cb.setPrice(rs.getInt(4));
                 list.add(cb);
             }

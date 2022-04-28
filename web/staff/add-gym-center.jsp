@@ -59,18 +59,18 @@
                                             <textarea class="form-control" name="address" rows="4"></textarea>
                                         </div>
                                     </div>
-<!--                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label for="address">Address</label>
-                                            <textarea class="form-control" name="address" rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label for="address">Price</label>
-                                                <input type="number"  name="price" class="form-control" />
-                                        </div>
-                                    </div>-->
+                                    <!--                                    <div class="col-md-6">
+                                                                            <div class="form-group ">
+                                                                                <label for="address">Address</label>
+                                                                                <textarea class="form-control" name="address" rows="4"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group ">
+                                                                                <label for="address">Price</label>
+                                                                                    <input type="number"  name="price" class="form-control" />
+                                                                            </div>
+                                                                        </div>-->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -81,7 +81,57 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 text-right mt-3">
+                                </div>
+
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="card-title">Price per Years</h4>
+                                        <div class="table-responsive">
+                                            <table class="w-50" id="tableGym">
+                                                <thead>
+                                                    <tr>
+                                                        <th> 
+                                                            <h4 class="card-title">Year</h4>
+                                                        </th>
+                                                        <th> 
+                                                            <h4 class="card-title ml-3">Price</h4>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 text-right mt-3">
                                         <input type='submit' value="Save" class="btn btn-primary mr-2">
                                         <input type='button' onclick="document.location = '${pageContext.request.contextPath}/index.jsp'" value="Cancal" class="btn btn-dark">
                                     </div>

@@ -9,7 +9,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Edit User</title>
+        <title>Add User</title>
+        <style>
+            .form-control[readonly] {
+                background-color: #2A3038 !important;
+            }
+        </style>
     </head>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
@@ -74,10 +79,10 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Role</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control">
-                                                    <option>Customer</option>
-                                                    <option>Staff</option>
-                                                    <option>Personal Trainer</option>
+                                                <select id="txtRole" class="form-control" name="role">
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Staff">Staff</option>
+                                                    <option value="Personal Trainer">Personal Trainer</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -137,7 +142,57 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 text-right mt-3">
+                                </div>
+
+                                <hr/>
+                                <div class="row" id="areaPrice" style="display: none">
+                                    <div class="col-12">
+                                        <h4 class="card-title">Price per Years</h4>
+                                        <div class="table-responsive">
+                                            <table class="w-50" id="tableGym">
+                                                <thead>
+                                                    <tr>
+                                                        <th> 
+                                                            <h4 class="card-title">Year</h4>
+                                                        </th>
+                                                        <th> 
+                                                            <h4 class="card-title ml-3">Price</h4>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" readonly />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" readonly />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" readonly />
+                                                        </td>
+                                                        <td class="ml-3">
+                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 text-right mt-3">
                                         <input type='submit' value="Save" class="btn btn-primary mr-2">
                                         <input type='reset' value="Clear" class="btn btn-dark">
                                     </div>
@@ -160,6 +215,21 @@
                 imgUser.src = URL.createObjectURL(file)
             }
         }
+        
+        $("#txtRole").change(function() {
+            console.log("Test");
+            if($("#txtRole").val() == "Personal Trainer") {
+                $("#areaPrice").show();
+            } else {
+                $("#areaPrice").hide();
+            }
+        });
+        
+        
+
+
+
+
     </script>
     <script src="${pageContext.request.contextPath}/assets/js/file-upload.js"></script>
 </html>

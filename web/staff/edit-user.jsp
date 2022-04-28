@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <form class="form-sample" enctype="multipart/form-data" action="handleAccount" method="post">
                                 <p class="card-description"> Personal info </p>
-                                <input type="hidden" class="form-control"  name="id" value="<jsp:getProperty name="userInfo" property="id" />" />
+                                <input type="hidden" class="form-control"  name="id" value="<jsp:getProperty name="user" property="id" />" />
                                 <input type="hidden" name="action" class="form-control" value="edit" />
                                 <div class="row">
                                     <div class="col-md-6">

@@ -125,7 +125,12 @@ public class HandleAccount extends HttpServlet {
 //                    inputStream = filePart.getInputStream();
 //                }
 //            }
-            
+            if(db.editUser(account)){
+                response.sendRedirect(request.getContextPath() + "/staff/handleAccount?action=list");
+            } else {
+                out.println("edit user failed");
+            }
+
         }  else if (action.equalsIgnoreCase("getEditCustomer")) {
             String id = request.getParameter("id");
             String role = request.getParameter("role");

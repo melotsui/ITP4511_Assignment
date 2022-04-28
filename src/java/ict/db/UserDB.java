@@ -526,4 +526,48 @@ public class UserDB {
         return (num == 1) ? true : false;
     }
 
+    public boolean editUser(UserBean cb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.user SET firstName=? ,lastName=? ,gender=?, address=?, phone=?, birthday=?, email=?, role=? WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cb.getFirstName());
+            pStmnt.setString(2, cb.getLastName());
+            pStmnt.setString(3, cb.getGender());
+            pStmnt.setString(4, cb.getAddress());
+            pStmnt.setInt(5, cb.getPhone());
+            pStmnt.setString(6, cb.getBirthday());
+            pStmnt.setString(7, cb.getEmail());
+            pStmnt.setString(8, cb.getRole());
+            pStmnt.setString(9, cb.getId());
+            //Statement s = cnnct.createStatement();
+            num = pStmnt.executeUpdate();
+
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return (num == 1) ? true : false;
+    }
+
 }

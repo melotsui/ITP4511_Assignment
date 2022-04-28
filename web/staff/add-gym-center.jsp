@@ -10,6 +10,11 @@
 <html lang="en">
     <head>
         <title>Add Gym Center</title>
+        <style>
+            .form-control[readonly] {
+                background-color: #2A3038 !important;
+            }
+        </style>
     </head>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
@@ -102,7 +107,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" />
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2023" readonly />
                                                         </td>
                                                         <td class="ml-3">
                                                             <input type="number" step="0.01" name="price" class="form-control ml-3" />
@@ -110,7 +115,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" />
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" readonly />
                                                         </td>
                                                         <td class="ml-3">
                                                             <input type="number" step="0.01" name="price" class="form-control ml-3" />
@@ -118,7 +123,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" />
+                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" readonly />
                                                         </td>
                                                         <td class="ml-3">
                                                             <input type="number" step="0.01" name="price" class="form-control ml-3" />

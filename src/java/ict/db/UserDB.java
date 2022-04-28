@@ -74,7 +74,7 @@ public class UserDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role, image, phone, address, gender) VALUES ((SELECT count(id)+1 FROM esd.user subquery), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role, image, phone, address, gender, birthday) VALUES ((SELECT count(id)+1 FROM esd.user subquery), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, bean.getFirstName());
             pStmnt.setString(2, bean.getLastName());
@@ -82,6 +82,7 @@ public class UserDB {
             pStmnt.setString(4, "password");
             pStmnt.setString(5, bean.getRole());
             pStmnt.setString(8, bean.getAddress());
+            pStmnt.setString(10, bean.getBirthday());
             pStmnt.setString(9, bean.getGender());
             pStmnt.setInt(7, bean.getPhone());
             if (image != null) {

@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <%
-                                    if(userPrice.size()>0){
+                                    if(!userPrice.get(0).getYear().equals("null")){
                                     out.println("<div class='row'><div class='col-12'><h4 class='card-title'>Price per Years</h4><div class='table-responsive'>");
                                     out.println("<table class='w-50' id='tableGym'><thead><tr><th><h4 class='card-title'>Year</h4>");
                                     out.println("</th><th><h4 class='card-title ml-3'>Price</h4></th></tr></thead><tbody>");

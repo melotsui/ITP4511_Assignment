@@ -146,6 +146,11 @@ public class HandleAccount extends HttpServlet {
             } else {
                 UserBean ub = db.getUserInfoByID(id);
                 request.setAttribute("user", ub);
+                ArrayList<UserPriceBean> upList = new ArrayList<UserPriceBean>();
+                UserPriceBean upb = new UserPriceBean();
+                upb.setYear("null");
+                upList.add(upb);
+                request.setAttribute("userPrice", upList);
                 RequestDispatcher rd;
                 rd = this.getServletContext().getRequestDispatcher("/staff/edit-user.jsp");
                 rd.forward(request, response);

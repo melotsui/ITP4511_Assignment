@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="userInfo" class="ict.bean.UserBean" scope="session" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,47 +36,54 @@
                 </div><div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            <form class="form-sample">
+                            <form class="form-sample" enctype="multipart/form-data" action="handleAccount" method="post">
                                 <p class="card-description"> Personal info </p>
-
+                                <input type="hidden" class="form-control"  name="id" value="<jsp:getProperty name="userInfo" property="id" />" />
+                                <input type="hidden" name="action" class="form-control" value="add" />
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">First Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" maxlength="64" />
+                                                <input type="text" class="form-control" maxlength="64"  name="firstName" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Last Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" maxlength="64" />
+                                                <input type="text" class="form-control" maxlength="64"  name="lastName" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
-                                                <input type="number" class="form-control" maxlength="8" />
+                                                <input type="number" class="form-control" maxlength="8"  name="phone"/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Birthday</label>
                                             <div class="col-sm-9">
-                                                <input type="date" class="form-control" placeholder="dd/mm/yyyy" />
+                                                <input type="text" class="form-control" placeholder="YYYY/MM/DD" name="birthday" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control"  name="email" />
+                                            </div>
+                                        </div>
+<!--                                        <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Center</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control">
-                                                    <option>Tuen Mun Center</option>
+                                                <select class="form-control" name="centerID">
+                                                    <option value="">Tuen Mun Center</option>
                                                     <option>Sha Tin Center</option>
                                                     <option>Tsing Yi Center</option>
                                                     <option>Lee Wai Lee Center</option>
                                                     <option>Chai Wan Center</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Role</label>
                                             <div class="col-sm-9">
@@ -91,19 +99,17 @@
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="Male" checked> Male </label>
+                                                        <input type="radio" class="form-check-input" name="gender" id="membershipRadios1" value="Male" checked> Male </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="Female"> Female </label>
+                                                        <input type="radio" class="form-check-input" name="gender" id="membershipRadios2" value="Female"> Female </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="col-md-6">
                                         <div class="row d-flex justify-content-center align-items-center">
                                             <div class="col-md-6">
@@ -129,7 +135,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group ">
                                             <label for="address">Address</label>
-                                            <textarea class="form-control" id="address" rows="4"></textarea>
+                                            <textarea class="form-control" name="address" rows="4"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +144,7 @@
                                         <div class="form-group">
                                             <div class="form-check form-check-success">
                                                 <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" checked=""> Active <i class="input-helper"></i></label>
+                                                    <input type="checkbox" class="form-check-input" name="active" checked=""> Active <i class="input-helper"></i></label>
                                             </div>
                                         </div>
                                     </div>
@@ -172,14 +178,6 @@
                                                     <tr>
                                                         <td>
                                                             <input class="form-control" type="number" min="1900" max="2099" step="1" value="2022" readonly />
-                                                        </td>
-                                                        <td class="ml-3">
-                                                            <input type="number" step="0.01" name="price" class="form-control ml-3" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-control" type="number" min="1900" max="2099" step="1" value="2021" readonly />
                                                         </td>
                                                         <td class="ml-3">
                                                             <input type="number" step="0.01" name="price" class="form-control ml-3" />

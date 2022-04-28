@@ -8,9 +8,12 @@ package ict.db;
 import ict.bean.UserBean;
 import com.mysql.jdbc.Connection;
 import ict.bean.CenterBean;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
+
 /**
  *
  * @author temp
@@ -20,13 +23,13 @@ public class UserDB {
     private String url = "";
     private String username = "";
     private String password = "";
-    
+
     public UserDB(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
     }
-    
+
     public Connection getConnection() throws SQLException, IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +67,44 @@ public class UserDB {
         }
         return isSuccess;
     }
-    
+
+    public boolean addUser(UserBean bean, InputStream image) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        System.out.println("AAAAAAAAAAA" + bean.toString());
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO esd.user (id, firstName, lastName, email, password, role, image, phone, address, gender) VALUES ((SELECT max(id)+1 FROM esd.user subquery), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, bean.getFirstName());
+            pStmnt.setString(2, bean.getLastName());
+            pStmnt.setString(3, bean.getEmail());
+            pStmnt.setString(4, "password");
+            pStmnt.setString(5, bean.getRole());
+            pStmnt.setString(8, bean.getAddress());
+            pStmnt.setString(9, bean.getGender());
+            pStmnt.setInt(7, bean.getPhone());
+            if (image != null) {
+                pStmnt.setBlob(6, image);
+            }
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
     public boolean isValidUser(String email, String pwd) {
         java.sql.Connection cnnct = null;
         PreparedStatement preQueryStatement = null;
@@ -95,8 +135,8 @@ public class UserDB {
         }
         return isValid;
     }
-    
-        public ArrayList queryCust() {
+
+    public ArrayList queryCust() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
@@ -122,7 +162,23 @@ public class UserDB {
                 cb.setRole(rs.getString(10));
                 cb.setBirthday(rs.getString(11));
                 cb.setIsActive(rs.getBoolean(12));
-                cb.setImage(rs.getString(13));
+                Blob blob = rs.getBlob(13);
+
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    cb.setImage(base64Image);
+                }
                 cb.setCenterID(rs.getString(14));
                 list.add(cb);
             }
@@ -182,7 +238,23 @@ public class UserDB {
                 cb.setRole(rs.getString(10));
                 cb.setBirthday(rs.getString(11));
                 cb.setIsActive(rs.getBoolean(12));
-                cb.setImage(rs.getString(13));
+                Blob blob = rs.getBlob(13);
+
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    cb.setImage(base64Image);
+                }
                 cb.setCenterID(rs.getString(14));
 //                cb.setFee(rs.getInt(15));
             }
@@ -199,7 +271,7 @@ public class UserDB {
         }
         return cb;
     }
-    
+
     public UserBean getUserInfoByID(String id) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -231,7 +303,23 @@ public class UserDB {
                 cb.setRole(rs.getString(10));
                 cb.setBirthday(rs.getString(11));
                 cb.setIsActive(rs.getBoolean(12));
-                cb.setImage(rs.getString(13));
+                Blob blob = rs.getBlob(13);
+
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    cb.setImage(base64Image);
+                }
                 cb.setCenterID(rs.getString(14));
 //                cb.setPrice(rs.getInt(15));
             }
@@ -248,11 +336,11 @@ public class UserDB {
         }
         return cb;
     }
-    
+
     public boolean changePassword(String id, String oldPw, String newPw) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        int num=0;
+        int num = 0;
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE esd.user SET password=? WHERE id=? AND password=?";
@@ -261,8 +349,8 @@ public class UserDB {
             pStmnt.setString(2, id);
             pStmnt.setString(3, oldPw);
             //Statement s = cnnct.createStatement();
-            num= pStmnt.executeUpdate();
-          
+            num = pStmnt.executeUpdate();
+
         } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
@@ -284,9 +372,9 @@ public class UserDB {
                 }
             }
         }
-         return (num == 1) ? true : false;   
+        return (num == 1) ? true : false;
     }
-    
+
     public ArrayList queryActiveTrainersWithPrice() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -314,7 +402,23 @@ public class UserDB {
                 cb.setRole(rs.getString(10));
                 cb.setBirthday(rs.getString(11));
                 cb.setIsActive(rs.getBoolean(12));
-                cb.setImage(rs.getString(13));
+                Blob blob = rs.getBlob(13);
+
+                if (blob != null) {
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    cb.setImage(base64Image);
+                }
                 cb.setCenterID(rs.getString(14));
                 cb.setPrice(rs.getInt(16));
                 list.add(cb);
@@ -343,11 +447,11 @@ public class UserDB {
         }
         return null;
     }
-    
+
     public boolean editProfile(UserBean cb) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        int num=0;
+        int num = 0;
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE esd.user SET firstName=? ,lastName=? ,gender=?, address=?, phone=?, birthday=? WHERE id=?";
@@ -360,8 +464,8 @@ public class UserDB {
             pStmnt.setString(6, cb.getBirthday());
             pStmnt.setString(7, cb.getId());
             //Statement s = cnnct.createStatement();
-            num= pStmnt.executeUpdate();
-          
+            num = pStmnt.executeUpdate();
+
         } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
@@ -383,21 +487,21 @@ public class UserDB {
                 }
             }
         }
-         return (num == 1) ? true : false;   
+        return (num == 1) ? true : false;
     }
-        
+
     public boolean deleteUserByID(String id) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        int num=0;
+        int num = 0;
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE esd.user SET deleted=1 WHERE id=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             //Statement s = cnnct.createStatement();
-            num= pStmnt.executeUpdate();
-          
+            num = pStmnt.executeUpdate();
+
         } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
@@ -419,7 +523,7 @@ public class UserDB {
                 }
             }
         }
-         return (num == 1) ? true : false;   
+        return (num == 1) ? true : false;
     }
-    
+
 }

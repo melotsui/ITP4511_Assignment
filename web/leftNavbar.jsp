@@ -55,7 +55,7 @@
                         <div class="profile-desc">
                             <div class="profile-pic">
                                 <div class="count-indicator">
-                                    <img class="img-xs rounded-circle " src="${pageContext.request.contextPath}/assets/images/faces/face15.jpg" alt="">
+                                    <img class="img-xs rounded-circle " src="data:image/jpg;base64,<jsp:getProperty name="userInfo" property="image" />" alt="">
                                     <span class="count bg-success"></span>
                                 </div>
                                 <div class="profile-name">
@@ -141,8 +141,8 @@
                             out.println("<div class='collapse' id='user'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='handleAccount?action=list'> List User </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/add-user.jsp'> Add User </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/edit-user.jsp'> Edit User </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>

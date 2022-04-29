@@ -127,7 +127,8 @@
                             out.println("</a>");
                             out.println("<div class='collapse' id='booking'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/add-booking.jsp'> New Booking </a></li>");
+//                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/add-booking.jsp'> New Booking </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/HandleBooking?action=getBookingInfo'> New Booking </a></li>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/view-booking.jsp'> View Booking </a></li>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/update-booking.jsp'> Update Booking </a></li>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");

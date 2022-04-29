@@ -5,14 +5,18 @@
  */
 package ict.servlet;
 
+import ict.bean.CenterBean;
 import ict.bean.CenterBookingBean;
 import ict.bean.TrainerBookingBean;
 import ict.bean.UserBean;
 import ict.db.BookingDB;
+import ict.db.CenterDB;
 import ict.db.UserDB;
 import ict.db.UserPriceDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "HandleBooking", urlPatterns = {"/HandleBooking"})
 public class HandleBooking extends HttpServlet {
     BookingDB bookingDB;
+    CenterDB centerDB;
+    UserDB userDB;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,8 +47,21 @@ public class HandleBooking extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         UserBean userBean = (UserBean) request.getSession().getAttribute("userInfo");
         String action = request.getParameter("action");
+        PrintWriter out = response.getWriter();
         switch(action) {
             case "list":
+                
+                
+                break;
+            case "getBookingInfo":
+                ArrayList<UserBean> trainersWithPrice = userDB.queryActiveTrainersWithPrice();
+                ArrayList<CenterBean> centersWithPrice = centerDB.queryActiveCenter();
+                request.setAttribute("centersWithPrice", centersWithPrice);
+                request.setAttribute("trainersWithPrice", trainersWithPrice);
+                RequestDispatcher rd;
+                rd = this.getServletContext().getRequestDispatcher("/customer/add-booking.jsp");
+                rd.forward(request, response);
+                
                 break;
             case "add":
                 String[] centers = request.getParameterValues("center");
@@ -60,7 +79,11 @@ public class HandleBooking extends HttpServlet {
                         trainerBean.setTrainerID(trainers[i]);
                         centerBean.setTrainerBooking(trainerBean);
                     }
-                    bookingDB.addBooking(centerBean, userBean.getId());
+                    if(bookingDB.addBooking(centerBean, userBean.getId())){
+                        out.println("booking success");
+                    } else {
+                        out.println("booking fail");
+                    }
                     
                 }
                 break;
@@ -74,7 +97,8 @@ public class HandleBooking extends HttpServlet {
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         bookingDB = new BookingDB(dbUrl, dbUser, dbPassword);
-        
+        centerDB = new CenterDB(dbUrl, dbUser, dbPassword);
+        userDB = new UserDB(dbUrl, dbUser, dbPassword);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -7,14 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.UserBean"%>
+<%@page import="ict.bean.CenterBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<jsp:useBean id="centersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
 <!DOCTYPE html>
 <%
     String urlBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 %>
 <html lang="en">
     <head>
-        <title>Dashboard</title>
+        <title>New Booking</title>
         <style>
             select.form-control {
                 color: #ffffff !important;
@@ -134,11 +137,11 @@
                                     <div class="form-group row">
                                         <label class="col-form-label">Center</label>
                                         <select class="form-control" name="center">
-                                            <option value="1">Tuen Mun Center</option>
-                                            <option value="2">Sha Tin Center</option>
-                                            <option value="3">Tsing Yi Center</option>
-                                            <option value="4">Lee Wai Lee Center</option>
-                                            <option value="5">Chai Wan Center</option>
+        <%
+            for(int i=0; i<centersWithPrice.size(); i++){
+                out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+" ($"+centersWithPrice.get(i).getPrice()+"/h)</option>");
+            }
+        %>
                                         </select>
                                     </div>
                                 </div>
@@ -165,7 +168,6 @@
                                             <option value="20:00:00">20:00 - 21:00</option>
                                             <option value="21:00:00">21:00 - 22:00</option>
                                             <option value="22:00:00">22:00 - 23:00</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -183,9 +185,12 @@
                                     <div class="form-group row">
                                         <select class="form-control" name="trainer">
                                             <option></option>
-                                            <option value="14">Melo Tsui ($200/hr)</option>
-                                            <option value="3">Ken Wong</option>
-                                            <option value="5">Ivan Leung</option>
+    
+        <%
+            for(int i=0; i<trainersWithPrice.size(); i++){
+                out.println("<option value='"+trainersWithPrice.get(i).getId()+"'>"+trainersWithPrice.get(i).getFirstName()+" "+trainersWithPrice.get(i).getLastName()+" ($"+trainersWithPrice.get(i).getPrice()+"/h)</option>");
+            }
+        %>
                                         </select>
                                     </div>
                                 </div>

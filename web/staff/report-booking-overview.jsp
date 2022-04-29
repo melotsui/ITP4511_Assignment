@@ -6,8 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="ict.bean.UserBean"%>
 <%@page import="ict.bean.CenterBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<jsp:useBean id="centersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,9 +53,11 @@
                                                 <label class="col-form-label">Trainer</label>
                                                 <select class="form-control">
                                                     <option></option>
-                                                    <option>Melo Tsui ($200/hr)</option>
-                                                    <option>Ken Wong</option>
-                                                    <option>Ivan Leung</option>
+                                                    <%
+                                                            for(int i=0; i<trainersWithPrice.size(); i++){
+                                                                out.println("<option value='"+trainersWithPrice.get(i).getId()+"'>"+trainersWithPrice.get(i).getFirstName()+" "+trainersWithPrice.get(i).getLastName()+"</option>");
+                                                            }
+                                                    %>
                                                 </select>
                                             </div>
                                         </div>
@@ -60,11 +65,12 @@
                                             <div class="form-group row m-2">
                                                 <label class="col-form-label">Center</label>
                                                 <select class="form-control">
-                                                    <option>Tuen Mun Center</option>
-                                                    <option>Sha Tin Center</option>
-                                                    <option>Tsing Yi Center</option>
-                                                    <option>Lee Wai Lee Center</option>
-                                                    <option>Chai Wan Center</option>
+                                                    <option></option>
+                                                    <%
+                                                            for(int i=0; i<centersWithPrice.size(); i++){
+                                                                out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+"</option>");
+                                                            }
+                                                    %>
                                                 </select>
                                             </div>
                                         </div>

@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hhch0
  */
-@WebServlet(name = "HandleBooking", urlPatterns = {"/HandleBooking"})
-public class HandleBooking extends HttpServlet {
+@WebServlet(name = "HandleReport", urlPatterns = {"/HandleReport"})
+public class HandleReport extends HttpServlet {
 
     BookingDB bookingDB;
     CenterDB centerDB;
@@ -42,6 +42,7 @@ public class HandleBooking extends HttpServlet {
         centerDB = new CenterDB(dbUrl, dbUser, dbPassword);
         userDB = new UserDB(dbUrl, dbUser, dbPassword);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,49 +58,22 @@ public class HandleBooking extends HttpServlet {
         UserBean userBean = (UserBean) request.getSession().getAttribute("userInfo");
         String action = request.getParameter("action");
         PrintWriter out = response.getWriter();
-        switch (action) {
-            case "list":
+        if (action.equalsIgnoreCase("getBooingReportInfo")) {
 
-                break;
-            case "getBookingInfo":
-                ArrayList<UserBean> trainersWithPrice = userDB.queryActiveTrainersWithPrice();
-                ArrayList<CenterBean> centersWithPrice = centerDB.queryActiveCenter();
-                request.setAttribute("centersWithPrice", centersWithPrice);
-                request.setAttribute("trainersWithPrice", trainersWithPrice);
-                RequestDispatcher rd;
-                rd = this.getServletContext().getRequestDispatcher("/customer/add-booking.jsp");
-                rd.forward(request, response);
+            ArrayList<UserBean> trainersWithPrice = userDB.queryActiveTrainersWithPrice();
+            ArrayList<CenterBean> centersWithPrice = centerDB.queryActiveCenter();
+            request.setAttribute("centersWithPrice", centersWithPrice);
+            request.setAttribute("trainersWithPrice", trainersWithPrice);
+            RequestDispatcher rd;
+            rd = this.getServletContext().getRequestDispatcher("/staff/report-booking-overview.jsp");
+            rd.forward(request, response);
 
-                break;
-            case "add":
-                String[] centers = request.getParameterValues("center");
-                String[] dates = request.getParameterValues("date");
-                String[] times = request.getParameterValues("time");
-                String[] trainers = request.getParameterValues("trainer");
-                for (int i = 0; i < centers.length; i++) {
-                    System.out.println(centers[i] + " " + dates[i] + " " + times[i] + " " + trainers[i]);
-                    CenterBookingBean centerBean = new CenterBookingBean();
-                    centerBean.setCenterID(centers[i]);
-                    centerBean.setStartDate(dates[i]);
-                    centerBean.setStartTime(times[i]);
-                    if (!trainers[i].equalsIgnoreCase("") && trainers[i] != null) {
-                        TrainerBookingBean trainerBean = new TrainerBookingBean();
-                        trainerBean.setTrainerID(trainers[i]);
-                        centerBean.setTrainerBooking(trainerBean);
-                    }
-                    if (bookingDB.addBooking(centerBean, userBean.getId())) {
-                        out.println("booking success");
-                    } else {
-                        out.println("booking fail");
-                    }
+        } else if (action.equalsIgnoreCase("getIncomeReportInfo")) {
 
-                }
-                break;
-            default:
-                break;
+        } else {
+            out.println("No such action");
         }
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

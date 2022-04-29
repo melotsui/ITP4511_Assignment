@@ -137,11 +137,11 @@
                                     <div class="form-group row">
                                         <label class="col-form-label">Center</label>
                                         <select class="form-control" name="center">
-        <%
+    <%
             for(int i=0; i<centersWithPrice.size(); i++){
                 out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+" ($"+centersWithPrice.get(i).getPrice()+"/h)</option>");
             }
-        %>
+    %>
                                         </select>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group row">
                                         <label class="col-form-label">Booking Date</label>
-                                        <input type="date" name="date" class="form-control mr-3" placeholder="dd/mm/yyyy" id="txtDate" min="` + minDate +  `" max="` + maxDate +`"/>
+                                        <input type="date" name="date" class="form-control mr-3" placeholder="dd/mm/yyyy" id="txtDate" min="` + minDate + `" max="` + maxDate + `"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -186,11 +186,11 @@
                                         <select class="form-control" name="trainer">
                                             <option></option>
     
-        <%
+    <%
             for(int i=0; i<trainersWithPrice.size(); i++){
                 out.println("<option value='"+trainersWithPrice.get(i).getId()+"'>"+trainersWithPrice.get(i).getFirstName()+" "+trainersWithPrice.get(i).getLastName()+" ($"+trainersWithPrice.get(i).getPrice()+"/h)</option>");
             }
-        %>
+    %>
                                         </select>
                                     </div>
                                 </div>

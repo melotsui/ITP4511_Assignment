@@ -117,7 +117,7 @@
                     </li>
                     
                     <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+//                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#booking' aria-expanded='false' aria-controls='booking'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
@@ -128,13 +128,15 @@
                             out.println("<div class='collapse' id='booking'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/add-booking.jsp'> New Booking </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/HandleBooking?action=getBookingInfo'> New Booking </a></li>");
+                            if(!userInfo.getRole().equals("Personal Trainer")){
+                                out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/HandleBooking?action=getBookingInfo'> New Booking </a></li>");
+                            }
                             //out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/customer/view-booking.jsp'> View Booking </a></li>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/HandleBooking?action=listing&id="+userInfo.getId()+"&role="+userInfo.getRole()+"'> List Booking </a></li>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
                             out.println("</ul></div></li>");
-                        }
+//                        }
                     %>
                     <% 
                         if(userInfo.getRole().equalsIgnoreCase("Staff")){

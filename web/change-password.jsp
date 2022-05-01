@@ -28,7 +28,7 @@
                     <div class="col-md-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title"><jsp:getProperty name="userInfo" property="id" /></h4>
+                                <!--<h4 class="card-title"><jsp:getProperty name="userInfo" property="id" /></h4>-->
                                 <!--<p class="card-description"> A strong password helps to prevent unauthorised access to your account </p>-->
                                 <form class="forms-sample" action='HandleChangePassword' method='post'>
                                         <input type="hidden" class="form-control" name="id" value='<jsp:getProperty name="userInfo" property="id" />'>

@@ -95,11 +95,13 @@ public class HandleBooking extends HttpServlet {
                         centerBean.setTrainerBooking(trainerBean);
                     }
                     if (bookingDB.addBooking(centerBean, userBean.getId())) {
-                        response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+//                        response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
                     } else {
                         out.println("booking fail");
                     }
                 }
+                response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+
                 break;
             case "Edit":
                 trainersWithPrice = userDB.queryActiveTrainersWithPrice();

@@ -55,8 +55,8 @@ public class HandleChangePassword extends HttpServlet {
         if (newPw.equals(confirmPw)) {
             if (db.changePassword(id, oldPw, newPw)) {
                 PrintWriter out = response.getWriter();
-                out.println("Success");
-//            response.sendRedirect("handleCustomer?action=list");
+//                out.println("Success");
+            response.sendRedirect("index.jsp");
             } else {
                 PrintWriter out = response.getWriter();
                 out.println("fail");

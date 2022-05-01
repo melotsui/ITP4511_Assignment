@@ -63,7 +63,7 @@
                                                     UserBean c = accounts.get(i);
                                                     out.println("<tr style='background-color: #191c24;'>");
                                                     out.println("<td class='id'>" + c.getId() + "</td>");
-                                                    out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
+                                                    out.println("<td>" + c.getFirstName() + " " + c.getLastName()+ "</td>");
                                                     out.println("<td>" + c.getEmail() + "</td>");
                                                     out.println("<td>" + c.getRole() + "</td>");
                                                     out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Inquire&id=" + c.getId() + "&role="+ c.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");

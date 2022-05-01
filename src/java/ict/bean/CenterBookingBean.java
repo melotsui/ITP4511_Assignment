@@ -151,6 +151,9 @@ public class CenterBookingBean implements Serializable {
     }
 
     public String getHandledBy() {
+        if(handledBy==null){
+            return "";
+        }
         return handledBy;
     }
 
@@ -159,6 +162,9 @@ public class CenterBookingBean implements Serializable {
     }
 
     public String getHandledDateTime() {
+        if(handledDateTime==null){
+            return "";
+        }
         return handledDateTime;
     }
 

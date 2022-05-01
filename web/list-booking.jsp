@@ -68,18 +68,17 @@
                                                     CenterBookingBean c = booking.get(i);
                                                     TrainerBookingBean t = booking.get(i).getTrainerBooking();
                                                     out.println("<tr style='background-color: #191c24;'>");
-                                                    out.println("<td class='id'>" + i + "</td>");
+                                                    out.println("<td class='id'>" + (i+1) + "</td>");
                                                     out.println("<td>" + c.getStartDate() +" "+ c.getStartTime() + "</td>");
                                                     out.println("<td>" + c.getCenterName() + "</td>");
                                                     out.println("<td>" + t.getTrainerName() + "</td>");
                                                     out.println("<td>" + c.getBookingUserName() + "</td>");
                                                     out.println("<td>$" + (c.getPrice()+t.getPrice()) + "</td>");
                                                     out.println("<td>" + c.getStatus() + "</td>");
-                                                    out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleBooking?action=Detail&id=" + c.getId() + "&role="+ userInfo.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleBooking?action=Edit&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleBooking?action=Delete&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                    out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/HandleBooking?action=Detail&id=" + c.getId() + "&role="+ userInfo.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/HandleBooking?action=Edit&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/HandleBooking?action=Cancel&id=" + c.getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                     out.println("</tr>");
-
                                                 }
                                             } else {
                                                 out.println("No Customer");

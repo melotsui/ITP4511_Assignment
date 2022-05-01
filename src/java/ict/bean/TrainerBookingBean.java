@@ -17,6 +17,9 @@ public class TrainerBookingBean implements Serializable {
     private String trainerName;
 
     public String getTrainerName() {
+        if(trainerName==null){
+            return "";
+        }
         return trainerName;
     }
 
@@ -26,6 +29,15 @@ public class TrainerBookingBean implements Serializable {
     private boolean isApproved;
     private String approvedDateTime;
     private double price;
+    private boolean isCancelled;
+
+    public boolean isIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsCancelled(boolean isCancelled) {
+        this.isCancelled = isCancelled;
+    }
     private boolean isHandled;
 
     public TrainerBookingBean() {
@@ -56,6 +68,9 @@ public class TrainerBookingBean implements Serializable {
     }
 
     public String getApprovedDateTime() {
+        if(approvedDateTime==null){
+            return "";
+        }
         return approvedDateTime;
     }
 

@@ -76,7 +76,6 @@ public class HandleBooking extends HttpServlet {
                 RequestDispatcher rd;
                 rd = this.getServletContext().getRequestDispatcher("/customer/add-booking.jsp");
                 rd.forward(request, response);
-
                 break;
             case "add":
                 String[] centers = request.getParameterValues("center");
@@ -99,7 +98,27 @@ public class HandleBooking extends HttpServlet {
                     } else {
                         out.println("booking fail");
                     }
+                }
+                break;
+            case "Edit":
+                break;
+            case "Detail":
+                CenterBookingBean centerBookingBean = new CenterBookingBean();
+                centerBookingBean = bookingDB.queryBookingById(id);
+                TrainerBookingBean trainerBookingBean = new TrainerBookingBean();
+                trainerBookingBean = centerBookingBean.getTrainerBooking();
+                System.out.println(trainerBookingBean);
+                request.setAttribute("centerBookingBean", centerBookingBean);
+                request.setAttribute("trainerBookingBean", trainerBookingBean);
+                rd = this.getServletContext().getRequestDispatcher("/customer/view-booking.jsp");
+                rd.forward(request, response);
 
+                break;
+            case "Cancel":
+                if(bookingDB.cancelBooking(id)){
+                    response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role="+role+"&id="+userBean.getId());
+                }else{
+                    out.println("cancel fail");
                 }
                 break;
             default:

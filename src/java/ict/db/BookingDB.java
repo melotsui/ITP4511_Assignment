@@ -119,7 +119,7 @@ public class BookingDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID;";
+            String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             
@@ -178,55 +178,96 @@ public class BookingDB {
         return null;
     }
     
-//    public CenterBookingBean queryBookingById(String id) {
-//        java.sql.Connection cnnct = null;
-//        PreparedStatement pStmnt = null; 
-//        CenterBookingBean cb = null;
-//        ResultSet rs = null;
-//        try {
-//            cnnct = getConnection();
-//            String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID WHERE esd.centerBooking.id = ?;";
-//            pStmnt = cnnct.prepareStatement(preQueryStatement);
-//            System.out.println("SSSSSSSSSSSSSSSSSSSSSS " + preQueryStatement);
-//            pStmnt.setString(1, id);
-//            rs = pStmnt.executeQuery();
-//            if (rs.next()) {
-//                TrainerBookingBean tbb = new TrainerBookingBean();
-//                CenterBookingBean cbb = new CenterBookingBean();
-//                tbb.setTrainerID(rs.getString("trainerID"));
-//                String queryStatement = "select firstName, lastName from esd.user where id = ?;";
-//                PreparedStatement pStmntName = cnnct.prepareStatement(queryStatement);
-//                System.out.println(tbb.getTrainerID());
-//                pStmntName.setString(1, tbb.getTrainerID());
-//                ResultSet rsName = pStmntName.executeQuery();
-//                if(rsName.next()){
-//                    tbb.setTrainerName(rsName.getString("firstName") + rsName.getString("lastName"));
-//                }
-//                tbb.setIsHandled("trainerBooking.");
-//                tbb.setPrice(rs.getInt("trainerBooking.price"));
-//                cbb.setTrainerBooking(tbb);
-//                cbb.setCenterID(rs.getString("centerID"));
-//                cbb.setCustomerID(rs.getString("customerID"));
-//                cbb.setStartDate(rs.getString("startDate"));
-//                cbb.setStartTime(rs.getString("startTime"));
-//                cbb.setPrice(rs.getInt("centerBooking.price"));
-//                cbb.setCreateDateTime(rs.getString("centerBooking.creationDateTime"));
-//                cbb.setHandledBy(rs.getString("centerBooking.handledBy"));
-//                cbb.setHandledDateTime(rs.getString("centerBooking.handledDateTime"));
-//                cbb.setIsApproved(rs.getBoolean("centerBooking.isApproved"));
-//                
-//            }
-//            pStmnt.close();
-//            cnnct.close();
-//        } catch (SQLException ex) {
-//            while (ex != null) {
-//                ex.printStackTrace();
-//                ex = ex.getNextException();
-//            }
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//        return cb;
-//    }
+    public CenterBookingBean queryBookingById(String id) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null; 
+        CenterBookingBean cbb = new CenterBookingBean();
+        ResultSet rs = null;
+        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD "+id);
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID WHERE esd.centerBooking.id = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            System.out.println("SSSSSSSSSSSSSSSSSSSSSS " + preQueryStatement);
+            pStmnt.setString(1, id);
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                TrainerBookingBean tbb = new TrainerBookingBean();
+                tbb.setTrainerID(rs.getString("trainerID"));
+                String queryStatement = "select firstName, lastName from esd.user where id = ?;";
+                PreparedStatement pStmntName = cnnct.prepareStatement(queryStatement);
+                System.out.println(tbb.getTrainerID());
+                pStmntName.setString(1, tbb.getTrainerID());
+                ResultSet rsName = pStmntName.executeQuery();
+                if(rsName.next()){
+                    tbb.setTrainerName(rsName.getString("firstName") + rsName.getString("lastName"));
+                }
+                tbb.setIsHandled(rs.getBoolean("trainerBooking.isHandled"));
+                tbb.setPrice(rs.getInt("trainerBooking.price"));
+                System.out.println(tbb);
+                cbb.setTrainerBooking(tbb);
+                cbb.setCenterID(rs.getString("centerID"));
+                cbb.setId(rs.getString("id"));
+                cbb.setCenterName(rs.getString("name"));
+                cbb.setCustomerID(rs.getString("customerID"));
+                cbb.setStartDate(rs.getString("startDate"));
+                cbb.setStartTime(rs.getString("startTime"));
+                cbb.setPrice(rs.getInt("centerBooking.price"));
+                cbb.setCreateDateTime(rs.getString("centerBooking.createDateTime"));
+                cbb.setHandledBy(rs.getString("centerBooking.handledBy"));
+                cbb.setHandledDateTime(rs.getString("centerBooking.handledDateTime"));
+                cbb.setIsApproved(rs.getBoolean("centerBooking.isApproved"));
+                cbb.setIsCancelled(rs.getBoolean("centerBooking.isCancelled"));
+                
+                System.out.println(cbb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cbb;
+    }
+
+    public boolean cancelBooking(String id) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.centerBooking SET isCancelled=1 WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            //Statement s = cnnct.createStatement();
+            num = pStmnt.executeUpdate();
+
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return (num == 1) ? true : false;
+    }
 
 }

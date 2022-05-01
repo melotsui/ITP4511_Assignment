@@ -5,7 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="ict.bean.CenterBookingBean"%>
+<%@page import="ict.bean.TrainerBookingBean"%>
+<jsp:useBean id="trainerBookingBean" scope="request" class="ict.bean.TrainerBookingBean" />
+<jsp:useBean id="centerBookingBean" scope="request" class="ict.bean.CenterBookingBean" />
+<jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -52,7 +56,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Booking ID</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="1" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="id" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +64,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Center</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="centerName" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +72,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Customer ID</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="customerID" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +80,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Booking Date Time</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="startDate" /> <jsp:getProperty name="centerBookingBean" property="startTime" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +88,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Center Price</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="price" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +96,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Create Date Time</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="createDateTime" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +110,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Handled</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="isHandled" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +118,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Handler</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="handledBy" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +126,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Handled Date Time</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="handledDateTime" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +134,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Approved</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="isApproved" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +142,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Cancelled</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="centerBookingBean" property="isCancelled" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +154,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="isCancelled" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +162,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Handled</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="isHandled" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +170,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Approved Date Time</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="approvedDateTime" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +178,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Price</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="price" />" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +186,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Approved</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="Tuen Mun Center" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="isApproved" />" readonly />
                                             </div>
                                         </div>
                                     </div>

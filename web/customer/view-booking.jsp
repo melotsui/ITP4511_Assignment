@@ -34,23 +34,24 @@
                             </div>
 
                         </div>
-                        <div class="col-6">
-                            <div class="text-right mr-3">
-                                <button type="button" class="btn btn-outline-success btn-icon-text mr-3">
-                                    <i class="mdi mdi-check btn-icon-prepend"></i> Approve
-                                </button>
-
-                                <button type="button" class="btn btn-outline-danger btn-icon-text">
-                                    <i class="mdi mdi-close btn-icon-prepend"></i> Reject
-                                </button>
-                            </div>
-                        </div>
+                        <%
+                            if(!userInfo.getRole().equals("Customer")){
+                                out.println("<div class='col-6'><div class='text-right mr-3'>");
+                                out.println("<a href='HandleBooking?action=Approve&centerBooingID="+centerBookingBean.getId()+"&handledBy="+userInfo.getId()+"&trainerBookingID="+trainerBookingBean.getId()+"'>");
+                                out.println("<button type='button' class='btn btn-outline-success btn-icon-text mr-3'>");
+                                out.println("<i class='mdi mdi-check btn-icon-prepend'></i> Approve</button>");
+                                out.println("</a>");
+                                out.println("<a href='HandleBooking?action=Reject&centerBooingID="+centerBookingBean.getId()+"&handledBy="+userInfo.getId()+"&trainerBookingID="+trainerBookingBean.getId()+"'>");
+                                out.println("<button type='button' class='btn btn-outline-danger btn-icon-text'>");
+                                out.println("<i class='mdi mdi-close btn-icon-prepend'></i> Reject</button></div></div>");
+                                out.println("</a>");
+                            }
+                        %>
                     </div>
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
                                 <p class="card-description"> Booking info </p>
-
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group row">
@@ -130,6 +131,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                            
                                     <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Approved</label>
@@ -154,7 +156,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="isCancelled" />" readonly />
+                                                <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="trainerName" />" readonly />
                                             </div>
                                         </div>
                                     </div>

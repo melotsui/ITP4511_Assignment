@@ -137,6 +137,40 @@ public class HandleBooking extends HttpServlet {
                     out.println("Cancel fail");
                 }
                 break;
+            case "Approve":
+                if (bookingDB.handleCenterBooking(request.getParameter("centerBooingID"), request.getParameter("handledBy"), true)) {
+//                    response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                    if (!request.getParameter("trainerBookingID").equals("null")) {
+                        if (bookingDB.handleTrainerBooking(request.getParameter("trainerBookingID"), true)) {
+                            response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                        } else {
+                            out.println("Approve trainer fail");
+                            out.println(request.getParameter("trainerBookingID"));
+                        }
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                    }
+                } else {
+                    out.println("Approve center fail");
+                }
+                break;
+            case "Reject":
+                if (bookingDB.handleCenterBooking(request.getParameter("centerBooingID"), request.getParameter("handledBy"), false)) {
+//                    response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                    if (!request.getParameter("trainerBookingID").equals("null")) {
+                        if (bookingDB.handleTrainerBooking(request.getParameter("trainerBookingID"), false)) {
+                            response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                        } else {
+                            out.println("Reject trainer fail");
+                            out.println(request.getParameter("trainerBookingID"));
+                        }
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                    }
+                } else {
+                    out.println("Reject center fail");
+                }
+                break;
             case "Update":
                 String status = request.getParameter("status");
                 if (status.equalsIgnoreCase("Waiting")) {

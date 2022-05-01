@@ -354,4 +354,79 @@ public class BookingDB {
         }
          return (tbbNum == 1) ? true : false;   
     }
+        
+    public boolean handleCenterBooking(String centerBooingID, String handledBy, boolean handle) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int cbbNum=0;
+        int tbbNum=0;
+        try {
+            cnnct = getConnection();
+            String cbbQueryStatement = "UPDATE esd.centerBooking SET isApproved=?, isHandled=1, handledBy=?, handledDateTime=NOW() WHERE esd.centerBooking.id = ?;";
+            pStmnt = cnnct.prepareStatement(cbbQueryStatement);
+            pStmnt.setBoolean(1, handle);
+            pStmnt.setString(2, handledBy);
+            pStmnt.setString(3, centerBooingID);
+//            pStmnt.setString(3, tbb.getId());
+            cbbNum= pStmnt.executeUpdate();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (cbbNum == 1) ? true : false;   
+    }
+
+    public boolean handleTrainerBooking(String trainerBookingID, boolean handle) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int cbbNum=0;
+        int tbbNum=0;
+        try {
+            cnnct = getConnection();
+            String cbbQueryStatement = "UPDATE esd.trainerBooking SET isApproved=?, isHandled=1, approvedDateTime=NOW() WHERE esd.trainerBooking.id = ?;";
+            pStmnt = cnnct.prepareStatement(cbbQueryStatement);
+            pStmnt.setBoolean(1, handle);
+            pStmnt.setString(2, trainerBookingID);
+//            pStmnt.setString(3, tbb.getId());
+            cbbNum= pStmnt.executeUpdate();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (cbbNum == 1) ? true : false;   
+    }
 }

@@ -139,7 +139,7 @@
 //                        }
                     %>
                     <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+//                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#center' aria-expanded='false' aria-controls='center'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
@@ -151,10 +151,12 @@
                             out.println("<ul class='nav flex-column sub-menu'>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+"/staff/handleCenter/getAll'> List Gym Center </a></li>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/staff/handleCenter?action=getAll'> List Gym Center </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/staff/add-gym-center.jsp'> Add Gym Center </a></li>");
+                            if(userInfo.getRole().equals("Staff")){
+                                out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath()+ "/staff/add-gym-center.jsp'> Add Gym Center </a></li>");
+                            }
                             //out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath() + "/staff/edit-gym-center.jsp'> Edit Gym Center </a></li>");
                             out.println("</ul></div></li>");
-                        }
+//                        }
                     %>
                     <% 
 //                        if(userInfo.getRole().equalsIgnoreCase("Staff")){

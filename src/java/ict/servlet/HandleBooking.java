@@ -55,11 +55,18 @@ public class HandleBooking extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         UserBean userBean = (UserBean) request.getSession().getAttribute("userInfo");
+        String id = request.getParameter("id");
+        String role = request.getParameter("role");
         String action = request.getParameter("action");
         PrintWriter out = response.getWriter();
         switch (action) {
-            case "list":
-
+            case "listing":
+                ArrayList<CenterBookingBean> bookingList = bookingDB.queryBookings();
+                request.setAttribute("bookingList", bookingList);
+                System.out.println(bookingList);
+                RequestDispatcher rdd;
+                rdd = this.getServletContext().getRequestDispatcher("/list-booking.jsp");
+                rdd.forward(request, response);
                 break;
             case "getBookingInfo":
                 ArrayList<UserBean> trainersWithPrice = userDB.queryActiveTrainersWithPrice();

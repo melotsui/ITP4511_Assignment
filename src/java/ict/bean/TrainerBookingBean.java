@@ -14,6 +14,15 @@ import java.io.Serializable;
 public class TrainerBookingBean implements Serializable {
     private String id;
     private String trainerID;
+    private String trainerName;
+
+    public String getTrainerName() {
+        return trainerName;
+    }
+
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
+    }
     private boolean isApproved;
     private String approvedDateTime;
     private double price;

@@ -14,15 +14,72 @@ import java.io.Serializable;
 public class CenterBookingBean implements Serializable {
     private String id;
     private String centerID;
+    private String centerName;
+    private String bookingUserName;
+    private String status;
+
+    public String getStatus() {
+        if(isCancelled){
+            return "Cancelled";
+        } else {
+            if(!isHandled){
+                return "Waiting";
+            } else {
+                if(isApproved){
+                    return "Approved";
+                } else {
+                    return "Rejected";
+                }
+            }
+        }
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBookingUserName() {
+        return bookingUserName;
+    }
+
+    public void setBookingUserName(String bookingUserName) {
+        this.bookingUserName = bookingUserName;
+    }
+
+    public String getCenterName() {
+        return centerName;
+    }
+
+    public void setCenterName(String centerName) {
+        this.centerName = centerName;
+    }
     private String customerID;
     private String startDate;
     private String startTime;
     private double price;
     private boolean isHandled;
+    private boolean isCancelled;
+
+    public boolean isIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsCancelled(boolean isCancelled) {
+        this.isCancelled = isCancelled;
+    }
     private String handledBy;
     private String handledDateTime;
     private String trainerBookingID;
     private boolean isApproved;
+    private boolean isDeleted;
+
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     private String createDateTime;
     private TrainerBookingBean trainerBooking;
 

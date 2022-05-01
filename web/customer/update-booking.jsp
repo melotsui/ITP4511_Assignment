@@ -41,6 +41,7 @@
                     <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="centerBookingBean" property="id" />" name="centerBookingID" />
                     <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="trainerBookingBean" property="id" />" name="trainerBookingID" />
                     <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="centerBookingBean" property="status" />" name="status" />
+                    <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="userInfo" property="id" />" name="handledBy" />
 
                     <div class="row ">
                         <div class="col-12 grid-margin">
@@ -52,11 +53,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="col-form-label">Center</label>
-                                                    <select class="form-control" name="center">
+                                                    <select class="form-control" name="centerID">
                                                         <%
-                                                                for(int i=0; i<centersWithPrice.size(); i++){
-                                                                    out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+" ($"+centersWithPrice.get(i).getPrice()+"/h)</option>");
-                                                                }
+                                                            for(int i=0; i<centersWithPrice.size(); i++){
+                                                                out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+" ($"+centersWithPrice.get(i).getPrice()+"/h)</option>");
+                                                            }
                                                         %>
                                                     </select>
                                                 </div>
@@ -72,18 +73,18 @@
                                                 <div class="form-group row">
                                                     <label class="col-form-label">Booking Time</label>
                                                     <select class="form-control" name="time">
-                                                        <option>11:00 - 12:00</option>
-                                                        <option>12:00 - 13:00</option>
-                                                        <option>13:00 - 14:00</option>
-                                                        <option>14:00 - 15:00</option>
-                                                        <option>15:00 - 16:00</option>
-                                                        <option>16:00 - 17:00</option>
-                                                        <option>17:00 - 18:00</option>
-                                                        <option>18:00 - 19:00</option>
-                                                        <option>19:00 - 20:00</option>
-                                                        <option>20:00 - 21:00</option>
-                                                        <option>21:00 - 22:00</option>
-                                                        <option>22:00 - 23:00</option>
+                                                        <option value="11:00:00">11:00 - 12:00</option>
+                                                        <option value="12:00:00">12:00 - 13:00</option>
+                                                        <option value="13:00:00">13:00 - 14:00</option>
+                                                        <option value="14:00:00">14:00 - 15:00</option>
+                                                        <option value="15:00:00">15:00 - 16:00</option>
+                                                        <option value="16:00:00">16:00 - 17:00</option>
+                                                        <option value="17:00:00">17:00 - 18:00</option>
+                                                        <option value="18:00:00">18:00 - 19:00</option>
+                                                        <option value="19:00:00">19:00 - 20:00</option>
+                                                        <option value="20:00:00">20:00 - 21:00</option>
+                                                        <option value="21:00:00">21:00 - 22:00</option>
+                                                        <option value="22:00:00">22:00 - 23:00</option>
 
                                                     </select>
                                                 </div>
@@ -100,7 +101,7 @@
                                             </div>
                                             <div class="col-md-6 mt-2 trainerSelect" style="display: none">
                                                 <div class="form-group row">
-                                                    <select class="form-control" name="trainer">
+                                                    <select class="form-control" name="trainerID">
                                                         <option></option>
                                                         <%
                                                                 for(int i=0; i<trainersWithPrice.size(); i++){

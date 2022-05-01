@@ -42,6 +42,7 @@ public class HandleBooking extends HttpServlet {
         centerDB = new CenterDB(dbUrl, dbUser, dbPassword);
         userDB = new UserDB(dbUrl, dbUser, dbPassword);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -94,7 +95,7 @@ public class HandleBooking extends HttpServlet {
                         centerBean.setTrainerBooking(trainerBean);
                     }
                     if (bookingDB.addBooking(centerBean, userBean.getId())) {
-                        out.println("booking success");
+                        response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
                     } else {
                         out.println("booking fail");
                     }
@@ -114,7 +115,6 @@ public class HandleBooking extends HttpServlet {
                 request.setAttribute("trainerBookingBean", trainerBookingBean);
                 rd = this.getServletContext().getRequestDispatcher("/customer/update-booking.jsp");
                 rd.forward(request, response);
-
                 break;
             case "Detail":
                 centerBookingBean = new CenterBookingBean();
@@ -129,25 +129,41 @@ public class HandleBooking extends HttpServlet {
 
                 break;
             case "Cancel":
-                if(bookingDB.cancelBooking(id)){
-                    response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role="+role+"&id="+userBean.getId());
-                }else{
-                    out.println("cancel fail");
+                if (bookingDB.cancelBooking(id)) {
+                    response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                } else {
+                    out.println("Cancel fail");
                 }
                 break;
             case "Update":
                 String status = request.getParameter("status");
-                if(status.equalsIgnoreCase("Waiting")){
-                    
+                if (status.equalsIgnoreCase("Waiting")) {
+                    centerBookingBean = new CenterBookingBean();
+                    trainerBookingBean = new TrainerBookingBean();
+                    centerBookingBean.setId(request.getParameter("centerBookingID"));
+                    centerBookingBean.setCenterID(request.getParameter("centerID"));
+                    centerBookingBean.setStartDate(request.getParameter("date"));
+                    centerBookingBean.setStartTime(request.getParameter("time"));
+                    centerBookingBean.setHandledBy(request.getParameter("handledBy"));
+                    trainerBookingBean.setTrainerID(request.getParameter("trainerID"));
+//                    trainerBookingBean.setId(request.getParameter("trainerBookingID"));
+                    if (bookingDB.updateBooking(centerBookingBean, trainerBookingBean)) {
+                        if (bookingDB.updateTrainerBooking(centerBookingBean, trainerBookingBean)) {
+                            response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role=" + role + "&id=" + userBean.getId());
+                        } else {
+                            out.println("Edit trainerBookingBean fail");
+                        }
+                    } else {
+                        out.println("Edit centerBookingBean fail");
+                    }
                 } else {
-                    out.println("Edit fail");
+                    out.println("Booking is already " + status);
                 }
                 break;
             default:
                 break;
         }
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

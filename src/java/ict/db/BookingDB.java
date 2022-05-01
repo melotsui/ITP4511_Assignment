@@ -87,13 +87,13 @@ public class BookingDB {
 
             }
 
-            String insertCenter = "INSERT INTO centerBooking (id, centerID, customerID, startDate, startTime, price, trainerBookingID) VALUES ((SELECT count(id)+1 FROM esd.centerBooking subquery), ?,?,?,?,?,?)";
+            String insertCenter = "INSERT INTO centerBooking (id, centerID, customerID, startDate, startTime, price, trainerBookingID) VALUES ((SELECT count(id)+1 FROM esd.centerBooking subquery), ?,?,?,?,(SELECT price from esd.centerHourlyRate WHERE centerID=? and year=year(sysdate())),?)";
             pStmnt = cnnct.prepareStatement(insertCenter);
             pStmnt.setString(1, bean.getCenterID());
             pStmnt.setString(2, customerID);
             pStmnt.setString(3, bean.getStartDate());
             pStmnt.setString(4, bean.getStartTime());
-            pStmnt.setDouble(5, bean.getPrice());
+            pStmnt.setString(5, bean.getCenterID());
             pStmnt.setString(6, insertedBookingID);
 
             int rowCount = pStmnt.executeUpdate();
@@ -204,8 +204,9 @@ public class BookingDB {
                     tbb.setTrainerName(rsName.getString("firstName") + rsName.getString("lastName"));
                 }
                 tbb.setIsHandled(rs.getBoolean("trainerBooking.isHandled"));
+                tbb.setId(rs.getString("trainerBooking.id"));
                 tbb.setPrice(rs.getInt("trainerBooking.price"));
-                System.out.println(tbb);
+                System.out.println(tbb.getId());
                 cbb.setTrainerBooking(tbb);
                 cbb.setCenterID(rs.getString("centerID"));
                 cbb.setId(rs.getString("id"));
@@ -271,17 +272,25 @@ public class BookingDB {
         return (num == 1) ? true : false;
     }
 
-    public boolean updateBooking(CenterBookingBean ccb, TrainerBookingBean tbb) {
+    public boolean updateBooking(CenterBookingBean cbb, TrainerBookingBean tbb) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        int num=0;
+        int cbbNum=0;
+        int tbbNum=0;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "UPDATE esd.center SET name=?, address=?, phone=?, isActive=? WHERE id=?";
-            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            String cbbQueryStatement = "UPDATE esd.centerBooking SET centerID=?, startDate=?, startTime=?, price=(SELECT price from esd.centerHourlyRate WHERE centerID=? and year=year(sysdate())), handledBy=?, handledDateTime=NOW() WHERE esd.centerBooking.id = ?;";
+//            String cbbQueryStatement = "UPDATE esd.centerBooking SET centerID=?, startDate=?, startTime=?, price=(SELECT price from esd.centerHourlyRate WHERE centerID=? and year=year(sysdate())), handledDateTime=NOW() WHERE esd.centerBooking.id = ?;";
+
+            pStmnt = cnnct.prepareStatement(cbbQueryStatement);
             //Statement s = cnnct.createStatement();
-            num= pStmnt.executeUpdate();
-          
+            pStmnt.setString(1, cbb.getCenterID());
+            pStmnt.setString(2, cbb.getStartDate());
+            pStmnt.setString(3, cbb.getStartTime());
+            pStmnt.setString(4, cbb.getCenterID());
+            pStmnt.setString(6, cbb.getHandledBy());
+            pStmnt.setString(5, cbb.getId());
+            cbbNum= pStmnt.executeUpdate();
         } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
@@ -303,6 +312,46 @@ public class BookingDB {
                 }
             }
         }
-         return (num == 1) ? true : false;   
+         return (cbbNum == 1) ? true : false;   
+    }
+    
+    public boolean updateTrainerBooking(CenterBookingBean cbb, TrainerBookingBean tbb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int cbbNum=0;
+        int tbbNum=0;
+        try {
+            cnnct = getConnection();
+            //String cbbQueryStatement = "UPDATE esd.centerBooking SET centerID=?, startDate=?, startTime=?, price=(SELECT price from esd.centerHourlyRate WHERE centerID=? and year=year(sysdate())), handledBy=?, handledDateTime=NOW() WHERE esd.centerBooking.id = ?;";
+            String tbbQueryStatement = "UPDATE esd.trainerBooking SET trainerID=?, price=(SELECT price from esd.trainerHourlyRate WHERE trainerID=? and year=year(sysdate())) WHERE esd.trainerBooking.id = (SELECT trainerBookingID FROM esd.centerBooking where id=?);";
+            pStmnt = cnnct.prepareStatement(tbbQueryStatement);
+            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS "+tbb.getTrainerID()+" " + cbb.getId());
+            pStmnt.setString(1, tbb.getTrainerID());
+            pStmnt.setString(2, tbb.getTrainerID());
+            pStmnt.setString(3, cbb.getId());
+//            pStmnt.setString(3, tbb.getId());
+            tbbNum= pStmnt.executeUpdate();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (tbbNum == 1) ? true : false;   
     }
 }

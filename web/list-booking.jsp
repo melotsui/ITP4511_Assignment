@@ -115,7 +115,7 @@
                                                     }
                                                 }
                                             } else {
-                                                out.println("No Customer");
+                                                out.println("No Booking");
                                             }
                                             %>
                                         </tbody>

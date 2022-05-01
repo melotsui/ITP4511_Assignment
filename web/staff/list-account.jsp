@@ -61,16 +61,41 @@
                                             if (accounts != null) {
                                                 for (int i = 0; i < accounts.size(); i++) {
                                                     UserBean c = accounts.get(i);
-                                                    out.println("<tr style='background-color: #191c24;'>");
-                                                    out.println("<td class='id'>" + c.getId() + "</td>");
-                                                    out.println("<td>" + c.getFirstName() + " " + c.getLastName()+ "</td>");
-                                                    out.println("<td>" + c.getEmail() + "</td>");
-                                                    out.println("<td>" + c.getRole() + "</td>");
-                                                    out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Inquire&id=" + c.getId() + "&role="+ c.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
-                                                    out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
-                                                    out.println("</tr>");
-
+                                                    if(userInfo.getRole().equals("Customer")){
+                                                        if(c.getRole().equals("Personal Trainer")){
+                                                            out.println("<tr style='background-color: #191c24;'>");
+                                                            out.println("<td class='id'>" + c.getId() + "</td>");
+                                                            out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
+                                                            out.println("<td>" + c.getEmail() + "</td>");
+                                                            out.println("<td>" + c.getRole() + "</td>");
+                                                            out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Inquire&id=" + c.getId() + "&role="+ c.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                            //out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                            //out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                            out.println("</tr>");
+                                                        }
+                                                    } else if(userInfo.getRole().equals("Staff")){
+                                                        out.println("<tr style='background-color: #191c24;'>");
+                                                        out.println("<td class='id'>" + c.getId() + "</td>");
+                                                        out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
+                                                        out.println("<td>" + c.getEmail() + "</td>");
+                                                        out.println("<td>" + c.getRole() + "</td>");
+                                                        out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Inquire&id=" + c.getId() + "&role="+ c.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                        out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                        out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                        out.println("</tr>");
+                                                    } else {
+                                                        if(!c.getRole().equals("Staff")){
+                                                            out.println("<tr style='background-color: #191c24;'>");
+                                                            out.println("<td class='id'>" + c.getId() + "</td>");
+                                                            out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
+                                                            out.println("<td>" + c.getEmail() + "</td>");
+                                                            out.println("<td>" + c.getRole() + "</td>");
+                                                            out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Inquire&id=" + c.getId() + "&role="+ c.getRole() +"''><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                            out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+                                                            out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
+                                                            out.println("</tr>");
+                                                        }
+                                                    }
                                                 }
                                             } else {
                                                 out.println("No Customer");

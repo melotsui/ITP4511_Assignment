@@ -7,7 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.UserBean"%>
+<%@page import="ict.bean.CenterBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<jsp:useBean id="trainerBookingBean" scope="request" class="ict.bean.TrainerBookingBean" />
+<jsp:useBean id="centerBookingBean" scope="request" class="ict.bean.CenterBookingBean" />
+<jsp:useBean id="centersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.CenterBean>" />
+<jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
 <!DOCTYPE html>
 <%
     String urlBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
@@ -31,7 +36,12 @@
                     <h3 class="page-title"> Update Booking </h3>
                 </div>
 
-                <form class="form-sample" action="" method="post">
+                <form class="form-sample" action="HandleBooking" method="post">
+                    <input type="hidden" class="form-control mr-3" value="Update" name="action" />
+                    <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="centerBookingBean" property="id" />" name="centerBookingID" />
+                    <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="trainerBookingBean" property="id" />" name="trainerBookingID" />
+                    <input type="hidden" class="form-control mr-3" value="<jsp:getProperty name="centerBookingBean" property="status" />" name="status" />
+
                     <div class="row ">
                         <div class="col-12 grid-margin">
                             <div class="card">
@@ -42,12 +52,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="col-form-label">Center</label>
-                                                    <select class="form-control">
-                                                        <option>Tuen Mun Center</option>
-                                                        <option>Sha Tin Center</option>
-                                                        <option>Tsing Yi Center</option>
-                                                        <option>Lee Wai Lee Center</option>
-                                                        <option>Chai Wan Center</option>
+                                                    <select class="form-control" name="center">
+                                                        <%
+                                                                for(int i=0; i<centersWithPrice.size(); i++){
+                                                                    out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+" ($"+centersWithPrice.get(i).getPrice()+"/h)</option>");
+                                                                }
+                                                        %>
                                                     </select>
                                                 </div>
                                             </div>
@@ -55,13 +65,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group row">
                                                     <label class="col-form-label">Booking Date</label>
-                                                    <input type="date" class="form-control mr-3" placeholder="dd/mm/yyyy" id="txtDate" />
+                                                    <input type="date" name="date" class="form-control mr-3" placeholder="dd/mm/yyyy" name="" id="txtDate" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group row">
                                                     <label class="col-form-label">Booking Time</label>
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="time">
                                                         <option>11:00 - 12:00</option>
                                                         <option>12:00 - 13:00</option>
                                                         <option>13:00 - 14:00</option>
@@ -90,11 +100,13 @@
                                             </div>
                                             <div class="col-md-6 mt-2 trainerSelect" style="display: none">
                                                 <div class="form-group row">
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="trainer">
                                                         <option></option>
-                                                        <option>Melo Tsui ($200/hr)</option>
-                                                        <option>Ken Wong</option>
-                                                        <option>Ivan Leung</option>
+                                                        <%
+                                                                for(int i=0; i<trainersWithPrice.size(); i++){
+                                                                    out.println("<option value='"+trainersWithPrice.get(i).getId()+"'>"+trainersWithPrice.get(i).getFirstName()+" "+trainersWithPrice.get(i).getLastName()+" ($"+trainersWithPrice.get(i).getPrice()+"/h)</option>");
+                                                                }
+                                                        %>
                                                     </select>
                                                 </div>
                                             </div>

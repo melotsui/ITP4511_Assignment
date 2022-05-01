@@ -6,6 +6,7 @@
 package ict.db;
 
 import com.mysql.jdbc.Connection;
+import ict.bean.CenterBean;
 import ict.bean.CenterBookingBean;
 import ict.bean.TrainerBookingBean;
 import ict.bean.UserBean;
@@ -270,4 +271,38 @@ public class BookingDB {
         return (num == 1) ? true : false;
     }
 
+    public boolean updateBooking(CenterBookingBean ccb, TrainerBookingBean tbb) {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int num=0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE esd.center SET name=?, address=?, phone=?, isActive=? WHERE id=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            num= pStmnt.executeUpdate();
+          
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+         return (num == 1) ? true : false;   
+    }
 }

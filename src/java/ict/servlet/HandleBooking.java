@@ -101,11 +101,25 @@ public class HandleBooking extends HttpServlet {
                 }
                 break;
             case "Edit":
-                break;
-            case "Detail":
+                trainersWithPrice = userDB.queryActiveTrainersWithPrice();
+                centersWithPrice = centerDB.queryActiveCenter();
+                request.setAttribute("centersWithPrice", centersWithPrice);
+                request.setAttribute("trainersWithPrice", trainersWithPrice);
                 CenterBookingBean centerBookingBean = new CenterBookingBean();
                 centerBookingBean = bookingDB.queryBookingById(id);
                 TrainerBookingBean trainerBookingBean = new TrainerBookingBean();
+                trainerBookingBean = centerBookingBean.getTrainerBooking();
+                System.out.println(trainerBookingBean);
+                request.setAttribute("centerBookingBean", centerBookingBean);
+                request.setAttribute("trainerBookingBean", trainerBookingBean);
+                rd = this.getServletContext().getRequestDispatcher("/customer/update-booking.jsp");
+                rd.forward(request, response);
+
+                break;
+            case "Detail":
+                centerBookingBean = new CenterBookingBean();
+                centerBookingBean = bookingDB.queryBookingById(id);
+                trainerBookingBean = new TrainerBookingBean();
                 trainerBookingBean = centerBookingBean.getTrainerBooking();
                 System.out.println(trainerBookingBean);
                 request.setAttribute("centerBookingBean", centerBookingBean);
@@ -119,6 +133,14 @@ public class HandleBooking extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/HandleBooking?action=listing&role="+role+"&id="+userBean.getId());
                 }else{
                     out.println("cancel fail");
+                }
+                break;
+            case "Update":
+                String status = request.getParameter("status");
+                if(status.equalsIgnoreCase("Waiting")){
+                    
+                } else {
+                    out.println("Edit fail");
                 }
                 break;
             default:

@@ -59,12 +59,13 @@
                                             <%
                                             ArrayList<UserBean> accounts = (ArrayList<UserBean>) request.getAttribute("accounts");
                                             if (accounts != null) {
+                                                    int n=1;
                                                 for (int i = 0; i < accounts.size(); i++) {
                                                     UserBean c = accounts.get(i);
                                                     if(userInfo.getRole().equals("Customer")){
                                                         if(c.getRole().equals("Personal Trainer")){
                                                             out.println("<tr style='background-color: #191c24;'>");
-                                                            out.println("<td class='id'>" + c.getId() + "</td>");
+                                                            out.println("<td class='id'>" + n + "</td>");
                                                             out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
                                                             out.println("<td>" + c.getEmail() + "</td>");
                                                             out.println("<td>" + c.getRole() + "</td>");
@@ -72,10 +73,11 @@
                                                             //out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
                                                             //out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                             out.println("</tr>");
+                                                            n++;
                                                         }
                                                     } else if(userInfo.getRole().equals("Staff")){
                                                         out.println("<tr style='background-color: #191c24;'>");
-                                                        out.println("<td class='id'>" + c.getId() + "</td>");
+                                                        out.println("<td class='id'>" + n + "</td>");
                                                         out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
                                                         out.println("<td>" + c.getEmail() + "</td>");
                                                         out.println("<td>" + c.getRole() + "</td>");
@@ -83,10 +85,11 @@
                                                         out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
                                                         out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                         out.println("</tr>");
+                                                        n++;
                                                     } else {
                                                         if(!c.getRole().equals("Staff")){
                                                             out.println("<tr style='background-color: #191c24;'>");
-                                                            out.println("<td class='id'>" + c.getId() + "</td>");
+                                                            out.println("<td class='id'>" + n + "</td>");
                                                             out.println("<td>" + c.getLastName() + " " + c.getFirstName()+ "</td>");
                                                             out.println("<td>" + c.getEmail() + "</td>");
                                                             out.println("<td>" + c.getRole() + "</td>");
@@ -94,6 +97,7 @@
                                                             out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=getEditCustomer&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
                                                             out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleAccount?action=Delete&id=" + c.getId() + "&role="+ c.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                             out.println("</tr>");
+                                                            n++;
                                                         }
                                                     }
                                                 }

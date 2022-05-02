@@ -168,14 +168,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+<!--                                    <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Approved Date Time</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control-plaintext" maxlength="64" value="<jsp:getProperty name="trainerBookingBean" property="approvedDateTime" />" readonly />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Trainer Price</label>

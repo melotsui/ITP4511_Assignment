@@ -80,7 +80,7 @@
                                     </div>
                                 </a>-->
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item preview-item">
+<!--                                <a href="#" class="dropdown-item preview-item">
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-file-image text-success"></i>
@@ -89,7 +89,7 @@
                                     <div class="preview-item-content">
                                         <p class="preview-subject ellipsis mb-1 text-small">Change Icon</p>
                                     </div>
-                                </a>
+                                </a>-->
                                 <div class="dropdown-divider"></div>
                                 <a href="${pageContext.request.contextPath}/change-password.jsp" class="dropdown-item preview-item">
                                     <div class="preview-thumbnail">

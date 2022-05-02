@@ -15,6 +15,7 @@
 <jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
 <jsp:useBean id="cetnerBookingRate" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
 <jsp:useBean id="trainerBookingRate" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
+<jsp:useBean id="customerBookingRecord" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
 
 
 <!DOCTYPE html>
@@ -201,6 +202,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <%
+                                                //DecimalFormat centerDF = new DecimalFormat("0.0");
+                                                for(int i=0; i<customerBookingRecord.size(); i++){
+                                                    ReportBean cbr = customerBookingRecord.get(i);
+                                                    out.println("<tr>");
+                                                    out.println("<td>"+ (i+1) +"</td>");
+                                                    out.println("<td>"+ cbr.getCustomerID() +"</td>");
+                                                    out.println("<td>"+ cbr.getCustomerName() +"</td>");
+                                                    out.println("<td>"+ cbr.getCustomerBookingPrice() +"</td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

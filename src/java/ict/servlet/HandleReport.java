@@ -70,7 +70,9 @@ public class HandleReport extends HttpServlet {
             
             ArrayList<ReportBean> cetnerBookingRate = reportDB.queryAllCenterBookingRate();
             ArrayList<ReportBean> trainerBookingRate = reportDB.queryAllTrainerBookingRate();
+            ArrayList<ReportBean> customerBookingRecord = reportDB.queryAllCustomerBookingRecord();
             request.setAttribute("cetnerBookingRate", cetnerBookingRate);
+            request.setAttribute("customerBookingRecord", customerBookingRecord);
             request.setAttribute("trainerBookingRate", trainerBookingRate);
             
             RequestDispatcher rd;

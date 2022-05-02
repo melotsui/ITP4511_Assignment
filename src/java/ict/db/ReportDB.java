@@ -51,7 +51,6 @@ public class ReportDB {
         }
         return (Connection) DriverManager.getConnection(url, username, password);
     }
-    private static final DecimalFormat df = new DecimalFormat("0.0");
     public ArrayList queryAllCenterBookingRate() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -144,7 +143,7 @@ public class ReportDB {
                 cb.setTrainerName(rs.getString("name"));
                 cb.setTrainerBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
                 cb.setTrainerBookingRate(rs.getInt("Booking")/countAllBooking*100);
-                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerBookingRate() + " " + cb.getTrainerBookings());
+//                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerBookingRate() + " " + cb.getTrainerBookings());
                 list.add(cb);
             }
             return list;
@@ -172,4 +171,69 @@ public class ReportDB {
         return null;
     }
     
+    public ArrayList queryAllCustomerBookingRecord() {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT esd.user.id as customerID, "
+                    + "CONCAT(esd.user.firstName, ' ', esd.user.lastName) as name, "
+                    + "sum(esd.centerBooking.price) as centerBookingPrice, "
+                    + "sum(esd.trainerBooking.price) as trainerBookingPrice "
+                    + "FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID "
+                    + "JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking "
+                    + "ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID group by customerID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+//            preQueryStatement = "select count(id) as countID from esd.trainerBooking;";
+//            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            //Statement s = cnnct.createStatement();
+//            ResultSet rrs = pStmnt.executeQuery();
+            
+            ArrayList list = new ArrayList();
+//            double countAllBooking = 0;
+//            if (rrs.next()) {
+//                countAllBooking = rrs.getInt("countID");
+////                System.out.println(countAllBooking);
+//            }
+            
+//                System.out.println(countAllBooking);
+            while (rs.next()) {
+//                System.out.println(rs.getInt("Booking"));
+//                System.out.println(countAllBooking);
+//                System.out.println(rs.getInt("Booking")/countAllBooking*100);
+                ReportBean cb = new ReportBean();
+                cb.setCustomerID(rs.getString("customerID"));
+                cb.setCustomerName(rs.getString("name"));
+                cb.setCustomerBookingPrice(rs.getInt("centerBookingPrice") + rs.getInt("trainerBookingPrice"));
+//                cb.setTrainerBookingRate(rs.getInt("Booking")/countAllBooking*100);
+                System.out.println("AAAAAAAAAAAAAA " + cb.getCustomerID() + " " + cb.getCustomerName() + " " + cb.getCustomerBookingPrice());
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -9,10 +9,13 @@
 <%@page import="ict.bean.UserBean"%>
 <%@page import="ict.bean.CenterBean"%>
 <%@page import="ict.bean.ReportBean"%>
+<%@page import="java.text.DecimalFormat"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <jsp:useBean id="centersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.CenterBean>" />
 <jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
 <jsp:useBean id="cetnerBookingRate" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
+<jsp:useBean id="trainerBookingRate" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +39,9 @@
 
 
     </head>
+    <%
+        DecimalFormat df = new DecimalFormat("0.0");
+    %>
     <jsp:include page="../leftNavbar.jsp" />
     <jsp:include page="../topNavbar.jsp" />
     <body>
@@ -69,6 +75,7 @@
                                                 <select class="form-control">
                                                     <option></option>
                                                     <%
+                                                        
                                                             for(int i=0; i<centersWithPrice.size(); i++){
                                                                 out.println("<option value='"+centersWithPrice.get(i).getId()+"'>"+centersWithPrice.get(i).getName()+"</option>");
                                                             }
@@ -78,8 +85,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 mt-5">
-                                        <div class="form-group row">
+                                    <div class="col-md-6 mt-5"> 
+                                       <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Period Type</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
@@ -121,12 +128,12 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                for(int i=0; i<cetnerBookingRate.size(); i++){
-                                                    ReportBean cbr = cetnerBookingRate.get(i);
+                                                for(int i=0; i<trainerBookingRate.size(); i++){
+                                                    ReportBean cbr = trainerBookingRate.get(i);
                                                     out.println("<tr>");
                                                     out.println("<td>"+ (i+1) +"</td>");
-                                                    out.println("<td>"+ cbr.getCenterName() +"</td>");
-                                                    out.println("<td>"+ cbr.getCenterBookings() + " ("+cbr.getCenterBookingRate()+"%)" +"</td>");
+                                                    out.println("<td>"+ cbr.getTrainerName() +"</td>");
+                                                    out.println("<td>"+ cbr.getTrainerBookings() + " ("+df.format(cbr.getTrainerBookingRate())+"%)" +"</td>");
                                                     out.println("</tr>");
                                                 }
                                             %>
@@ -157,12 +164,13 @@
                                         </thead>
                                         <tbody>
                                             <%
+                                                //DecimalFormat centerDF = new DecimalFormat("0.0");
                                                 for(int i=0; i<cetnerBookingRate.size(); i++){
                                                     ReportBean cbr = cetnerBookingRate.get(i);
                                                     out.println("<tr>");
                                                     out.println("<td>"+ (i+1) +"</td>");
                                                     out.println("<td>"+ cbr.getCenterName() +"</td>");
-                                                    out.println("<td>"+ cbr.getCenterBookings() + " ("+cbr.getCenterBookingRate()+"%)" +"</td>");
+                                                    out.println("<td>"+ cbr.getCenterBookings() + " ("+df.format(cbr.getCenterBookingRate())+"%)" +"</td>");
                                                     out.println("</tr>");
                                                 }
                                             %>

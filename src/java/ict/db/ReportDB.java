@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -50,7 +51,7 @@ public class ReportDB {
         }
         return (Connection) DriverManager.getConnection(url, username, password);
     }
-
+    private static final DecimalFormat df = new DecimalFormat("0.0");
     public ArrayList queryAllCenterBookingRate() {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -82,8 +83,68 @@ public class ReportDB {
                 cb.setCenterID(rs.getString("centerID"));
                 cb.setCenterName(rs.getString("name"));
                 cb.setCenterBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
-                cb.setCenterBookingRate(rs.getInt("Booking")/countAllBooking);
+                cb.setCenterBookingRate(rs.getInt("Booking")/countAllBooking*100);
 //                System.out.println("AAAAAAAAAAAAAA " + cb.getCenterID() + " " + cb.getCenterName() + " " + cb.getCenterBookingRate() + " " + cb.getCenterBookings());
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList queryAllTrainerBookingRate() {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "select esd.trainerBooking.trainerID, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , Count(esd.trainerBooking.id) as 'Booking' from esd.trainerBooking, esd.user where esd.trainerBooking.trainerID = esd.user.id group by trainerID order by Booking desc;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+            preQueryStatement = "select count(id) as countID from esd.trainerBooking;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rrs = pStmnt.executeQuery();
+            
+            ArrayList list = new ArrayList();
+            double countAllBooking = 0;
+            if (rrs.next()) {
+                countAllBooking = rrs.getInt("countID");
+//                System.out.println(countAllBooking);
+            }
+            
+//                System.out.println(countAllBooking);
+            while (rs.next()) {
+//                System.out.println(rs.getInt("Booking"));
+//                System.out.println(countAllBooking);
+//                System.out.println(rs.getInt("Booking")/countAllBooking*100);
+                ReportBean cb = new ReportBean();
+                cb.setTrainerID(rs.getString("trainerID"));
+                cb.setTrainerName(rs.getString("name"));
+                cb.setTrainerBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
+                cb.setTrainerBookingRate(rs.getInt("Booking")/countAllBooking*100);
+                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerBookingRate() + " " + cb.getTrainerBookings());
                 list.add(cb);
             }
             return list;

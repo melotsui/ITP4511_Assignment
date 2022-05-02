@@ -69,7 +69,9 @@ public class HandleReport extends HttpServlet {
             request.setAttribute("trainersWithPrice", trainersWithPrice);
             
             ArrayList<ReportBean> cetnerBookingRate = reportDB.queryAllCenterBookingRate();
+            ArrayList<ReportBean> trainerBookingRate = reportDB.queryAllTrainerBookingRate();
             request.setAttribute("cetnerBookingRate", cetnerBookingRate);
+            request.setAttribute("trainerBookingRate", trainerBookingRate);
             
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/staff/report-booking-overview.jsp");

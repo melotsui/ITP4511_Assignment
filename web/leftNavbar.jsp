@@ -107,17 +107,23 @@
                     <li class="nav-item nav-category">
                         <span class="nav-link">Navigation</span>
                     </li>
-                    <li class="nav-item menu-items">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">
-                            <span class="menu-icon">
-                                <i class="mdi mdi-speedometer"></i>
+                    <li class='nav-item menu-items'>
+                        <a class='nav-link' href='${pageContext.request.contextPath}/index.jsp'>
+                            <span class='menu-icon'>
+                                <i class='mdi mdi-speedometer'></i>
                             </span>
-                            <span class="menu-title">Dashboard</span>
+                            <%
+                                if(!userInfo.getRole().equals("Personal Trainer")){
+                                    out.println("<span class='menu-title'>Dashboard</span>");
+                                } else {
+                                    out.println("<span class='menu-title'>List Booking</span>");
+                                }
+                            %>
                         </a>
                     </li>
                     
                     <% 
-//                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                        if(!userInfo.getRole().equalsIgnoreCase("Personal Trainer")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#booking' aria-expanded='false' aria-controls='booking'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
@@ -136,7 +142,7 @@
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='add-user.jsp'> Add User </a></li>");
 //                            out.println("<li class='nav-item'> <a class='nav-link' href='edit-user.jsp'> Edit User </a></li>");
                             out.println("</ul></div></li>");
-//                        }
+                        }
                     %>
                     <% 
 //                        if(userInfo.getRole().equalsIgnoreCase("Staff")){

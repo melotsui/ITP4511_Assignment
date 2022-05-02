@@ -20,7 +20,7 @@
                 } else if (userInfo.getRole().equalsIgnoreCase("Staff")){
                     response.sendRedirect("./staff/dashboard.jsp");
                 } else if (userInfo.getRole().equalsIgnoreCase("Personal Trainer")){
-                    response.sendRedirect("./trainer/dashboard.jsp");
+                    response.sendRedirect("HandleBooking?action=listing&id="+userInfo.getId()+"&role="+userInfo.getRole());
                 }
             } catch (Exception ex) {
                 response.sendRedirect("./login.jsp");

@@ -142,5 +142,7 @@ public class ReportBean implements Serializable {
         this.customerBookingPrice = customerBookingPrice;
     }
     
-    
+    public String genYearlyBookingCSV(){
+        return "";
+    }
 }

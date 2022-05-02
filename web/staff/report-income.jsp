@@ -42,7 +42,8 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form action="HandleReport" method="post">
+                                    <input type="hidden" name="action" value="genIncomeReport" />
                                     <h3 class="page-title"> Income Report </h3>
                                     <div class="col-md-6 mt-5">
                                         <div class="form-group row">

@@ -54,14 +54,15 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form action="HandleReport" method="post">
+                                    <input type="hidden" name="action" value="genBookingReport" />
                                     <h3 class="page-title"> Booking Report </h3>
                                     <div class="row">
                                         <div class="col-md-6 trainerSelect">
                                             <div class="form-group row m-2">
                                                 <label class="col-form-label">Trainer</label>
-                                                <select class="form-control">
-                                                    <option></option>
+                                                <select class="form-control" name="trainer">
+                                                    <option value=""></option>
                                                     <%
                                                             for(int i=0; i<trainersWithPrice.size(); i++){
                                                                 out.println("<option value='"+trainersWithPrice.get(i).getId()+"'>"+trainersWithPrice.get(i).getFirstName()+" "+trainersWithPrice.get(i).getLastName()+"</option>");
@@ -73,8 +74,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group row m-2">
                                                 <label class="col-form-label">Center</label>
-                                                <select class="form-control">
-                                                    <option></option>
+                                                <select class="form-control" name="center">
+                                                    <option value=""></option>
                                                     <%
                                                         
                                                             for(int i=0; i<centersWithPrice.size(); i++){
@@ -85,14 +86,13 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6 mt-5"> 
-                                       <div class="form-group row">
+                                        <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Period Type</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" > Monthly <i class="input-helper"></i></label>
+                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" checked="" > Monthly <i class="input-helper"></i></label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
@@ -103,9 +103,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Year" id="dpYear" style="display: none" />
-                                    <input type="month" class="form-control" id="dpMonth" placeholder="Month" style="display: none">
-
+                                    <input type="text" class="form-control" placeholder="Year" id="dpYear" style="display: none" name="year"/>
+                                    <input type="month" class="form-control" id="dpMonth" placeholder="Month" name="month">
                                     <button type="submit" class="btn btn-primary my-2">Submit</button>
                                 </form>
                             </div>
@@ -138,8 +137,6 @@
                                                     out.println("</tr>");
                                                 }
                                             %>
-                                            
-                                                
                                         </tbody>
                                     </table>
                                 </div>
@@ -196,8 +193,8 @@
                                                 <th> # </th>
                                                 <th> Customer ID </th>
                                                 <th> Customer Name </th>
-<!--                                                <th> Center </th>
-                                                <th> Booking Date Time </th>
+                                                <!--                                                <th> Center </th>
+                                                                                                <th> Booking Date Time </th>
                                                 --><th> Price </th>
                                             </tr>
                                         </thead>

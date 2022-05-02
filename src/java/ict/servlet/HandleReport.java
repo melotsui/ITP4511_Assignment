@@ -15,6 +15,9 @@ import ict.db.CenterDB;
 import ict.db.ReportDB;
 import ict.db.UserDB;
 import ict.db.UserPriceDB;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -67,27 +70,53 @@ public class HandleReport extends HttpServlet {
             ArrayList<CenterBean> centersWithPrice = centerDB.queryActiveCenter();
             request.setAttribute("centersWithPrice", centersWithPrice);
             request.setAttribute("trainersWithPrice", trainersWithPrice);
-            
-            ArrayList<ReportBean> cetnerBookingRate = reportDB.queryAllCenterBookingRate();
-            ArrayList<ReportBean> trainerBookingRate = reportDB.queryAllTrainerBookingRate();
-            ArrayList<ReportBean> customerBookingRecord = reportDB.queryAllCustomerBookingRecord();
+
+            ArrayList<ReportBean> cetnerBookingRate = reportDB.queryAllCenterBookingRate("2022");
+            ArrayList<ReportBean> trainerBookingRate = reportDB.queryAllTrainerBookingRate("2022");
+            ArrayList<ReportBean> customerBookingRecord = reportDB.queryAllCustomerBookingRecord("2022");
             request.setAttribute("cetnerBookingRate", cetnerBookingRate);
             request.setAttribute("customerBookingRecord", customerBookingRecord);
             request.setAttribute("trainerBookingRate", trainerBookingRate);
-            
+
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/staff/report-booking-overview.jsp");
             rd.forward(request, response);
 
         } else if (action.equalsIgnoreCase("getIncomeReportInfo")) {
-            ArrayList<ReportBean> trainerIncome = reportDB.queryTrainerIncome();
+            ArrayList<ReportBean> trainerIncome = reportDB.queryTrainerIncome("2022");
             request.setAttribute("trainerIncome", trainerIncome);
-            ArrayList<ReportBean> centerIncome = reportDB.queryCenterIncome();
+            ArrayList<ReportBean> centerIncome = reportDB.queryCenterIncome("2022");
             request.setAttribute("centerIncome", centerIncome);
 
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/staff/report-income.jsp");
             rd.forward(request, response);
+        } else if (action.equalsIgnoreCase("genBookingReport")) {
+            String year = request.getParameter("year");
+            if (!request.getParameter("year").equals("")) {
+                File file = reportDB.bookingRateCsv(year,"", request.getParameter("center"), request.getParameter("trainer"));
+                String fileName = "booking-report.csv";
+                response.setContentType("text/csv");
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    response.getWriter().write(line + "\n");
+                }
+            } else {
+                String month = request.getParameter("month")+"-01";
+                File file = reportDB.bookingRateCsv("",month, request.getParameter("center"), request.getParameter("trainer"));
+                String fileName = "booking-report.csv";
+                response.setContentType("text/csv");
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    response.getWriter().write(line + "\n");
+                }
+            }
+        } else if (action.equalsIgnoreCase("genIncomeReport")) {
+            
         } else {
             out.println("No such action");
         }

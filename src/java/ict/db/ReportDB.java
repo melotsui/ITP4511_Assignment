@@ -11,7 +11,11 @@ import ict.bean.ReportBean;
 import ict.bean.CenterBookingBean;
 import ict.bean.TrainerBookingBean;
 import ict.bean.UserBean;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -33,6 +37,7 @@ public class ReportDB {
     private String url = "";
     private String username = "";
     private String password = "";
+    DecimalFormat df = new DecimalFormat("0.0");
 
     public ReportDB() {
     }
@@ -51,13 +56,15 @@ public class ReportDB {
         }
         return (Connection) DriverManager.getConnection(url, username, password);
     }
-    public ArrayList queryAllCenterBookingRate() {
+
+    public ArrayList queryAllCenterBookingRate(String date) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "select centerID, esd.center.name, Count(esd.centerBooking.id) as 'Booking' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id and YEAR(startDate) = YEAR(sysdate()) group by centerID order by Booking desc;";
+            String preQueryStatement = "select centerID, esd.center.name, Count(esd.centerBooking.id) as 'Booking' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id and YEAR(esd.centerBooking.createDateTime) = ? group by centerID order by Booking desc;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -65,14 +72,14 @@ public class ReportDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rrs = pStmnt.executeQuery();
-            
+
             ArrayList list = new ArrayList();
             double countAllBooking = 0;
             if (rrs.next()) {
                 countAllBooking = rrs.getInt("countID");
 //                System.out.println(countAllBooking);
             }
-            
+
 //                System.out.println(countAllBooking);
             while (rs.next()) {
 //                System.out.println(rs.getInt("Booking"));
@@ -81,8 +88,8 @@ public class ReportDB {
                 ReportBean cb = new ReportBean();
                 cb.setCenterID(rs.getString("centerID"));
                 cb.setCenterName(rs.getString("name"));
-                cb.setCenterBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
-                cb.setCenterBookingRate(rs.getInt("Booking")/countAllBooking*100);
+                cb.setCenterBookings(rs.getInt("Booking") + "/" + (int) countAllBooking);
+                cb.setCenterBookingRate(rs.getInt("Booking") / countAllBooking * 100);
 //                System.out.println("AAAAAAAAAAAAAA " + cb.getCenterID() + " " + cb.getCenterName() + " " + cb.getCenterBookingRate() + " " + cb.getCenterBookings());
                 list.add(cb);
             }
@@ -110,14 +117,15 @@ public class ReportDB {
         }
         return null;
     }
-    
-    public ArrayList queryAllTrainerBookingRate() {
+
+    public ArrayList queryAllTrainerBookingRate(String date) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "select esd.trainerBooking.trainerID, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , Count(esd.trainerBooking.id) as 'Booking' from esd.trainerBooking, esd.user where esd.trainerBooking.trainerID = esd.user.id group by trainerID order by Booking desc;";
+            String preQueryStatement = "select esd.trainerBooking.trainerID, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , Count(esd.trainerBooking.id) as 'Booking' from esd.trainerBooking, esd.user where YEAR(esd.trainerBooking.createDateTime) = ? and esd.trainerBooking.trainerID = esd.user.id group by trainerID order by Booking desc;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -125,14 +133,14 @@ public class ReportDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             //Statement s = cnnct.createStatement();
             ResultSet rrs = pStmnt.executeQuery();
-            
+
             ArrayList list = new ArrayList();
             double countAllBooking = 0;
             if (rrs.next()) {
                 countAllBooking = rrs.getInt("countID");
 //                System.out.println(countAllBooking);
             }
-            
+
 //                System.out.println(countAllBooking);
             while (rs.next()) {
 //                System.out.println(rs.getInt("Booking"));
@@ -141,8 +149,8 @@ public class ReportDB {
                 ReportBean cb = new ReportBean();
                 cb.setTrainerID(rs.getString("trainerID"));
                 cb.setTrainerName(rs.getString("name"));
-                cb.setTrainerBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
-                cb.setTrainerBookingRate(rs.getInt("Booking")/countAllBooking*100);
+                cb.setTrainerBookings(rs.getInt("Booking") + "/" + (int) countAllBooking);
+                cb.setTrainerBookingRate(rs.getInt("Booking") / countAllBooking * 100);
 //                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerBookingRate() + " " + cb.getTrainerBookings());
                 list.add(cb);
             }
@@ -170,8 +178,8 @@ public class ReportDB {
         }
         return null;
     }
-    
-    public ArrayList queryAllCustomerBookingRecord() {
+
+    public ArrayList queryAllCustomerBookingRecord(String date) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
@@ -182,8 +190,10 @@ public class ReportDB {
                     + "sum(esd.trainerBooking.price) as trainerBookingPrice "
                     + "FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID "
                     + "JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking "
-                    + "ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID group by customerID;";
+                    + "ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID "
+                    + "where YEAR(esd.trainerBooking.createDateTime) = ? group by customerID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -191,14 +201,13 @@ public class ReportDB {
 //            pStmnt = cnnct.prepareStatement(preQueryStatement);
 //            //Statement s = cnnct.createStatement();
 //            ResultSet rrs = pStmnt.executeQuery();
-            
             ArrayList list = new ArrayList();
 //            double countAllBooking = 0;
 //            if (rrs.next()) {
 //                countAllBooking = rrs.getInt("countID");
 ////                System.out.println(countAllBooking);
 //            }
-            
+
 //                System.out.println(countAllBooking);
             while (rs.next()) {
 //                System.out.println(rs.getInt("Booking"));
@@ -236,14 +245,15 @@ public class ReportDB {
         }
         return null;
     }
-    
-    public ArrayList queryTrainerIncome() {
+
+    public ArrayList queryTrainerIncome(String date) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "select esd.user.id, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , SUM(esd.trainerBooking.price) as 'income' from esd.trainerBooking, esd.user where esd.trainerBooking.trainerID = esd.user.id group by trainerID order by income desc;";
+            String preQueryStatement = "select esd.user.id, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , SUM(esd.trainerBooking.price) as 'income' from esd.trainerBooking, esd.user where esd.trainerBooking.trainerID = esd.user.id and YEAR(esd.trainerBooking.createDateTime) = ? group by trainerID order by income desc;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
 
@@ -283,17 +293,17 @@ public class ReportDB {
         }
         return null;
     }
-    
-    public ArrayList queryCenterIncome() {
+
+    public ArrayList queryCenterIncome(String date) {
         java.sql.Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "select esd.center.id, esd.center.name , SUM(esd.centerBooking.price) as 'income' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id group by centerID order by income desc;";
+            String preQueryStatement = "select esd.center.id, esd.center.name, SUM(esd.centerBooking.price) as 'income' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id and YEAR(esd.centerBooking.createDateTime) = ? group by centerID order by income desc;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
             //Statement s = cnnct.createStatement();
             ResultSet rs = pStmnt.executeQuery();
-
             ArrayList list = new ArrayList();
             while (rs.next()) {
 //                System.out.println(rs.getInt("Booking"));
@@ -303,7 +313,7 @@ public class ReportDB {
                 cb.setCenterID(rs.getString("id"));
                 cb.setCenterName(rs.getString("name"));
                 cb.setCenterIncome(rs.getInt("income"));
-//                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerIncome());
+                System.out.println("AAAAAAAAAAAAAA " + cb.getCenterID() + " " + cb.getCenterIncome());
                 list.add(cb);
             }
             return list;
@@ -330,5 +340,166 @@ public class ReportDB {
         }
         return null;
     }
-    
+
+    public File bookingRateCsv(String year, String yearMonth, String centerID, String trainerID) {
+
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+
+        try {
+            String fileName = "booking-report.csv";
+            File file = new File(fileName);
+            // 创建文件
+            file.createNewFile();
+            FileWriter fw = new FileWriter(fileName);
+            cnnct = getConnection();
+            fw.append("Center Booking ID, Center ID, Center Name, Center Price, CustomerID, Customer First Name, Customer Last Name, Trainer ID, Trainer Price,"
+                    + " Center Booking Start Date, Center Booking Start Time, Is Handled?, HandledBy, Handled Date Time, Trainer Booking ID, Is Approved?, Create Date TIme, Is Cancelled?, \n");
+            if (!year.equals("")) {
+                String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID where YEAR(esd.centerBooking.createDateTime) = ? ";
+                if (!centerID.equals("")){
+                    preQueryStatement += " and center.id = " + centerID;
+                }
+                if(!trainerID.equals("")){
+                    preQueryStatement += " and trainerID = " + trainerID;
+                }
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, year);
+            } else {
+                String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID where month(esd.centerBooking.createDateTime) = month(?)  and year(esd.centerBooking.createDateTime) = year(?)";
+                if (!centerID.equals("")){
+                    preQueryStatement += " and center.id = " + centerID;
+                }
+                if(!trainerID.equals("")){
+                    preQueryStatement += " and trainerID = " + trainerID;
+                }
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, yearMonth);
+                pStmnt.setString(2, yearMonth);
+            }
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                String content = "";
+                ReportBean cb = new ReportBean();
+                content += rs.getString("centerBooking.id");
+                content += ',';
+                content += rs.getString("center.id");
+                content += ',';
+                content += rs.getString("center.name");
+                content += ',';
+                content += rs.getString("centerBooking.price");
+                content += ',';
+                content += rs.getString("user.id");
+                content += ',';
+                content += rs.getString("user.firstName");
+                content += ',';
+                content += rs.getString("user.lastName");
+                content += ',';
+                content += rs.getString("trainerBooking.trainerID");
+                content += ',';
+                content += rs.getString("trainerBooking.price");
+                content += ',';
+                content += rs.getString("startDate");
+                content += ',';
+                content += rs.getString("startTime");
+                content += ',';
+                content += rs.getString("centerBooking.price");
+                content += ',';
+                content += rs.getString("centerBooking.isHandled");
+                content += ',';
+                content += rs.getString("centerBooking.handledDateTime");
+                content += ',';
+                content += rs.getString("trainerBookingID");
+                content += ',';
+                content += rs.getString("centerBooking.isApproved");
+                content += ',';
+                content += rs.getString("centerBooking.createDateTime");
+                content += ',';
+                content += rs.getString("centerBooking.isCancelled");
+                content += ',';
+                System.out.println("SSSSSSSSSSSSSS " + content);
+                fw.append(content + '\n');
+            }
+            fw.flush();
+            fw.close();
+
+            FileReader fr = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fr);
+            String temp = null;
+            while ((temp = bufferedReader.readLine()) != null) {
+                System.out.println(temp);
+            }
+            fr.close();
+            cnnct.close();
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public File incomeRateCsv() {
+
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+
+        try {
+            String fileName = "income-report.csv";
+            File file = new File(fileName);
+            // 创建文件
+            file.createNewFile();
+            FileWriter fw = new FileWriter(fileName);
+            cnnct = getConnection();
+            fw.append("Center ID, Center Name, Booking Rate\n");
+            String preQueryStatement = "select centerID, esd.center.name, Count(esd.centerBooking.id) as 'Booking' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id and YEAR(esd.centerBooking.createDateTime) = 2022 group by centerID order by Booking desc;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+
+            preQueryStatement = "select count(id) as countID from esd.centerBooking;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rrs = pStmnt.executeQuery();
+
+//            ArrayList list = new ArrayList();
+            double countAllBooking = 0;
+            if (rrs.next()) {
+                countAllBooking = rrs.getInt("countID");
+//                System.out.println(countAllBooking);
+            }
+//                ReportBean cb = new ReportBean();
+//                cb.setCenterID(rs.getString("centerID"));
+//                cb.setCenterName(rs.getString("name"));
+//                cb.setCenterBookings(rs.getInt("Booking")+"/"+(int)countAllBooking);
+//                cb.setCenterBookingRate(rs.getInt("Booking")/countAllBooking*100);
+            while (rs.next()) {
+                String content = "";
+                ReportBean cb = new ReportBean();
+                content += rs.getString("centerID");
+                content += ',';
+                content += rs.getString("name");
+                content += ',';
+                content += rs.getInt("Booking") + "/" + (int) countAllBooking + " (" + df.format(rs.getInt("Booking") / countAllBooking * 100) + "%)";
+                content += ',';
+                System.out.println("SSSSSSSSSSSSSS " + content);
+                fw.append(content + '\n');
+            }
+            fw.flush();
+            fw.close();
+
+            FileReader fr = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fr);
+            String temp = null;
+            while ((temp = bufferedReader.readLine()) != null) {
+                System.out.println(temp);
+            }
+            fr.close();
+            cnnct.close();
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

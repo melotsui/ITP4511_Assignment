@@ -366,7 +366,7 @@ public class ReportDB {
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, year);
             } else {
-                String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID where month(esd.centerBooking.createDateTime) = month(?)  and year(esd.centerBooking.createDateTime) = year(?)";
+                String preQueryStatement = "SELECT * FROM esd.centerBooking JOIN esd.center ON esd.center.id = esd.centerBooking.centerID JOIN esd.user ON esd.user.id = esd.centerBooking.customerID LEFT JOIN esd.trainerBooking ON esd.trainerBooking.id = esd.centerBooking.trainerBookingID where month(esd.centerBooking.createDateTime) = month(?)  and year(esd.centerBooking.createDateTime) = ?";
                 if (!centerID.equals("")){
                     preQueryStatement += " and center.id = " + centerID;
                 }

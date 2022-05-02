@@ -345,7 +345,10 @@ public class ReportDB {
 
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-
+        System.out.println("year " + year + "yearMonth " + yearMonth);
+        if(year.equalsIgnoreCase("") && yearMonth.equalsIgnoreCase("-01")){
+            year = "2022";
+        }
         try {
             String fileName = "booking-report.csv";
             File file = new File(fileName);

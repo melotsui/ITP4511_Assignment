@@ -380,7 +380,7 @@ public class UserDB {
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID group by esd.user.id having esd.user.isActive = 1 and esd.user.role=? and esd.user.deleted = 0 order by firstName asc";
+            String preQueryStatement = "SELECT esd.user.*, esd.trainerHourlyRate.price FROM esd.user join esd.trainerHourlyRate on esd.user.id = esd.trainerHourlyRate.trainerID where esd.trainerHourlyRate.year=year(sysdate()) group by esd.user.id having esd.user.isActive = 1 and esd.user.role=? and esd.user.deleted = 0 order by firstName asc";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, "Personal Trainer");
             //Statement s = cnnct.createStatement();

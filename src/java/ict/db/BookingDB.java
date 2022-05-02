@@ -219,6 +219,7 @@ public class BookingDB {
                 cbb.setHandledBy(rs.getString("centerBooking.handledBy"));
                 cbb.setHandledDateTime(rs.getString("centerBooking.handledDateTime"));
                 cbb.setIsApproved(rs.getBoolean("centerBooking.isApproved"));
+                cbb.setIsHandled(rs.getBoolean("centerBooking.isHandled"));
                 cbb.setIsCancelled(rs.getBoolean("centerBooking.isCancelled"));
                 
                 System.out.println(cbb);
@@ -242,7 +243,7 @@ public class BookingDB {
         int num = 0;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "UPDATE esd.centerBooking SET isCancelled=1 WHERE id=?";
+            String preQueryStatement = "UPDATE esd.centerBooking SET isCancelled=1, isHandled=1 WHERE id=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             //Statement s = cnnct.createStatement();

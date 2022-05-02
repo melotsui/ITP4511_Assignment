@@ -51,9 +51,9 @@
                                                     out.println("<td>" + centers.get(i).getPhone() + "</td>");
                                                     out.println("<td>$" + centers.get(i).getPrice() + "/h</td>");
                                                     out.println("<td>" + centers.get(i).getIsActive() + "</td>");
-                                                    out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
                                                     if(!userInfo.getRole().equals("Customer")){
-                                                        out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=edit&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
+//                                                        out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/HandleCenterDetail?action=Inquire&id=" + centers.get(i).getId() + "'><i class='mdi mdi-eye mdi-18px text-warning'></i></a>");
+                                                        out.println("<td><a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=edit&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-pen mdi-18px'></i></a>");
                                                         out.println("<a class='mr-2' href='" + request.getContextPath() + "/staff/handleCenter?action=delete&id=" + centers.get(i).getId() + "&role="+ userInfo.getRole() +"'><i class='mdi mdi-delete mdi-18px text-danger'></i></a></td>");
                                                     }
                                                     out.println("</tr>");

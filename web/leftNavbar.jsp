@@ -145,7 +145,7 @@
                         }
                     %>
                     <% 
-//                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#center' aria-expanded='false' aria-controls='center'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
@@ -162,10 +162,10 @@
                             }
                             //out.println("<li class='nav-item'> <a class='nav-link' href='"+request.getContextPath() + "/staff/edit-gym-center.jsp'> Edit Gym Center </a></li>");
                             out.println("</ul></div></li>");
-//                        }
+                        }
                     %>
                     <% 
-//                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#user' aria-expanded='false' aria-controls='user'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");
@@ -181,7 +181,7 @@
                             }
                             //out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/edit-user.jsp'> Edit User </a></li>");
                             out.println("</ul></div></li>");
-//                        }
+                        }
                     %>
                     <% 
                         if(userInfo.getRole().equalsIgnoreCase("Staff")){
@@ -219,7 +219,7 @@
                             <span class="menu-title">Profile</span>
                         </a>
                     </li>
-                    <li class='nav-item menu-items'>
+<!--                    <li class='nav-item menu-items'>
                         <a class='nav-link' data-toggle='collapse' href='#auth' aria-expanded='false' aria-controls='auth'>
                             <span class='menu-icon'>
                                 <i class='mdi mdi-security'></i>
@@ -236,7 +236,7 @@
                                 <li class='nav-item'> <a class='nav-link' href='pages/samples/register.html'> Register </a></li>
                             </ul>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
             </nav>
 

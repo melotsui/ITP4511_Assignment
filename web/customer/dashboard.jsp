@@ -109,6 +109,7 @@
                                         <tbody>
                                             <%
                                                 for(int i=0; i<centers.size(); i++){
+//                                                    out.println(centers.size());
 //                                                    out.println(centers.get(i).getAddress());
                                                     out.println("<tr>");
                                                     out.println("<td> " + (i+1) + " </td>");

@@ -47,9 +47,9 @@
                                                         <h6 class="preview-subject"><jsp:getProperty name="user" property="firstName" /> <jsp:getProperty name="user" property="lastName" /></h6>
                                                         <!--<p class="text-muted text-small">4 Hours Ago</p>-->
                                                     </div>
-                                                    <p class="text-muted"><jsp:getProperty name="user" property="price" /> </p>
-                                                </div>
                                                     <p class="text-muted"><jsp:getProperty name="user" property="role" /> </p>
+                                                    <!--<p class="text-muted"><jsp:getProperty name="user" property="price" /> </p>-->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

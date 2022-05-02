@@ -88,8 +88,8 @@ public class ReportDB {
                 ReportBean cb = new ReportBean();
                 cb.setCenterID(rs.getString("centerID"));
                 cb.setCenterName(rs.getString("name"));
-                cb.setCenterBookings(rs.getInt("Booking") + "/" + (int) countAllBooking);
-                cb.setCenterBookingRate(rs.getInt("Booking") / countAllBooking * 100);
+                cb.setCenterBookings(rs.getInt("Booking") + "/" + 43800);
+                cb.setCenterBookingRate(rs.getInt("Booking") / 43800.0);
 //                System.out.println("AAAAAAAAAAAAAA " + cb.getCenterID() + " " + cb.getCenterName() + " " + cb.getCenterBookingRate() + " " + cb.getCenterBookings());
                 list.add(cb);
             }
@@ -149,8 +149,8 @@ public class ReportDB {
                 ReportBean cb = new ReportBean();
                 cb.setTrainerID(rs.getString("trainerID"));
                 cb.setTrainerName(rs.getString("name"));
-                cb.setTrainerBookings(rs.getInt("Booking") + "/" + (int) countAllBooking);
-                cb.setTrainerBookingRate(rs.getInt("Booking") / countAllBooking * 100);
+                cb.setTrainerBookings(rs.getInt("Booking") + "/" + 43800);
+                cb.setTrainerBookingRate(rs.getInt("Booking") / 43800.0);
 //                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerBookingRate() + " " + cb.getTrainerBookings());
                 list.add(cb);
             }

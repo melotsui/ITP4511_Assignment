@@ -145,7 +145,7 @@
                         }
                     %>
                     <% 
-                        if(userInfo.getRole().equalsIgnoreCase("Staff")){
+                        if(!userInfo.getRole().equalsIgnoreCase("Customer")){
                             out.println("<li class='nav-item menu-items'>");
                             out.println("<a class='nav-link' data-toggle='collapse' href='#center' aria-expanded='false' aria-controls='center'>");
 //                            out.println("<a class='nav-link' href='edit-gym-center.jsp'>");

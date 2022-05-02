@@ -7,10 +7,12 @@ package ict.servlet;
 
 import ict.bean.CenterBean;
 import ict.bean.CenterBookingBean;
+import ict.bean.ReportBean;
 import ict.bean.TrainerBookingBean;
 import ict.bean.UserBean;
 import ict.db.BookingDB;
 import ict.db.CenterDB;
+import ict.db.ReportDB;
 import ict.db.UserDB;
 import ict.db.UserPriceDB;
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class HandleReport extends HttpServlet {
     BookingDB bookingDB;
     CenterDB centerDB;
     UserDB userDB;
+    ReportDB reportDB;
 
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
@@ -41,6 +44,7 @@ public class HandleReport extends HttpServlet {
         bookingDB = new BookingDB(dbUrl, dbUser, dbPassword);
         centerDB = new CenterDB(dbUrl, dbUser, dbPassword);
         userDB = new UserDB(dbUrl, dbUser, dbPassword);
+        reportDB = new ReportDB(dbUrl, dbUser, dbPassword);
     }
 
     /**
@@ -59,11 +63,14 @@ public class HandleReport extends HttpServlet {
         String action = request.getParameter("action");
         PrintWriter out = response.getWriter();
         if (action.equalsIgnoreCase("getBooingReportInfo")) {
-
             ArrayList<UserBean> trainersWithPrice = userDB.queryActiveTrainersWithPrice();
             ArrayList<CenterBean> centersWithPrice = centerDB.queryActiveCenter();
             request.setAttribute("centersWithPrice", centersWithPrice);
             request.setAttribute("trainersWithPrice", trainersWithPrice);
+            
+            ArrayList<ReportBean> cetnerBookingRate = reportDB.queryAllCenterBookingRate();
+            request.setAttribute("cetnerBookingRate", cetnerBookingRate);
+            
             RequestDispatcher rd;
             rd = this.getServletContext().getRequestDispatcher("/staff/report-booking-overview.jsp");
             rd.forward(request, response);

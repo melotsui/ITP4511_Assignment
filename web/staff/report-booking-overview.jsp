@@ -8,14 +8,16 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.UserBean"%>
 <%@page import="ict.bean.CenterBean"%>
+<%@page import="ict.bean.ReportBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <jsp:useBean id="centersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.CenterBean>" />
 <jsp:useBean id="trainersWithPrice" scope="request" class="java.util.ArrayList<ict.bean.UserBean>" />
+<jsp:useBean id="cetnerBookingRate" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Dashboard</title>
+        <title>Booking Report</title>
         <style>
             .ui-datepicker-calendar {
                 display: none;
@@ -82,7 +84,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" checked=""> Monthly <i class="input-helper"></i></label>
+                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" > Monthly <i class="input-helper"></i></label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
@@ -118,11 +120,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Ken Wong</td>
-                                                <td>1882/3650(51.5%)</td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<cetnerBookingRate.size(); i++){
+                                                    ReportBean cbr = cetnerBookingRate.get(i);
+                                                    out.println("<tr>");
+                                                    out.println("<td>"+ (i+1) +"</td>");
+                                                    out.println("<td>"+ cbr.getCenterName() +"</td>");
+                                                    out.println("<td>"+ cbr.getCenterBookings() + " ("+cbr.getCenterBookingRate()+"%)" +"</td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
+                                            
+                                                
                                         </tbody>
                                     </table>
                                 </div>
@@ -147,11 +156,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>LWL</td>
-                                                <td>1882/3650(51.5%)</td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<cetnerBookingRate.size(); i++){
+                                                    ReportBean cbr = cetnerBookingRate.get(i);
+                                                    out.println("<tr>");
+                                                    out.println("<td>"+ (i+1) +"</td>");
+                                                    out.println("<td>"+ cbr.getCenterName() +"</td>");
+                                                    out.println("<td>"+ cbr.getCenterBookings() + " ("+cbr.getCenterBookingRate()+"%)" +"</td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -172,9 +186,10 @@
                                             <tr>
                                                 <th> # </th>
                                                 <th> Customer ID </th>
-                                                <th> Center </th>
+                                                <th> Customer Name </th>
+<!--                                                <th> Center </th>
                                                 <th> Booking Date Time </th>
-                                                <th> Price </th>
+                                                --><th> Price </th>
                                             </tr>
                                         </thead>
                                         <tbody>

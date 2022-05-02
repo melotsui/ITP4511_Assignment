@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Dashboard</title>
+        <title>Income Report</title>
         <style>
             .ui-datepicker-calendar {
                 display: none;
@@ -47,13 +47,13 @@
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" checked=""> Monthly <i class="input-helper"></i></label>
+                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios1" value="month" > Monthly <i class="input-helper"></i></label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios2" value="year"> Yearly <i class="input-helper"></i></label>
+                                                        <input type="radio" class="form-check-input" name="period" id="membershipRadios2" value="year" > Yearly <i class="input-helper"></i></label>
                                                 </div>
                                             </div>
                                         </div>

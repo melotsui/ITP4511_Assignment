@@ -195,7 +195,7 @@
                             out.println("<div class='collapse' id='report'>");
                             out.println("<ul class='nav flex-column sub-menu'>");
                             out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/HandleReport?action=getBooingReportInfo'> Booking Report </a></li>");
-                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/staff/report-income.jsp'> Income Report </a></li>");
+                            out.println("<li class='nav-item'> <a class='nav-link' href='" +request.getContextPath()+ "/HandleReport?action=getIncomeReportInfo'> Income Report </a></li>");
                             out.println("</ul></div></li>");
                         }
                     %>

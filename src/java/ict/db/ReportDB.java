@@ -236,4 +236,99 @@ public class ReportDB {
         }
         return null;
     }
+    
+    public ArrayList queryTrainerIncome() {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "select esd.user.id, CONCAT(esd.user.firstName, ' ', esd.user.lastName) AS name , SUM(esd.trainerBooking.price) as 'income' from esd.trainerBooking, esd.user where esd.trainerBooking.trainerID = esd.user.id group by trainerID order by income desc;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+            ArrayList list = new ArrayList();
+            while (rs.next()) {
+//                System.out.println(rs.getInt("Booking"));
+//                System.out.println(countAllBooking);
+//                System.out.println(rs.getInt("Booking")/countAllBooking*100);
+                ReportBean cb = new ReportBean();
+                cb.setTrainerID(rs.getString("id"));
+                cb.setTrainerName(rs.getString("name"));
+                cb.setTrainerIncome(rs.getInt("income"));
+//                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerIncome());
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList queryCenterIncome() {
+        java.sql.Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "select esd.center.id, esd.center.name , SUM(esd.centerBooking.price) as 'income' from esd.centerBooking, esd.center where esd.centerBooking.centerID = esd.center.id group by centerID order by income desc;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            //Statement s = cnnct.createStatement();
+            ResultSet rs = pStmnt.executeQuery();
+
+            ArrayList list = new ArrayList();
+            while (rs.next()) {
+//                System.out.println(rs.getInt("Booking"));
+//                System.out.println(countAllBooking);
+//                System.out.println(rs.getInt("Booking")/countAllBooking*100);
+                ReportBean cb = new ReportBean();
+                cb.setCenterID(rs.getString("id"));
+                cb.setCenterName(rs.getString("name"));
+                cb.setCenterIncome(rs.getInt("income"));
+//                System.out.println("AAAAAAAAAAAAAA " + cb.getTrainerID() + " " + cb.getTrainerName() + " " + cb.getTrainerIncome());
+                list.add(cb);
+            }
+            return list;
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (pStmnt != null) {
+                try {
+                    pStmnt.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (cnnct != null) {
+                try {
+                    cnnct.close();
+                } catch (SQLException sqlEx) {
+                }
+            }
+        }
+        return null;
+    }
+    
 }

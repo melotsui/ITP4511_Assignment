@@ -7,7 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ict.bean.CenterBean"%>
+<%@page import="ict.bean.ReportBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
+<jsp:useBean id="trainerIncome" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
+<jsp:useBean id="centerIncome" scope="request" class="java.util.ArrayList<ict.bean.ReportBean>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,11 +86,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Ken Wong</td>
-                                                <td>$3840</td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<trainerIncome.size(); i++){
+                                                    ReportBean cbr = trainerIncome.get(i);
+                                                    out.println("<tr>");
+                                                    out.println("<td>"+(i+1)+"</td>");
+                                                    out.println("<td>"+cbr.getTrainerName()+"</td>");
+                                                    out.println("<td>"+cbr.getTrainerIncome()+"</td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -111,11 +119,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>LWL</td>
-                                                <td>$3840</td>
-                                            </tr>
+                                            <%
+                                                for(int i=0; i<centerIncome.size(); i++){
+                                                    ReportBean cbr = centerIncome.get(i);
+                                                    out.println("<tr>");
+                                                    out.println("<td>"+(i+1)+"</td>");
+                                                    out.println("<td>"+cbr.getCenterName()+"</td>");
+                                                    out.println("<td>"+cbr.getCenterIncome()+"</td>");
+                                                    out.println("</tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

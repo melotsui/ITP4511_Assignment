@@ -80,7 +80,14 @@ public class HandleReport extends HttpServlet {
             rd.forward(request, response);
 
         } else if (action.equalsIgnoreCase("getIncomeReportInfo")) {
+            ArrayList<ReportBean> trainerIncome = reportDB.queryTrainerIncome();
+            request.setAttribute("trainerIncome", trainerIncome);
+            ArrayList<ReportBean> centerIncome = reportDB.queryCenterIncome();
+            request.setAttribute("centerIncome", centerIncome);
 
+            RequestDispatcher rd;
+            rd = this.getServletContext().getRequestDispatcher("/staff/report-income.jsp");
+            rd.forward(request, response);
         } else {
             out.println("No such action");
         }

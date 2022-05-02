@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="ict.bean.UserBean"%>
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserBean" />
 <!DOCTYPE html>
 <html>
